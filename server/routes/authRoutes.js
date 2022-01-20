@@ -49,7 +49,8 @@ router.post('/login', (req, res) => {
     if (!bcrypt.compareSync(user.password, data[0].password)) {
       return res.status(400).send("Incorrect password")
     }
-    const token = jwt.sign({userId: data.id}, KEY)
+    console.log(data[0].id)
+    const token = jwt.sign({userId: data[0].id}, KEY)
     return res.status(200).json(token)
   })
 
