@@ -1,14 +1,15 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const knex = require('knex')(require('./knexfile').development)
 const jwt = require('jsonwebtoken')
-const authRoutes = ('./routes/authRoutes.js')
-const liftRoutes = ('./routes/liftRoutes.js')
-const workoutRouts = ('./routes/workoutRouts.js')
+const authRoutes = require('./routes/authRoutes.js')
+const liftRoutes = require('./routes/liftRoutes.js')
+const workoutRouts = require('./routes/workoutRoutes.js')
 
 app.use(express.json())
 app.use(cors())
+
+app.use('/account', authRoutes)
 
 
 require('dotenv').config()
