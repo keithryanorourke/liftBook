@@ -29,6 +29,7 @@
     .createTable('workouts', (table) => {
       table.increments('id').notNullable();
       table.timestamp('timestamp').notNullable().defaultTo(knex.fn.now());
+      table.string('name');
       table
         .integer('user_id')
         .unsigned()
