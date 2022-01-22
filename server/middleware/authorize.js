@@ -1,10 +1,13 @@
+const express = require("express")
 const jwt = require('jsonwebtoken')
 
 require('dotenv').config()
 const {KEY} = process.env
 
 const authorize = (req, res, next) => {
-  const token = req.headers.authorization.split(" ").pop()
+  let token;
+  req.headers.authorization ? token = req.headers.authorization.split(" ").pop() : null
+  console.log(token)
   jwt.verify(token, KEY, (err, decoded) => {
     if(err) {
       return res.status(400).send("invalid JWT")
@@ -15,3 +18,5 @@ const authorize = (req, res, next) => {
     }
   })
 }
+
+module.exports = {authorize};

@@ -3,10 +3,10 @@ const router = express.Router()
 const knex = require('knex')(require('../knexfile').development)
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const authorize = require ("../middleware/authorize").authorize;
 
 require('dotenv').config()
 const {KEY} = process.env
-
 
 router.post('/signup', (req, res) => {
   console.log("Received post request")
@@ -14,29 +14,28 @@ router.post('/signup', (req, res) => {
   knex('users')
   .where({username: newUser.username})
   .then(data => {
-    console.log(data)
     if (data.length) {
-      return res.status(400).send("username already exists")
+      return res.status(401).send("username already exists")
     }
     if(!newUser.password) {
-      return res.status(400).send("Password required for sign up")
+      return res.status(402).send("Password required for sign up")
     }
     if(!newUser.username) {
-      return res.status(400).send("Username required for sign up")
+      return res.status(403).send("Username required for sign up")
     }
-    if(newUser.mode === 'basic') {
-      newUser.password = bcrypt.hashSync(newUser.password, 10)
-      newUser = {...newUser, trackDifficulty: false, preferredMetric: "RPE", trackPercentageOfMax: false}
-    }
-    console.log(newUser)
+    newUser.password = bcrypt.hashSync(newUser.password, 10)
+    newUser = {...newUser, mode:"basic", trackDifficulty: false, preferredMetric: "RPE", trackPercentageOfMax: false}
+    // console.log(newUser)
     knex('users')
     .insert(newUser)
     .then(data => {
+      console.log(data[0])
       delete newUser.password
-      return res.status(200).json(newUser)
+      const token = jwt.sign({userId: data[0]}, KEY)
+      return res.status(200).json(token)
     })
     .catch(err => {
-      return res.status(400).send(`Error creating account: ${err}`)
+      return res.status(405).send(`Error creating account: ${err}`)
     })
   })
 })
@@ -53,7 +52,14 @@ router.post('/login', (req, res) => {
     const token = jwt.sign({userId: data[0].id}, KEY)
     return res.status(200).json(token)
   })
+  .catch(err => {
+    return res.status(404).send("Username does not match any existing account!")
+  })
+})
 
+router.get("/check-auth", authorize, (_req, res) => {
+  console.log("Good to go!")
+  return res.status(200).send("Valid JWT!")
 })
 
 module.exports=router

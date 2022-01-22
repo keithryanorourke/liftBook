@@ -1,0 +1,16 @@
+@use "./variables" as *;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:Arial, Helvetica, sans-serif;
+  background: linear-gradient(45deg, $primary2, $primary1);
+  color: $globaltextcolor
+}
+
+html, body, .root {
+  height: 100%;
+}
