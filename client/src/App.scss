@@ -1,7 +1,11 @@
 @use "./styles/partials/variables" as *;
 @use "./styles/partials/global" as *;
+
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .App-logo {

@@ -48,12 +48,13 @@ export const LoginPage = () => {
 
   return (
     <section className="login">
+      <h2 className="login__title">Login:</h2>
       <form onSubmit={loginHandler} className="login__form">
         <label className="login__label">Username:
-          <input type="text" name="username" className="login__username" />
+          <input type="text" name="username" className="login__field" />
         </label>
         <label className="login__label">Password:
-          <input type="password" name="password" className="login__username" />
+          <input type="password" name="password" className="login__field" />
         </label>
         <button className="login__submit">Log In!</button>
         <NavLink className="login__link" to="/signup">Need an account? Sign up here!</NavLink>

@@ -1,0 +1,45 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  background-color: $primary4;
+  border-radius: 2rem;
+  margin: 0 2rem;
+  overflow: hidden;
+  
+  &__title {
+    text-align: center
+  }
+  
+  &__form {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $primary3;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  &__field, &__submit {
+    outline: none;
+    border: none;
+    color: $globaltextcolor;
+    background-color: $primary2;
+    padding: 0.65rem 1rem;
+    margin-top: 0.25rem;
+    border-radius: 2rem;
+  }
+
+  &__submit {
+    align-self: flex-end;
+    width: 50%;
+  }
+}
