@@ -14,9 +14,6 @@ class Private extends React.Component {
     componentDidMount() {
         console.log(this.props.children)
         const token = Cookie.get("token")
-        // Send an Auth check request to the server
-        // don't forget to set axios to send requests withCredentials
-        // it allows for cookies to be passed to backend
         if(!token) {
             this.setState({
                 isAuthenticating: false,
@@ -48,14 +45,6 @@ class Private extends React.Component {
 
     render() {
         const { element: Element, ...rest } = this.props;
-        // Return a Route with all original props passed to it
-        // and a custom render prop that waits for component to
-        // finish authenticating and for successful auth
-        // render component and also pass user object provided by server as a prop
-        // otherwise redirect back to login page while pasing it
-        // a current route so it can redirect back to page you came from
-        // return (this.state.isAuthenticating ? null : 
-        // (this.state.isAuthenticated ? this.props.children : <Navigate to="/login"></Navigate>))
         if (this.state.isAuthenticating) {
             console.log("AUTHENTICATING")
             return null;
@@ -68,24 +57,6 @@ class Private extends React.Component {
             console.log("FAIL")
             return <Navigate to="/login"/>
         }
-
-            // <Route {...rest} render={(props) => {
-            //     // While authenticating, don't show anything
-            //     // alternatively this could be a loading indicator
-            //     if (this.state.isAuthenticating) return null;
-                
-            //     return this.state.isAuthenticated ? (
-            //         <Element token={this.state.token} {...props} />
-            //     ) : (
-            //             <Navigate to={{
-            //                 pathname: '/login',
-            //                 state: {from: props.location}
-            //         }} />
-            //     )
-            // }}>
-                
-            // </Route>
-        
     }
 }
 

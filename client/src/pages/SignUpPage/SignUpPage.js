@@ -44,7 +44,7 @@ export const SignUpPage = () => {
   }
 
   if (redirect) {
-    return <Navigate to="/home"/>
+    return <Navigate to="/setup"/>
   }
 
   return (

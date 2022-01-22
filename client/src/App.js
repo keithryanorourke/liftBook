@@ -11,6 +11,7 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import {LoginPage} from './pages/LoginPage/LoginPage';
 import {SignUpPage} from './pages/SignUpPage/SignUpPage';
 import HomePage from "./pages/HomePage/HomePage"
+import OrientationPage from "./pages/OrientationPage/OrientationPage"
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/signup" element={<SignUpPage />}></Route>
           <Route path="/home" element={<Private><HomePage /></Private>}></Route>
-          
+          <Route path="/setup" element={<Private><OrientationPage /></Private>}></Route>
         </Routes>
       </BrowserRouter>
       
