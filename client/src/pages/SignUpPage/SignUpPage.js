@@ -49,19 +49,23 @@ export const SignUpPage = () => {
 
   return (
     <section className="signup">
-      <h2 className="signup__title">Create Account:</h2>
-      <form onSubmit={loginHandler} className="signup__form">
-        <label className="signup__label">Username:
-          <input type="text" name="username" className="signup__field" />
-        </label>
-        <label className="signup__label">Password:
-          <input type="password" name="password" className="signup__field" />
-        </label>
-        <label className="signup__label">Confirm Password:
-          <input type="password" name="confirmPassword" className="signup__field" />
-        </label>
-        <button className="signup__submit" type="submit">Sign up!</button>
-      </form>
+      <div className="signup__container">
+        <div className="signup__top-container">
+          <h2 className="signup__title">Create Account:</h2>
+        </div>
+        <form onSubmit={loginHandler} className="signup__form">
+          <label className="signup__label">Username:
+            <input type="text" name="username" className="signup__field" />
+          </label>
+          <label className="signup__label">Password:
+            <input type="password" name="password" className="signup__field" />
+          </label>
+          <label className="signup__label">Confirm Password:
+            <input type="password" name="confirmPassword" className="signup__field" />
+          </label>
+          <button className="signup__submit" type="submit">Sign Up</button>
+        </form>
+      </div>
     </section>
       )
 }
