@@ -1,0 +1,67 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+
+.orientation {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2rem;
+  
+  &__container {
+    border-radius: 2rem;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+
+  &__top-container {
+    position: relative;
+    z-index: 2;
+  }
+
+  &__title {
+    color: $textcolor2;
+    text-align: center;
+    margin: 0;
+    padding: 0.8rem 0;
+  }
+
+  &__mode {
+    background-color: $primary3;
+    box-shadow: $darkshadow2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    border-radius: 2rem;
+    list-style-type: none;
+    margin: 0.5rem 0 1rem;
+    padding: 1rem 1.5rem;
+  }
+
+  &__mode-copy {
+    padding: 0.5rem 0;
+    align-self: flex-start;
+  }
+
+  &__button {
+    color: $textcolor2;
+    font-size: 1rem;
+    box-shadow: $darkshadow1;
+    outline: none;
+    border: none;
+    background-color: $primary2;
+    width: 50%;
+    padding: 0.65rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 2rem;
+  }
+
+  &__disclaimer {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+}
+
