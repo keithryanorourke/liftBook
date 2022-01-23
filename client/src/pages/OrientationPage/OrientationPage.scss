@@ -2,17 +2,13 @@
 @use "../../styles/partials/global" as *;
 
 .orientation {
-  box-shadow: $lightshadow1;
   display: flex;
   flex-direction: column;
-  background-color: $accent1;
-  border-radius: 2rem;
   margin: 0 2rem;
-  overflow: hidden;
   
   &__container {
-    background-color: $primary3;
-    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+    padding: 1rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,43 +18,49 @@
   &__top-container {
     position: relative;
     z-index: 2;
-    box-shadow: 0 0.1875rem 1.625rem $accent1;
   }
 
   &__title {
+    color: $textcolor2;
     text-align: center;
     margin: 0;
     padding: 0.8rem 0;
   }
 
   &__mode {
-    box-shadow: $lightshadow1;
+    background-color: $primary3;
+    box-shadow: $darkshadow2;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     flex-wrap: wrap;
     width: 100%;
     border-radius: 2rem;
-    background-color: $primary4;
     list-style-type: none;
     margin: 0.5rem 0 1rem;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1.5rem;
   }
 
   &__mode-copy {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem 0;
+    align-self: flex-start;
   }
 
   &__button {
+    color: $textcolor2;
     font-size: 1rem;
     box-shadow: $darkshadow1;
     outline: none;
     border: none;
-    font-weight: 600;
-    color: $globaltextcolor;
-    background-color: $accent1;
-    width: 60%;
+    background-color: $primary2;
+    width: 50%;
     padding: 0.65rem 1rem;
     margin: 0.5rem 0;
     border-radius: 2rem;
+  }
+
+  &__disclaimer {
+    text-align: center;
+    font-size: 0.8rem;
   }
 }

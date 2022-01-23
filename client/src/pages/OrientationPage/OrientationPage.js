@@ -21,14 +21,14 @@ const OrientationPage = () => {
       <div className="orientation__top-container">
         <h1 className="orientation__title">Welcome to liftBook!</h1>
       </div>
+      <p className="orientation__copy">Before you get started, please select a tracking mode:</p>
       <div className="orientation__container">
-        <p className="orientation__copy">Before you get started, please select a tracking mode:</p>
         <div className='orientation__mode'>
-          <button className="orientation__button">BASIC</button>
+          <button className="orientation__button">Basic</button>
           <li className="orientation__mode-copy">Just track weights and reps!</li>
         </div>
         <div className="orientation__mode">
-          <button onClick={() => setAdvanced(true)} className="orientation__button">ADVANCED</button>
+          <button onClick={() => setAdvanced(true)} className="orientation__button">Advanced</button>
           <li className="orientation__mode-copy">Track advanced metrics like RPE and %of1RM!</li>
           <li className="orientation__mode-copy">Customize what metrics you do and don't want to track!</li>
         </div>
