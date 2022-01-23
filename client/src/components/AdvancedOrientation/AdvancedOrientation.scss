@@ -5,15 +5,16 @@
   display: flex;
   flex-direction: column;
   margin: 0 2rem;
-
+  
   &__title {
     color: $textcolor2;
     text-align: center;
     margin: 0;
     padding: 0.8rem 0;
   }
-
+  
   &__container {
+    box-shadow: $lightshadow1;
     display: flex;
     flex-direction: column;
     border-radius: 2rem;
@@ -52,36 +53,38 @@
     padding: 1rem 1.5rem 1.5rem;
   }
 
-  &__check-wrapper {
+  &__wrapper {
     display: flex;
   }
 
-  &__check-separator {
+  &__separator {
     width: 50%;
+    margin: 0.375rem 0 0.5rem;
     display: flex;
     align-items: center;
+  }
+
+  &__option {
+    margin: 0;
+    margin-right: 0.5rem;
+    filter:hue-rotate(100deg);
+    transform: scale(1.375)
+  }
+
+  &__label {
+    line-height: 100%;
   }
 
   &__help-button {
     background: none;
     border: none;
     padding: 0;
-    margin: 0 0 0.2rem 1rem;
+    margin-left: 0.5rem;
     height: 1.2rem;
   }
 
   &__help {
     width: 1.2rem;
-  }
-
-  &__radio-wrapper {
-    display: flex;
-  }
-  
-  &__radio-separator {
-    display: flex;
-    width: 50%;
-    align-items: center;
   }
 
   &__submit {

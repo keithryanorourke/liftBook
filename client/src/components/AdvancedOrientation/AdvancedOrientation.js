@@ -14,17 +14,17 @@ const AdvancedOrientation = ({advancedHandler, difficultyHandler, setAdvanced, t
         </div>
         <form onSubmit={advancedHandler} className="advanced__form">
           <p className="advanced__prompt">Please select which advanced metrics you would like to track:</p>
-          <div className="advanced__check-wrapper">
-            <div className="advanced__check-separator">
-              <input type="checkbox" id="difficulty" name="difficulty" onClick={difficultyHandler} value="difficulty" className="advanced__check" />
-              <label htmlFor="difficulty" className="advanced__check-label">Difficulty</label>
+          <div className="advanced__wrapper">
+            <div className="advanced__separator">
+              <input type="checkbox" id="difficulty" name="difficulty" onClick={difficultyHandler} value="difficulty" className="advanced__option" />
+              <label htmlFor="difficulty" className="advanced__label">Difficulty</label>
               <button className="advanced__help-button">
                 <img src={help} alt="Question mark icon" className="advanced__help" />
               </button>
             </div>
-            <div className="advanced__check-separator">
-              <input type="checkbox" id="percentage" name="percentage" value="percentage" className="advanced__check" />
-              <label htmlFor="difficulty" className="advanced__check-label">%of1RM</label>
+            <div className="advanced__separator">
+              <input type="checkbox" id="percentage" name="percentage" value="percentage" className="advanced__option" />
+              <label htmlFor="difficulty" className="advanced__label">%of1RM</label>
               <button className="advanced__help-button">
                 <img src={help} alt="Question mark icon" className="advanced__help" />
               </button>
@@ -33,17 +33,17 @@ const AdvancedOrientation = ({advancedHandler, difficultyHandler, setAdvanced, t
           {trackDifficulty ? 
           <>
           <p className="advanced__prefer">Preferred difficulty metric:</p>
-          <div className="advanced__radio-wrapper">
-            <div className="advanced__radio-separator">
-              <input type="radio" defaultChecked id="rpe" name="difficultyMetric" value="RPE" disabled={trackDifficulty ? false : true} className="advanced__radio" />
-              <label htmlFor="rpe" className="advanced__radio-label">RPE</label>
+          <div className="advanced__wrapper">
+            <div className="advanced__separator">
+              <input type="radio" defaultChecked id="rpe" name="difficultyMetric" value="RPE" disabled={trackDifficulty ? false : true} className="advanced__option" />
+              <label htmlFor="rpe" className="advanced__label">RPE</label>
               <button className="advanced__help-button">
                 <img src={help} alt="Question mark icon" className="advanced__help" />
               </button>
             </div>
-            <div className="advanced__radio-separator">
-              <input type="radio" id="rir" name="difficultyMetric" value="RIR" disabled={trackDifficulty ? false : true} className="advanced__radio" />
-              <label htmlFor="rir" className="advanced__radio-label">RIR</label>
+            <div className="advanced__separator">
+              <input type="radio" id="rir" name="difficultyMetric" value="RIR" disabled={trackDifficulty ? false : true} className="advanced__option" />
+              <label htmlFor="rir" className="advanced__label">RIR</label>
               <button className="advanced__help-button">
                 <img src={help} alt="Question mark icon" className="advanced__help" />
               </button>
