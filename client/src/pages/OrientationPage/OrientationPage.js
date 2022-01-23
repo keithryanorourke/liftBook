@@ -24,11 +24,18 @@ const OrientationPage = ({token}) => {
 
   const advancedHandler = (e) => {
     e.preventDefault()
+    console.log(e.target.difficultyMetric)
     const settings = {
+      mode: "advanced",
       trackDifficulty: e.target.difficulty.checked,
       trackPercentageOfMax: e.target.percentage.checked,
-      preferredMetric: e.target.difficultyMetric.value
+      preferredMetric: (e.target.difficultyMetric ? e.target.difficultyMetric.value : "RPE")
     }
+    axios.put("http://localhost:8080/account/settings", settings, {
+      headers: {Authorization: `Bearer: ${token}`}
+    })
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
 
     console.log(settings)
   }
