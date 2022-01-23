@@ -48,7 +48,6 @@ router.post('/login', (req, res) => {
     if (!bcrypt.compareSync(user.password, data[0].password)) {
       return res.status(400).send("Incorrect password")
     }
-    console.log(data[0].id)
     const token = jwt.sign({userId: data[0].id}, KEY)
     return res.status(200).json(token)
   })
@@ -57,25 +56,22 @@ router.post('/login', (req, res) => {
   })
 })
 
-router.put('/settings', (req, res) => {
+router.put('/settings', authorize, (req, res) => {
+  // console.log(req.decoded)
   const {userId} = req.decoded
   const settings = req.body
   knex('users')
   .where({id: userId})
   .update({...settings})
   .then(response => {
-    console.log(response)
     return res.status(200).send("settings succesfully updated!")
   })
   .catch(error => {
-    console.log(error)
-    return res.status(400).send("Incorrect settings object provided")
+    return res.status(400).send("Incorrect settings object provided OR user not found.")
   })
-  return res.status(404).send("User not found!")
 })
 
 router.get("/check-auth", authorize, (_req, res) => {
-  console.log("Good to go!")
   return res.status(200).send("Valid JWT!")
 })
 

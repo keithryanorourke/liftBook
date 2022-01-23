@@ -25,7 +25,6 @@ function App() {
           <Route path="/setup" element={<Private><OrientationPage /></Private>}></Route>
         </Routes>
       </BrowserRouter>
-      
     </div>
   );
 }
