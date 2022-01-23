@@ -4,9 +4,17 @@ $primary3: #555;
 $primary4: #666;
 $primary5: #777;
 
+// $accent1: rgb(44, 135, 187);
+$accent1: #1f51ff;
+$accent2: #a51fff;
+$accent3: #ff1fda;
+$accent4: #ff711f;
+$accent5: #fff01f;
+
+
 $globaltextcolor: #e1e1e1;
 
 $lightshadow1: 0 .1875rem .825rem rgba(124, 122, 122, 0.445);
-$lightshadow2: 0 .1875rem 0.625rem rgba(124, 122, 122, 0.445);
+$lightshadow2: 0 .1875rem 0.625rem rgb(102, 96, 96);
 $darkshadow1: 0 .1875rem 0.625rem rgba(0, 0, 0, 0.253);
-$darkshadow2: 0 .1875rem 0.625rem rgba(0, 0, 0, 0.253);
+$darkshadow2: 0 .1875rem 1rem 0.2rem rgba(0, 0, 0, 0.5);

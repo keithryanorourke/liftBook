@@ -5,11 +5,11 @@
   box-shadow: $lightshadow1;
   display: flex;
   flex-direction: column;
-  background-color: $primary4;
+  background-color: $accent1;
   border-radius: 2rem;
   margin: 0 2rem;
   overflow: hidden;
-
+  
   &__container {
     background-color: $primary3;
     padding: 1rem 1.5rem;
@@ -22,7 +22,7 @@
   &__top-container {
     position: relative;
     z-index: 2;
-    box-shadow: $lightshadow2;
+    box-shadow: 0 0.1875rem 1.625rem $accent1;
   }
 
   &__title {
@@ -55,7 +55,7 @@
     border: none;
     font-weight: 600;
     color: $globaltextcolor;
-    background-color: $primary3;
+    background-color: $accent1;
     width: 60%;
     padding: 0.65rem 1rem;
     margin: 0.5rem 0;
