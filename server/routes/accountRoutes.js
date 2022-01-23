@@ -58,7 +58,20 @@ router.post('/login', (req, res) => {
 })
 
 router.put('/settings', (req, res) => {
-  
+  const {userId} = req.decoded
+  const settings = req.body
+  knex('users')
+  .where({id: userId})
+  .update({...settings})
+  .then(response => {
+    console.log(response)
+    return res.status(200).send("settings succesfully updated!")
+  })
+  .catch(error => {
+    console.log(error)
+    return res.status(400).send("Incorrect settings object provided")
+  })
+  return res.status(404).send("User not found!")
 })
 
 router.get("/check-auth", authorize, (_req, res) => {
