@@ -5,12 +5,9 @@ import help from "../../assets/icons/help_outline_black_24dp.svg"
 import "./OrientationPage.scss"
 import Cookie from "js-cookie"
 
-const OrientationPage = () => {
+const OrientationPage = ({token}) => {
   const [advanced, setAdvanced] = useState(false)
   const [trackDifficulty, setTrackDifficulty] = useState(false)
-
-  const token = Cookie.get("token")
-
   const basicHandler = () => {
     const settings = {
       mode: "basic",
@@ -26,7 +23,21 @@ const OrientationPage = () => {
   }
 
   const advancedHandler = (e) => {
+    e.preventDefault()
+    const settings = {
+      trackDifficulty: e.target.difficulty.checked,
+      trackPercentageOfMax: e.target.percentage.checked,
+      preferredMetric: e.target.difficultyMetric.value
+    }
 
+    console.log(settings)
+  }
+
+  const difficultyHandler = (e) => {
+    if(e.target.checked) {
+      return setTrackDifficulty(true)
+    }
+    return setTrackDifficulty(false)
   }
 
   if(advanced) {
@@ -43,24 +54,26 @@ const OrientationPage = () => {
             <p className="advanced__prompt">Please select which advanced metrics you would like to track:</p>
             <div className="advanced__check-wrapper">
               <div className="advanced__check-separator">
-                <input type="checkbox" id="difficulty" name="difficulty" value="difficulty" className="advanced__check" />
+                <input type="checkbox" id="difficulty" name="difficulty" onClick={difficultyHandler} value="difficulty" className="advanced__check" />
                 <label htmlFor="difficulty" className="advanced__check-label">Difficulty</label>
                 <button className="advanced__help-button">
                   <img src={help} alt="Question mark icon" className="advanced__help" />
                 </button>
               </div>
               <div className="advanced__check-separator">
-                <input type="checkbox" id="difficulty" name="difficulty" value="Percentage" className="advanced__check" />
+                <input type="checkbox" id="percentage" name="percentage" value="percentage" className="advanced__check" />
                 <label htmlFor="difficulty" className="advanced__check-label">%of1RM</label>
                 <button className="advanced__help-button">
                   <img src={help} alt="Question mark icon" className="advanced__help" />
                 </button>
               </div>
             </div>
+            {trackDifficulty ? 
+            <>
             <p className="advanced__prefer">Preferred difficulty metric:</p>
             <div className="advanced__radio-wrapper">
               <div className="advanced__radio-separator">
-                <input type="radio" id="rpe" name="difficultyMetric" value="RPE" disabled={trackDifficulty ? false : true} className="advanced__radio" />
+                <input type="radio" defaultChecked id="rpe" name="difficultyMetric" value="RPE" disabled={trackDifficulty ? false : true} className="advanced__radio" />
                 <label htmlFor="rpe" className="advanced__radio-label">RPE</label>
                 <button className="advanced__help-button">
                   <img src={help} alt="Question mark icon" className="advanced__help" />
@@ -73,7 +86,10 @@ const OrientationPage = () => {
                   <img src={help} alt="Question mark icon" className="advanced__help" />
                 </button>
               </div>
-            </div>
+            </div> 
+            </>
+            : null}
+            <button className="advanced__submit">Continue</button>
           </form>
         </div>
       </section>

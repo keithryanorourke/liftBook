@@ -118,7 +118,6 @@
 
   &__check-wrapper {
     display: flex;
-    // flex-direction: column;
   }
 
   &__check-separator {
@@ -147,5 +146,19 @@
     display: flex;
     width: 50%;
     align-items: center;
+  }
+
+  &__submit {
+    align-self: flex-end;
+    color: $textcolor2;
+    font-size: 1rem;
+    box-shadow: $darkshadow1;
+    outline: none;
+    border: none;
+    background-color: $primary2;
+    width: 50%;
+    padding: 0.65rem 1rem;
+    margin: 1rem 0 0;
+    border-radius: 2rem;
   }
 }
