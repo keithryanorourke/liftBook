@@ -74,7 +74,7 @@ const AdvancedOrientation = ({advancedHandler, difficultyHandler, setAdvanced, t
             </div>
           </div>
           {trackDifficulty ? 
-          <>
+          <div className="advanced__preferance-container">
           <p className="advanced__prefer">Preferred difficulty metric:</p>
           <div className="advanced__wrapper">
             <div className="advanced__separator">
@@ -92,7 +92,7 @@ const AdvancedOrientation = ({advancedHandler, difficultyHandler, setAdvanced, t
               </button>
             </div>
           </div> 
-          </>
+          </div>
           : null}
           <button className="advanced__submit">Continue</button>
         </form>
