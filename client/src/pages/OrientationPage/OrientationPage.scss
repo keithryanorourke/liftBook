@@ -1,0 +1,64 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+
+.orientation {
+  box-shadow: $lightshadow1;
+  display: flex;
+  flex-direction: column;
+  background-color: $primary4;
+  border-radius: 2rem;
+  margin: 0 2rem;
+  overflow: hidden;
+
+  &__container {
+    background-color: $primary3;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+
+  &__top-container {
+    position: relative;
+    z-index: 2;
+    box-shadow: $lightshadow2;
+  }
+
+  &__title {
+    text-align: center;
+    margin: 0;
+    padding: 0.8rem 0;
+  }
+
+  &__mode {
+    box-shadow: $lightshadow1;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    border-radius: 2rem;
+    background-color: $primary4;
+    list-style-type: none;
+    margin: 0.5rem 0 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  &__mode-copy {
+    padding: 0.5rem 0.5rem;
+  }
+
+  &__button {
+    font-size: 1rem;
+    box-shadow: $darkshadow1;
+    outline: none;
+    border: none;
+    font-weight: 600;
+    color: $globaltextcolor;
+    background-color: $primary3;
+    width: 60%;
+    padding: 0.65rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 2rem;
+  }
+}

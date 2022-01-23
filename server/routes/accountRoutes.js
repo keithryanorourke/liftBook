@@ -57,6 +57,10 @@ router.post('/login', (req, res) => {
   })
 })
 
+router.put('/settings', (req, res) => {
+  
+})
+
 router.get("/check-auth", authorize, (_req, res) => {
   console.log("Good to go!")
   return res.status(200).send("Valid JWT!")
