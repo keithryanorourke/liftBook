@@ -49,7 +49,6 @@ export const SignUpPage = () => {
 
   return (
     <section className="signup">
-      <div className="signup__container">
         <div className="signup__top-container">
           <h2 className="signup__title">Create Account:</h2>
         </div>
@@ -65,7 +64,6 @@ export const SignUpPage = () => {
           </label>
           <button className="signup__submit" type="submit">Sign Up</button>
         </form>
-      </div>
     </section>
-      )
+  )
 }

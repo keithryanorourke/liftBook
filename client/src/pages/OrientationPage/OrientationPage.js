@@ -55,11 +55,11 @@ const OrientationPage = ({token}) => {
       </div>
       <p className="orientation__copy">Before you get started, please select a tracking mode:</p>
       <div className="orientation__container">
-        <div className='orientation__mode'>
+        <div className='orientation__mode orientation__mode--basic'>
           <button onClick={basicHandler} className="orientation__button">Basic</button>
           <li className="orientation__mode-copy">Just track weights and reps!</li>
         </div>
-        <div className="orientation__mode">
+        <div className="orientation__mode orientation__mode--advanced">
           <button onClick={() => setAdvanced(true)} className="orientation__button">Advanced</button>
           <li className="orientation__mode-copy">Track advanced metrics like RPE and %of1RM!</li>
           <li className="orientation__mode-copy">Customize what metrics you do and don't want to track!</li>

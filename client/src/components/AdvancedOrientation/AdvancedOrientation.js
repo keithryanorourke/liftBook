@@ -48,7 +48,6 @@ const AdvancedOrientation = ({advancedHandler, difficultyHandler, setAdvanced, t
     <>
     {modal ? <InformativeModal title={helpInformation.title} copy={helpInformation.copy} close={closeModal}/> : null}
     <section className="advanced">
-      <h1 className="advanced__title">Welcome to liftBook!</h1>
       <div className="advanced__container">
         <div className="advanced__top-container">
           <button onClick={() => setAdvanced(false)} className="advanced__back"><img src={back} alt="" className="advanced__arrow" /></button>

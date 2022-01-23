@@ -1,17 +1,12 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/global" as *;
 @use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/animations" as *;
 
 .login {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  &__container {
-    @include top-level-container;
-    width: 100%;
-    margin: 0 2rem;
-  }
+  animation: popup 0.2s;
+  @include top-level-container;
+  margin: 0 2rem;
 
   &__top-container {
     background-color: $primary3;

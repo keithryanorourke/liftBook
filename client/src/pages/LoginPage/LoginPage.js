@@ -48,7 +48,6 @@ export const LoginPage = () => {
 
   return (
     <section className="login">
-      <div className="login__container">
       <div className="login__top-container">
         <h2 className="login__title">Login:</h2>
       </div>
@@ -62,7 +61,6 @@ export const LoginPage = () => {
         <button className="login__submit">Log In</button>
         <NavLink className="login__link" to="/signup">Need an account? Sign up here!</NavLink>
       </form>
-      </div>
     </section>
     )
 }
