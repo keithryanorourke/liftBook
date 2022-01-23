@@ -1,0 +1,44 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+
+.informative {
+  position: absolute;
+  top: 25%;
+  margin: 0 3rem;
+  background-color: $primary4;
+  z-index: 2;
+  border-radius: 2rem;
+  overflow: hidden;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(55, 84, 107, 0.349)
+  }
+  
+  &__top-container {
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $primary3;
+  }
+  
+  &__empty {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &__bottom-container {
+    padding: 0 1.5rem;
+  }
+
+  &__back {
+    background: none;
+    border: none;
+    height: 1.5rem;
+  }
+}
