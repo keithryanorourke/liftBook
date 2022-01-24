@@ -4,10 +4,10 @@
  */
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex('defaultexercises').del()
+  return knex('exercises').del()
     .then(function () {
       // Inserts seed entries
-      return knex('defaultexercises').insert([
+      return knex('exercises').insert([
         {name: "Squat", muscle: "Quadriceps, Glutes"},
         {name: "Deadlift", muscle: "Back, Hamstrings"},
         {name: "Bench Press", muscle: "Chest, Triceps, Shoulders"},

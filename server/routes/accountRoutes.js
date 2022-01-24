@@ -57,7 +57,6 @@ router.post('/login', (req, res) => {
 })
 
 router.put('/settings', authorize, (req, res) => {
-  // console.log(req.decoded)
   const {userId} = req.decoded
   const settings = req.body
   knex('users')
