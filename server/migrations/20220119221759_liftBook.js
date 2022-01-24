@@ -15,12 +15,11 @@
     })
     .createTable('exercises', (table) => {
       table.increments('id').notNullable;
-      table.string('name').notNullable();
+      table.string('name').notNullable().unique();
       table.string('muscle').notNullable();
       table
         .integer('user_id')
         .unsigned()
-        .notNullable()
         .references('id')
         .inTable('users')
         .onUpdate('CASCADE')
