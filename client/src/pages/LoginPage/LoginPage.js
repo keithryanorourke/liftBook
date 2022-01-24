@@ -48,7 +48,9 @@ export const LoginPage = () => {
 
   return (
     <section className="login">
-      <h2 className="login__title">Login:</h2>
+      <div className="login__top-container">
+        <h2 className="login__title">Login:</h2>
+      </div>
       <form onSubmit={loginHandler} className="login__form">
         <label className="login__label">Username:
           <input type="text" name="username" className="login__field" />
@@ -56,7 +58,7 @@ export const LoginPage = () => {
         <label className="login__label">Password:
           <input type="password" name="password" className="login__field" />
         </label>
-        <button className="login__submit">Log In!</button>
+        <button className="login__submit">Log In</button>
         <NavLink className="login__link" to="/signup">Need an account? Sign up here!</NavLink>
       </form>
     </section>

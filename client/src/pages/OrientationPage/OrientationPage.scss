@@ -1,5 +1,7 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/animations" as *;
 
 .orientation {
   display: flex;
@@ -14,19 +16,19 @@
     align-items: center;
   }
   
-
+  
   &__top-container {
     position: relative;
     z-index: 2;
   }
-
+  
   &__title {
     color: $textcolor2;
     text-align: center;
     margin: 0;
     padding: 0.8rem 0;
   }
-
+  
   &__mode {
     background-color: $primary3;
     box-shadow: $darkshadow2;
@@ -39,6 +41,14 @@
     list-style-type: none;
     margin: 0.5rem 0 1rem;
     padding: 1rem 1.5rem;
+    &--basic {
+      animation: popup 0.5s;
+    }
+
+    &--advanced {
+      opacity: 0%;
+      animation: popup 0.5s 0.2s forwards;
+    }
   }
 
   &__mode-copy {

@@ -1,26 +1,16 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/global" as *;
 @use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
 
 .advanced {
+  animation: popup 0.2s;
   display: flex;
   flex-direction: column;
   margin: 0 2rem;
   
-  &__title {
-    color: $textcolor2;
-    text-align: center;
-    margin: 0;
-    padding: 0.8rem 0;
-  }
-  
   &__container {
-    box-shadow: $lightshadow1;
-    display: flex;
-    flex-direction: column;
-    border-radius: 2rem;
-    overflow: hidden;
-    background-color: $primary4;
+    @include top-level-container;
   }
   
   &__top-container {
@@ -66,10 +56,14 @@
   }
 
   &__option {
+    transition: 0.5s;
     margin: 0;
     margin-right: 0.5rem;
-    filter:hue-rotate(100deg);
-    transform: scale(1.375)
+    filter:hue-rotate(100deg) brightness(0.5) drop-shadow(-0.5px 3px 8px $primary1);
+    transform: scale(1.375);
+    &:checked {
+      filter:hue-rotate(100deg) brightness(1) drop-shadow(-0.5px 3px 8px $primary1);
+    }
   }
 
   &__label {
