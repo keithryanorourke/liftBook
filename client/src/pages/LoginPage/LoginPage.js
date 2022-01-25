@@ -1,7 +1,7 @@
 import "./LoginPage.scss";
 import axios from "axios";
 import {useState} from "react";
-import {NavLink, Navigate} from "react-router-dom"
+import {NavLink, Navigate, useNavigate} from "react-router-dom"
 import Cookie from "js-cookie";
 
 
@@ -10,7 +10,7 @@ export const LoginPage = () => {
     username: {},
     password: {},
   })
-  const [redirect, setRedirect] = useState(false)
+  const navigate = useNavigate()
 
   const loginHandler = (e) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ export const LoginPage = () => {
       axios.post("http://localhost:8080/account/login", submission)
       .then(response => {
         Cookie.set("token", response.data, {expires: 7})
-        setRedirect(true)
+        navigate("../", {replace: true})
       })
       .catch(error => {
         if(error.status === 404) {
@@ -40,10 +40,6 @@ export const LoginPage = () => {
       })
     }
     return null;
-  }
-
-  if (redirect) {
-    return <Navigate to="/home"/>
   }
 
   return (

@@ -3,6 +3,23 @@ const router = express.Router()
 const knex = require('knex')(require('../knexfile').development)
 const authorize = require ("../middleware/authorize").authorize;
 
+router.get("/", authorize, (req, res) => {
+  const {userId} = req.decoded
+  console.log("received")
+  knex.from('users')
+  .innerJoin('workouts', 'users.id', 'workouts.user_id')
+  .select('workouts.id', 'workouts.name')
+  .where({user_id: userId})
+  .then(response => {
+    console.log(response, "THEN")
+    return res.status(200).send(response)
+  })
+  .catch(error => {
+    console.log(error, "ERROR")
+    return res.status(400).send(error)
+  })
+})
+
 router.post("/", authorize, (req, res) => {
   const {userId} = req.decoded
   knex('workouts')
