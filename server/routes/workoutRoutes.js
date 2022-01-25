@@ -8,7 +8,7 @@ router.get("/", authorize, (req, res) => {
   console.log("received")
   knex.from('users')
   .innerJoin('workouts', 'users.id', 'workouts.user_id')
-  .select('workouts.id', 'workouts.name')
+  .select('workouts.id', 'workouts.name', 'workouts.timestamp')
   .where({user_id: userId})
   .then(response => {
     console.log(response, "THEN")

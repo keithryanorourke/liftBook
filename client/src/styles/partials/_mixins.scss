@@ -8,3 +8,15 @@
   overflow: hidden;
   background-color: $primary4;
 }
+
+@mixin generic-button {
+    color: $textcolor2;
+    font-size: 1rem;
+    box-shadow: $darkshadow1;
+    outline: none;
+    border: none;
+    background-color: $primary2;
+    border-radius: 2rem;
+    padding: 0.65rem 1rem;
+    margin: 1rem 0 0;
+}
