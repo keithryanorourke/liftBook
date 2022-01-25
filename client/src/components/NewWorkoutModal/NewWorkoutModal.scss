@@ -4,13 +4,41 @@
 @use "../../styles/partials/mixins" as *;
 
 .new-workout {
+  position: absolute;
+  z-index: 2;
+  top: 32.5vh;
+  left: 0;
   @include top-level-container;
-  margin: 0 2rem;
+  margin: 0 3rem;
+  animation: popup 0.2s;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(55, 84, 107, 0.349)
+  }
 
   &__top-container {
+    padding: 0 1.5rem;
     background-color: $primary3;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__empty {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &__close {
+    height: 1.5rem;
+    background: none;
+    border: none;
+
   }
 
   &__form {
@@ -34,5 +62,13 @@
 
   &__button {
     @include generic-button;
+    width: 45%;
+
+    &--submit {
+      color: $accent1;
+      background: none;
+      border: 0.25rem solid $accent1;
+      box-shadow: $lightshadow1;
+    }
   }
 }

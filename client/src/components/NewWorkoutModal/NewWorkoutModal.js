@@ -5,23 +5,23 @@ import InformativeModal from "../InformativeModal/InformativeModal"
 import React, {useState} from "react"
 
 const NewWorkoutModal = ({handler, setNewWorkout}) => {
-  const submitHandler = (e) => {
-
-  }
-
   const closeModal = (e) => {
     e.preventDefault()
     setNewWorkout(false)
   }
 
   return (
+  <>
+  <div className="new-workout__overlay" onClick={closeModal}></div>
   <section className="new-workout">
     <div className="new-workout__top-container">
-      <h2 className="new-workout__title">New Workout:</h2>
+      <div className="new-workout__empty"></div>
+      <h2 className="new-workout__title">New Workout</h2>
+      <button onClick={closeModal} className="new-workout__close"><img src={close} alt="" className="new-workout__x" /></button>
     </div>
-    <form onSubmit={submitHandler} className="new-workout__form">
+    <form onSubmit={handler} className="new-workout__form">
       <label htmlFor="" className="new-workout__label">Workout Name:
-        <input type="text" placeholder="Leave blank for freestyle workout!" className="new-workout__name" />
+        <input name="name" type="text" placeholder="Leave blank for freestyle workout!" className="new-workout__name" />
       </label>
       <div className="new-workout__button-container">
         <button onClick={closeModal} className="new-workout__button new-workout__button--cancel">Cancel</button>
@@ -29,6 +29,7 @@ const NewWorkoutModal = ({handler, setNewWorkout}) => {
       </div>
     </form>
   </section>
+  </>
   )
 }
 
