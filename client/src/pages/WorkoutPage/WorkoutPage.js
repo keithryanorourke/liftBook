@@ -15,6 +15,19 @@ const WorkoutPage = ({token}) => {
   const [openLiftModal, setOpenLiftModal] = useState(false)
   const [userSettings, setUserSettings] = useState(null)
 
+  const getLifts = () => {
+    axios.get("http://localhost:8080/lifts/", { headers: 
+    {
+    Authorization: `Bearer: ${token}`
+    } 
+    })
+    .then(response => {
+      console.log(response)
+      setLifts(response.data)
+    })
+    .catch(error => console.log(error))
+  }
+
   useEffect(() => {
     axios.get(`http://localhost:8080/account/settings`, { headers: 
     {
@@ -43,8 +56,6 @@ const WorkoutPage = ({token}) => {
       alert(`${error}.\nThe workout you are trying to access is not associated with your account! `)
     })
 
-  
-
   axios.get(`http://localhost:8080/exercises/`, { headers: 
     {
     Authorization: `Bearer: ${token}`
@@ -54,6 +65,8 @@ const WorkoutPage = ({token}) => {
       console.log(response.data)
       setExercises(response.data)
     })
+
+    getLifts()
   }, [])
 
   const addLiftHandler = (e) => {
@@ -93,6 +106,7 @@ const WorkoutPage = ({token}) => {
     })
     .then(response => {
       console.log(response)
+      getLifts()
     })
     .catch (error => {
       console.log(error)
@@ -114,15 +128,15 @@ const WorkoutPage = ({token}) => {
           <h2>{workout ? workout.name : "Loading..."}</h2>
         </div>
           {lifts.length ?
-        <div className="workout__lifts-container">
-          {lifts.map(lift => {
-            return(
-              <article className="workout__lift">
+          <div className="workout__lifts-container">
+            {lifts.map(lift => {
+              return(
+                <article key={lift.id} className="workout__lift">
 
-              </article>
-            )
-          })}
-        </div>
+                </article>
+              )
+            })}
+          </div>
           :
           <div className="workout__lifts-container">
             <p className="workout__no-lifts">No lifts tracked yet!</p>
