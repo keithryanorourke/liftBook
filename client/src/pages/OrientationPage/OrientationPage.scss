@@ -6,7 +6,8 @@
 .orientation {
   display: flex;
   flex-direction: column;
-  margin: 3rem 2rem;
+  @include page-margins;
+  text-align: center;
   
   &__container {
     border-radius: 2rem;
@@ -53,7 +54,6 @@
 
   &__mode-copy {
     padding: 0.5rem 0;
-    align-self: flex-start;
   }
 
   &__button {
