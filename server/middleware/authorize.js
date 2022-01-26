@@ -6,7 +6,6 @@ const {KEY} = process.env
 
 const authorize = (req, res, next) => {
   let token;
-  console.log(req.headers.authorization)
   req.headers.authorization ? token = req.headers.authorization.split(" ").pop() : null
   if (token) {
     jwt.verify(token, KEY, (err, decoded) => {

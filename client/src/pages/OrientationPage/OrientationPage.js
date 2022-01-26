@@ -1,11 +1,14 @@
 import axios from 'axios'
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
+import {useNavigate} from "react-router-dom"
 import "./OrientationPage.scss"
 import AdvancedOrientation from '../../components/AdvancedOrientation/AdvancedOrientation'
 
 const OrientationPage = ({token}) => {
   const [advanced, setAdvanced] = useState(false)
   const [trackDifficulty, setTrackDifficulty] = useState(false)
+  const navigate = useNavigate()
+
   const basicHandler = () => {
     const settings = {
       mode: "basic",
@@ -16,13 +19,12 @@ const OrientationPage = ({token}) => {
     axios.put("http://localhost:8080/account/settings", settings, {
       headers: {Authorization: `Bearer: ${token}`}
     })
-    .then(response => console.log(response))
+    .then(response => navigate("../workouts", {replace: true}))
     .catch(error => console.log(error))
   }
 
   const advancedHandler = (e) => {
     e.preventDefault()
-    console.log(e.target.difficultyMetric)
     const settings = {
       mode: "advanced",
       trackDifficulty: e.target.difficulty.checked,
@@ -32,10 +34,8 @@ const OrientationPage = ({token}) => {
     axios.put("http://localhost:8080/account/settings", settings, {
       headers: {Authorization: `Bearer: ${token}`}
     })
-    .then(response => console.log(response))
+    .then(response => navigate("../workouts", {replace: true}))
     .catch(error => console.log(error))
-
-    console.log(settings)
   }
 
   const difficultyHandler = (e) => {

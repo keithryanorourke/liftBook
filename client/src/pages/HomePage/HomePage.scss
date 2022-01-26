@@ -1,0 +1,139 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.home {
+  position: relative;
+  animation: popup 0.2s;
+  @include top-level-container;
+  overflow: visible;
+
+  &__new {
+    position: absolute;
+    background-color: $accent5;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.5rem;
+    width: 2.5rem;
+    right: -0.75rem;
+    top: -0.75rem;
+    box-shadow: $lightshadow1;
+  }
+  
+  &__top-container {
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: center;
+    background-color: $primary3;;
+  }
+
+
+  &__workouts-container {
+    box-shadow: $darkshadow1;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    overflow: hidden;
+  }
+
+  
+  &__workout {
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    &--even {
+      background-color: $primary5;
+    }
+  }
+
+  &__workout-name {
+    font-weight: 600;
+    color: $textcolor2;
+    margin-bottom: 0.5rem;
+  }
+
+  &__workout-date {
+    font-weight: 600;
+  }
+
+  &__workout-instruct {
+    font-size: 0.7rem;
+    text-decoration: underline;
+  } 
+ 
+  &__open-workout {
+    text-align: center;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    color: $globaltextcolor;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid $globaltextcolor;
+    width: 100%;
+    border-radius: 1rem;
+    background: rgba(36, 143, 57, 0.289);
+    box-shadow: $darkshadow1;
+  }
+
+  &__button-container {
+    margin-left: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__button {
+    position: relative;
+    padding: 0;
+    margin: 0 0.25rem;
+    height: 1.5rem;
+    background: none;
+    border: none;
+  }
+  
+  &__icon {
+    position: relative;
+    border-radius: 50%;
+    z-index: 2;
+  }
+
+  &__icon-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    z-index: 1;
+    border-radius: 50%;
+    filter: blur(0.6rem);
+    opacity: 0.5;
+    &--edit {
+      background-color:rgb(74, 136, 135);
+    }
+    &--open {
+      background-color:rgb(87, 146, 75);
+    }
+    &--delete {
+      background-color:rgb(141, 84, 40);
+    }
+  }
+
+  &__null {
+    text-align: center;
+    margin: 0;
+  }
+
+  &__get-started {
+    @include generic-button
+  }
+}
