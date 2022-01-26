@@ -1,7 +1,5 @@
 import "./NewWorkoutModal.scss"
 import close from "../../assets/icons/clear_black_24dp.svg"
-import help from "../../assets/icons/help_outline_black_24dp.svg"
-import InformativeModal from "../InformativeModal/InformativeModal"
 import React, {useState} from "react"
 
 const NewWorkoutModal = ({handler, setNewWorkout}) => {
