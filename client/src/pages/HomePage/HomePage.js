@@ -57,11 +57,11 @@ const HomePage = ({token}) => {
               <article key={workout.id} 
               className={"home__workout " + (index % 2 === 0 ? "home__workout--even " : "")}
               >
-                <button className="home__open-workout">
+                <NavLink to={`/workouts/${workout.id}`} className="home__open-workout">
                   <span className="home__workout-name">{workout.name}</span>
                   <span className="home__workout-date">{convertDate(workout.timestamp)}</span>
                   <span className="home__workout-instruct">Tap here to open workout!</span>
-                </button>
+                </NavLink>
                 <div className="home__button-container">
                   <button className="home__button"><img src={edit} alt="" className="home__icon" /><div className="home__icon-overlay"></div></button>
                   <button className="home__button"><img src={deleteIcon} alt="" className="home__icon" /><div className="home__icon-overlay"></div></button>

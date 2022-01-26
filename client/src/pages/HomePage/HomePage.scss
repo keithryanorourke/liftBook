@@ -43,8 +43,9 @@
 
   
   &__workout {
-    padding: 1rem 0.5rem;
+    padding: 1rem 1.5rem;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     &--even {
@@ -58,18 +59,25 @@
     margin-bottom: 0.5rem;
   }
 
+  &__workout-date {
+    font-weight: 600;
+  }
+
   &__workout-instruct {
     font-size: 0.7rem;
+    text-decoration: underline;
   } 
  
   &__open-workout {
+    text-decoration: none;
     padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
     color: $globaltextcolor;
     display: flex;
     flex-direction: column;
     align-items: center;
     border: 2px solid $globaltextcolor;
-    width: 70%;
+    width: 100%;
     border-radius: 1rem;
     background: rgba(36, 143, 57, 0.289);
     box-shadow: $darkshadow1;
@@ -78,10 +86,9 @@
   &__button-container {
     margin-left: 0.5rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    // padding: 0 1rem;
-    max-width: 30%;
+    width: 100%;
   }
 
   &__button {
