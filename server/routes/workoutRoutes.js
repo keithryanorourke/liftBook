@@ -28,7 +28,7 @@ router.post("/", authorize, (req, res) => {
   })
   .then(response => {
     console.log(response)
-    return res.status(200).send("Workout succesfully added!")
+    return res.status(200).json(response[response.length-1])
   })
   .catch(error => {
     console.log(error)

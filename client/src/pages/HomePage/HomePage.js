@@ -8,12 +8,14 @@ import add from "../../assets/icons/fitness_center_black_24dp.svg";
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
 import edit from "../../assets/icons/edit_black_24dp.svg"
 import listIcon from "../../assets/icons/description_black_24dp.svg"
+import { useNavigate } from "react-router-dom";
 
 const HomePage = ({token}) => {
   const [user, setUser] = useState({
     workouts: null
   })
   const [newWorkout, setNewWorkout] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios.get("http://localhost:8080/workouts", { headers: 
@@ -39,7 +41,7 @@ const HomePage = ({token}) => {
       Authorization: `Bearer: ${token}`
       } 
     })
-    .then(response => console.log(response))
+    .then(response => navigate(`../workouts/${response.data}`, {replace: true}))
     .catch(error => console.log(error))
   }
 
