@@ -4,13 +4,7 @@
 @use "../../styles/partials/animations" as *;
 
 .add-lift {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  padding: 0 3rem;
-  top: 32.5vh;
-  left: 0;
-  z-index: 3;
+  @include modal;
   
   &__container {
     @include top-level-container;
@@ -81,6 +75,14 @@
     background-color: $primary3;
     padding: 0.5rem;
     border-radius: 0.5rem;
+  }
+
+  &__radio {
+    filter:hue-rotate(-40deg) brightness(0.5) drop-shadow(-0.5px 3px 8px $primary1);
+    transform: scale(1.375);
+    &:checked {
+      filter:hue-rotate(-40deg) brightness(1) drop-shadow(-0.5px 3px 8px $primary2);
+    }
   }
 
   &__radio-container {

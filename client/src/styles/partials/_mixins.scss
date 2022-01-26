@@ -21,6 +21,15 @@
   }
 }
 
+@mixin modal {
+  position: absolute;
+  width: 100%;
+  padding: 0 2rem;
+  top: 6rem;
+  left: 0;
+  z-index: 3;
+}
+
 @mixin top-level-container {
   box-shadow: $lightshadow1;
   display: flex;
