@@ -19,7 +19,7 @@ const OrientationPage = ({token}) => {
     axios.put("http://localhost:8080/account/settings", settings, {
       headers: {Authorization: `Bearer: ${token}`}
     })
-    .then(response => navigate("../", {replace: true}))
+    .then(response => navigate("../workouts", {replace: true}))
     .catch(error => console.log(error))
   }
 
@@ -34,7 +34,7 @@ const OrientationPage = ({token}) => {
     axios.put("http://localhost:8080/account/settings", settings, {
       headers: {Authorization: `Bearer: ${token}`}
     })
-    .then(response => navigate("../", {replace: true}))
+    .then(response => navigate("../workouts", {replace: true}))
     .catch(error => console.log(error))
   }
 

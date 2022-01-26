@@ -7,7 +7,6 @@
   animation: popup 0.2s;
   display: flex;
   flex-direction: column;
-  margin: 0 2rem;
   
   &__container {
     @include top-level-container;
@@ -46,10 +45,11 @@
 
   &__wrapper {
     display: flex;
+    flex-wrap: wrap;
   }
 
   &__separator {
-    width: 50%;
+    min-width: 50%;
     margin: 0.375rem 0 0.5rem;
     display: flex;
     align-items: center;
