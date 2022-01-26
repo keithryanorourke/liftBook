@@ -45,6 +45,18 @@ const HomePage = ({token}) => {
     .catch(error => console.log(error))
   }
 
+  const deleteHandler = (e, id) => {
+    e.preventDefault()
+    console.log("delete handler")
+    axios.delete(`http://localhost:8080/workouts/${id}`, { headers: 
+    {
+    Authorization: `Bearer: ${token}`
+    } 
+  })
+  .then(response => console.log(response))
+  .catch(error => console.log(error))
+  }
+
   return (
     <>
       {newWorkout ? <NewWorkoutModal handler={newWorkoutHandler} setNewWorkout={setNewWorkout} /> : null}
@@ -64,9 +76,9 @@ const HomePage = ({token}) => {
                   <span className="home__workout-date">{convertDate(workout.timestamp)}</span>
                 </NavLink>
                 <div className="home__button-container">
-                  <button className="home__button"><img src={edit} alt="" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--edit"></div></button>
-                  <button className="home__button"><img src={listIcon} alt="" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--open"></div></button>
-                  <button className="home__button"><img src={deleteIcon} alt="" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--delete"></div></button>
+                  <button className="home__button"><img src={edit} alt="Pencil icon" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--edit"></div></button>
+                  <button className="home__button"><img src={listIcon} alt="Paper document icon" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--open"></div></button>
+                  <button onClick={(e) => deleteHandler(e, workout.id)} className="home__button"><img src={deleteIcon} alt="Trash bin icon" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--delete"></div></button>
                 </div>
               </article>
               )

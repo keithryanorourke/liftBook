@@ -3,6 +3,8 @@ const router = express.Router()
 const knex = require('knex')(require('../knexfile').development)
 const authorize = require ("../middleware/authorize").authorize;
 
+
+// Get all workouts for specific user
 router.get("/", authorize, (req, res) => {
   const {userId} = req.decoded
   console.log("received")
@@ -17,6 +19,24 @@ router.get("/", authorize, (req, res) => {
   .catch(error => {
     console.log(error, "ERROR")
     return res.status(400).send(error)
+  })
+})
+
+// Get specific workout from user account
+
+// Delete specific workout
+router.delete("/:workoutId", authorize, (req, res) => {
+  const {userId} = req.decoded
+  knex.from('workouts')
+  .where({id: req.params.workoutId, user_id: userId})
+  .delete()
+  .then(response => {
+    console.log(response, "workout deleted!")
+    return res.status(200).send("workout deleted")
+  })
+  .catch(error => {
+    console.log(error, "delete failed")
+    return res.status(400).send("deleted failed")
   })
 })
 
