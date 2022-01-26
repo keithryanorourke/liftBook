@@ -6,7 +6,6 @@
 .orientation {
   display: flex;
   flex-direction: column;
-  margin: 0 2rem;
   
   &__container {
     border-radius: 2rem;
@@ -63,7 +62,7 @@
     outline: none;
     border: none;
     background-color: $primary2;
-    width: 50%;
+    min-width: 50%;
     padding: 0.65rem 1rem;
     margin: 0.5rem 0;
     border-radius: 2rem;

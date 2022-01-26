@@ -6,9 +6,11 @@
 
 body {
   margin: 0;
+  padding: 3rem 2rem 0;
   font-family:Arial, Helvetica, sans-serif;
   background: linear-gradient(-20deg, $primary1, $primary2);
-  color: $globaltextcolor
+  color: $globaltextcolor;
+  overflow: scroll;
 }
 
 html, body, #root {

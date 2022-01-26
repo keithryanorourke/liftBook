@@ -8,7 +8,6 @@
   animation: popup 0.2s;
   @include top-level-container;
   overflow: visible;
-  margin: 0 2rem;
 
   &__new {
     position: absolute;
@@ -34,15 +33,84 @@
     background-color: $primary3;;
   }
 
-  &__container {
-    padding: 1rem 1.5rem 1.5rem;
-    display: flex;
-    flex-direction: column;
+
+  &__workouts-container {
+    box-shadow: $darkshadow1;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    overflow: hidden;
   }
 
+  
   &__workout {
+    padding: 1rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &--even {
+      background-color: $primary5;
+    }
+  }
+
+  &__workout-name {
+    font-weight: 600;
+    color: $textcolor2;
+    margin-bottom: 0.5rem;
+  }
+
+  &__workout-instruct {
+    font-size: 0.7rem;
+  } 
+ 
+  &__open-workout {
+    padding: 0.5rem 1rem;
+    color: $globaltextcolor;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    border: 2px solid $globaltextcolor;
+    width: 70%;
+    border-radius: 1rem;
+    background: rgba(36, 143, 57, 0.289);
+    box-shadow: $darkshadow1;
+  }
+
+  &__button-container {
+    margin-left: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding: 0 1rem;
+    max-width: 30%;
+  }
+
+  &__button {
+    position: relative;
+    padding: 0;
+    margin: 0 0.25rem;
+    height: 1.5rem;
+    background: none;
+    border: none;
+  }
+  
+  &__icon {
+    position: relative;
+    border-radius: 50%;
+    z-index: 2;
+  }
+
+  &__icon-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    transform: scale(0.7);
+    background-color: $globaltextcolor;
+    z-index: 1;
+    border-radius: 50%;
+    filter: blur(0.6rem);
+    opacity: 0.1;
   }
 
   &__null {
