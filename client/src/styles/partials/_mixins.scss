@@ -1,5 +1,26 @@
 @use "./variables" as *;
 
+@mixin tablet {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}
+
+@mixin page-margins {
+  margin: 3rem 1rem;
+  @include tablet {
+    margin: 3rem 5rem;
+  }
+  @include desktop {
+    margin: 3rem 15%;
+  }
+}
+
 @mixin top-level-container {
   box-shadow: $lightshadow1;
   display: flex;
@@ -7,7 +28,7 @@
   border-radius: 2rem;
   overflow: hidden;
   background-color: $primary4;
-  margin: 3rem 2rem;
+  @include page-margins
 }
 
 @mixin generic-button {

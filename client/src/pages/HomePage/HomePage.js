@@ -4,10 +4,10 @@ import {useState, useEffect} from "react";
 import convertDate from "../../functions/dateConversion";
 import {NavLink} from "react-router-dom"
 import NewWorkoutModal from "../../components/NewWorkoutModal/NewWorkoutModal";
-import add from "../../assets/icons/fitness_center_black_24dp.svg";
+import add from "../../assets/icons/add_black_24dp.svg";
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
 import edit from "../../assets/icons/edit_black_24dp.svg"
-import listIcon from "../../assets/icons/description_black_24dp.svg"
+import listIcon from "../../assets/icons/post_add_black_24dp.svg"
 import { useNavigate } from "react-router-dom";
 
 const HomePage = ({token}) => {
@@ -62,11 +62,11 @@ const HomePage = ({token}) => {
                 <NavLink to={`/workouts/${workout.id}`} className="home__open-workout">
                   <span className="home__workout-name">{workout.name}</span>
                   <span className="home__workout-date">{convertDate(workout.timestamp)}</span>
-                  <span className="home__workout-instruct">Tap here to open workout!</span>
                 </NavLink>
                 <div className="home__button-container">
-                  <button className="home__button"><img src={edit} alt="" className="home__icon" /><div className="home__icon-overlay"></div></button>
-                  <button className="home__button"><img src={deleteIcon} alt="" className="home__icon" /><div className="home__icon-overlay"></div></button>
+                  <button className="home__button"><img src={edit} alt="" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--edit"></div></button>
+                  <button className="home__button"><img src={listIcon} alt="" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--open"></div></button>
+                  <button className="home__button"><img src={deleteIcon} alt="" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--delete"></div></button>
                 </div>
               </article>
               )

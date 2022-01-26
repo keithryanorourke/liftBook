@@ -69,6 +69,7 @@
   } 
  
   &__open-workout {
+    text-align: center;
     text-decoration: none;
     padding: 0.5rem 1rem;
     margin-bottom: 1rem;
@@ -86,7 +87,7 @@
   &__button-container {
     margin-left: 0.5rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
   }
@@ -112,12 +113,19 @@
     left: 0;
     width: 1.5rem;
     height: 1.5rem;
-    transform: scale(0.7);
-    background-color: $globaltextcolor;
     z-index: 1;
     border-radius: 50%;
     filter: blur(0.6rem);
-    opacity: 0.1;
+    opacity: 0.5;
+    &--edit {
+      background-color:rgb(74, 136, 135);
+    }
+    &--open {
+      background-color:rgb(87, 146, 75);
+    }
+    &--delete {
+      background-color:rgb(141, 84, 40);
+    }
   }
 
   &__null {
