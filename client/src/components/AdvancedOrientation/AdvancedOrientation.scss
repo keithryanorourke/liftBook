@@ -46,6 +46,7 @@
   &__wrapper {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   &__separator {
@@ -88,15 +89,16 @@
 
   &__submit {
     align-self: flex-end;
-    color: $textcolor2;
-    font-size: 1rem;
-    box-shadow: $darkshadow1;
-    outline: none;
-    border: none;
-    background-color: $primary2;
-    border-radius: 2rem;
-    width: 50%;
-    padding: 0.65rem 1rem;
-    margin: 1rem 0 0;
+    // color: $textcolor2;
+    // font-size: 1rem;
+    // box-shadow: $darkshadow1;
+    // outline: none;
+    // border: none;
+    // background-color: $primary2;
+    // border-radius: 2rem;
+    // padding: 0.65rem 1rem;
+    // margin: 1rem 0 0;
+    @include generic-button;
+    min-width: 7.75rem;
   }
 }
