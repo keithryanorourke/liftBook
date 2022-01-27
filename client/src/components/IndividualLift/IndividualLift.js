@@ -1,6 +1,8 @@
 import "./IndividualLift.scss"
+import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
+import edit from "../../assets/icons/edit_black_24dp.svg"
 
-const IndividualLift = ({lift, settings, index}) => {
+const IndividualLift = ({lift, settings, index, setNum}) => {
 
   const showDifficulty = () => {
     if (lift.metric === "RPE") {
@@ -23,6 +25,7 @@ const IndividualLift = ({lift, settings, index}) => {
     <article className={"lift " + (index % 2 === 0 ? "lift--even" : null)}>
       <h4 className="lift__title">{lift.name}</h4>
       <div className="lift__container">
+        <span className="lift__set-number">{`set ${setNum}`}</span>
         <div className="lift__stat-container">
           <span className="lift__specifier">WEIGHT:</span>
           <span className="lift__stat">{lift.weight ? `${lift.weight}${lift.measure}` : 'bodyweight'}</span>
@@ -49,6 +52,10 @@ const IndividualLift = ({lift, settings, index}) => {
         :
         null
         }
+      </div>
+      <div className="lift__button-container">
+        <button className="lift__button"><img src={edit} alt="Pencil Icon" className="lift__edit-icon" /></button>
+        <button className="lift__button"><img src={deleteIcon} alt="Trash bin Icon" className="lift__delete-icon" /></button>
       </div>
     </article>
     )

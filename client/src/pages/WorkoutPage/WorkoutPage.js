@@ -133,6 +133,7 @@ const WorkoutPage = ({token}) => {
               return(
                 <IndividualLift 
                 key={lift.id} 
+                setNum={index+1}
                 lift={lift}
                 index={index}
                 settings={userSettings}
