@@ -1,5 +1,6 @@
 import "./WorkoutPage.scss"
 import LiftModal from "../../components/LiftModal/LiftModal"
+import IndividualLift from "../../components/IndividualLift/IndividualLift"
 import axios from "axios"
 import React, {useState, useEffect} from "react"
 import {NavLink, Navigate, useNavigate} from "react-router-dom"
@@ -22,7 +23,7 @@ const WorkoutPage = ({token}) => {
     } 
     })
     .then(response => {
-      console.log(response)
+      console.log("lifts here!", response.data)
       setLifts(response.data)
     })
     .catch(error => console.log(error))
@@ -62,7 +63,6 @@ const WorkoutPage = ({token}) => {
     } 
     })
     .then(response => {
-      console.log(response.data)
       setExercises(response.data)
     })
 
@@ -125,15 +125,19 @@ const WorkoutPage = ({token}) => {
       : null}
       <section className="workout">
         <div className="workout__top-container">
-          <h2>{workout ? workout.name : "Loading..."}</h2>
+          <h2 className="workout__title">{workout ? workout.name : "Loading..."}</h2>
         </div>
           {lifts.length ?
           <div className="workout__lifts-container">
-            {lifts.map(lift => {
+            {lifts.map((lift, index) => {
               return(
-                <article key={lift.id} className="workout__lift">
-
-                </article>
+                <IndividualLift 
+                key={lift.id} 
+                lift={lift}
+                index={index}
+                settings={userSettings}
+                className="workout__lift" 
+                />
               )
             })}
           </div>
