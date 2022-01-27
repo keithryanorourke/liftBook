@@ -23,6 +23,22 @@ router.get("/", authorize, (req, res) => {
 })
 
 // Get specific workout from user account
+router.get("/:workoutId", authorize, (req, res) => {
+  const {userId} = req.decoded
+  knex('workouts')
+  .where({user_id: userId, 'id': req.params.workoutId})
+  .then(response => {
+    if (response.length) {
+      console.log(response, "got")
+      return res.status(200).send(response[0])
+    }
+    return res.status(404).json("Workout not found within user account!")
+  })
+  .catch(error => {
+    console.log(error, "did not get")
+    return res.status(400).send(error)
+  })
+})
 
 // Delete specific workout
 router.delete("/:workoutId", authorize, (req, res) => {

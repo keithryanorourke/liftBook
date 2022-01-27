@@ -1,7 +1,5 @@
 import "./NewWorkoutModal.scss"
 import close from "../../assets/icons/clear_black_24dp.svg"
-import help from "../../assets/icons/help_outline_black_24dp.svg"
-import InformativeModal from "../InformativeModal/InformativeModal"
 import React, {useState} from "react"
 
 const NewWorkoutModal = ({handler, setNewWorkout}) => {
@@ -14,6 +12,7 @@ const NewWorkoutModal = ({handler, setNewWorkout}) => {
   <>
   <div className="new-workout__overlay" onClick={closeModal}></div>
   <section className="new-workout">
+  <div className="new-workout__container">
     <div className="new-workout__top-container">
       <div className="new-workout__empty"></div>
       <h2 className="new-workout__title">New Workout</h2>
@@ -28,6 +27,7 @@ const NewWorkoutModal = ({handler, setNewWorkout}) => {
         <button type="submit" className="new-workout__button new-workout__button--submit">Start!</button>
       </div>
     </form>
+  </div>
   </section>
   </>
   )

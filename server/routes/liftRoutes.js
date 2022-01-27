@@ -20,5 +20,22 @@ router.post("/", authorize, (req, res) => {
   })
 })
 
+router.get("/:workoutId", authorize, (req, res) => {
+  const {userId} = req.decoded
+  const {workoutId} = req.params
+  knex.from('workouts')
+  .innerJoin('lifts', 'workouts.id', 'lifts.workout_id')
+  .where({userId: userId, workout_id: workoutId})
+  .innerJoin('exercises', 'exercises.id', 'lifts.exercise_id')
+  .then(response => {
+    console.log(response)
+    return res.status(200).json(response)
+  })
+  .catch(error => {
+    console.log(error)
+    return res.status(400).send("Ya done goofed")
+  })
+})
+
 
 module.exports=router

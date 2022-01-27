@@ -25,7 +25,6 @@ router.post('/signup', (req, res) => {
     }
     newUser.password = bcrypt.hashSync(newUser.password, 10)
     newUser = {...newUser, mode:"basic", trackDifficulty: false, preferredMetric: "RPE", trackPercentageOfMax: false}
-    // console.log(newUser)
     knex('users')
     .insert(newUser)
     .then(data => {
@@ -53,6 +52,22 @@ router.post('/login', (req, res) => {
   })
   .catch(err => {
     return res.status(404).send("Username does not match any existing account!")
+  })
+})
+
+router.get("/settings", authorize, (req, res) => {
+  const {userId} = req.decoded
+  knex
+  .select('mode', 'trackDifficulty', "preferredMetric", 'trackPercentageOfMax')
+  .from('users')
+  .where({id: userId})
+  .then(response => {
+    console.log(response[0])
+    return res.status(200).json(response[0])
+  })
+  .catch(error => {
+    console.log(error)
+    return res.status(404).send("User not found!")
   })
 })
 

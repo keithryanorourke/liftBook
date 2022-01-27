@@ -1,27 +1,20 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/global" as *;
-@use "../../styles/partials/animations" as *;
 @use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/animations" as *;
 
-.new-workout {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  z-index: 3;
-  top: 32.5vh;
-  left: 0;
-  padding: 0 3rem;
+.add-lift {
+  @include modal;
   
   &__container {
     @include top-level-container;
+    width: 100%;
     margin: 0;
     animation: popup 0.2s;
-    width: 100%;
   }
 
   &__overlay {
     position: absolute;
-    z-index: 1;
     top: 0;
     left: 0;
     height: 100%;
@@ -43,6 +36,7 @@
   }
 
   &__close {
+    width: 1.5rem;
     height: 1.5rem;
     background: none;
     border: none;
@@ -55,12 +49,52 @@
     flex-direction: column;
   }
 
-  &__name {
-    @include generic-button;
-    &::placeholder {
-      color: $placeholdertext;
+  &__label {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+
+    &--radio {
+      margin: 0;
     }
-    width: 100%;
+  }
+
+  &__exercise-dropdown {
+    margin-top: 0.25rem;
+    color: $globaltextcolor;
+    border: none;
+    background-color: $primary3;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+
+  &__input {
+    margin-top: 0.25rem;
+    color: $globaltextcolor;
+    border: none;
+    background-color: $primary3;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+
+  &__radio {
+    filter:hue-rotate(-40deg) brightness(0.5) drop-shadow(-0.5px 3px 8px $primary1);
+    transform: scale(1.375);
+    &:checked {
+      filter:hue-rotate(-40deg) brightness(1) drop-shadow(-0.5px 3px 8px $primary2);
+    }
+  }
+
+  &__radio-container {
+    margin-top: 0.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &__separator {
+    display: flex;
+    padding: 0 0.25rem;
   }
 
   &__button-container {
@@ -70,11 +104,10 @@
 
   &__button {
     @include generic-button;
-    width: 45%;
 
     &--submit {
-      color: $accent1;
       background: none;
+      color: $accent1;
       border: 0.25rem solid $accent1;
       box-shadow: $lightshadow1;
     }
