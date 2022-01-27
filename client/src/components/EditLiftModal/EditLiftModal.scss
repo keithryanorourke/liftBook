@@ -14,7 +14,8 @@
   }
 
   &__overlay {
-    position: absolute;
+    z-index: 2;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100%;

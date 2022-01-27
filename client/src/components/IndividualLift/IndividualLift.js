@@ -2,7 +2,7 @@ import "./IndividualLift.scss"
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
 import edit from "../../assets/icons/edit_black_24dp.svg"
 
-const IndividualLift = ({lift, settings, index, setNum}) => {
+const IndividualLift = ({lift, settings, index, setNum, setEditLiftModal}) => {
 
   const showDifficulty = () => {
     if (lift.metric === "RPE") {
@@ -54,7 +54,7 @@ const IndividualLift = ({lift, settings, index, setNum}) => {
         }
       </div>
       <div className="lift__button-container">
-        <button className="lift__button"><img src={edit} alt="Pencil Icon" className="lift__edit-icon" /></button>
+        <button className="lift__button" onClick={() => setEditLiftModal(lift)}><img src={edit} alt="Pencil Icon" className="lift__edit-icon" /></button>
         <button className="lift__button"><img src={deleteIcon} alt="Trash bin Icon" className="lift__delete-icon" /></button>
       </div>
     </article>

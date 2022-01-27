@@ -1,18 +1,18 @@
 import axios from "axios";
-import "./LiftModal.scss"
+import "./AddLiftModal.scss"
 import close from "../../assets/icons/clear_black_24dp.svg"
 
-const LiftModal = ({settings, exercises, addLiftHandler, setOpenLiftModal}) => {
+const LiftModal = ({settings, exercises, addLiftHandler, setAddLiftModal}) => {
   const closeModal = (e) => {
     e.preventDefault()
-    setOpenLiftModal(false)
+    setAddLiftModal(false)
   }
 
   console.log(settings)
 
   return (
     <>
-    <div className="add-lift__overlay"></div>
+    <div onClick={() => setAddLiftModal(false)} className="add-lift__overlay"></div>
     <section className="add-lift">
       <div className="add-lift__container">
         <div className="add-lift__top-container">

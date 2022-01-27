@@ -1,6 +1,8 @@
 import "./WorkoutPage.scss"
-import LiftModal from "../../components/LiftModal/LiftModal"
+import EditLiftModal from "../../components/EditLiftModal/EditLiftModal";
+import AddLiftModal from "../../components/AddLiftModal/AddLiftModal"
 import IndividualLift from "../../components/IndividualLift/IndividualLift"
+import add from "../../assets/icons/add_black_24dp.svg";
 import axios from "axios"
 import React, {useState, useEffect} from "react"
 import {NavLink, Navigate, useNavigate} from "react-router-dom"
@@ -13,7 +15,9 @@ const WorkoutPage = ({token}) => {
   const [workout, setWorkout] = useState(null)
   const [exercises, setExercises] = useState(null)
   const [lifts, setLifts] = useState([])
-  const [openLiftModal, setOpenLiftModal] = useState(false)
+  const [addLiftModal, setAddLiftModal] = useState(false)
+  const [editLiftModal, setEditLiftModal] = useState(false)
+  const [currentLift, setCurrentLift] = useState(null)
   const [userSettings, setUserSettings] = useState(null)
 
   const getLifts = () => {
@@ -114,16 +118,31 @@ const WorkoutPage = ({token}) => {
     }
   }
 
+  const handleSetEditLiftModal = (lift) => {
+    console.log("SETTING")
+    setCurrentLift(lift)
+    setEditLiftModal(true)
+  } 
+
   return (
     <>
-      {openLiftModal ? <LiftModal 
+      {addLiftModal ? <AddLiftModal 
       settings={userSettings} 
       exercises={exercises} 
       addLiftHandler={addLiftHandler} 
-      setOpenLiftModal={setOpenLiftModal}
+      setAddLiftModal={setAddLiftModal}
+      /> 
+      : null}
+      {editLiftModal ? <EditLiftModal 
+      settings={userSettings} 
+      lift={currentLift}
+      exercises={exercises} 
+      addLiftHandler={addLiftHandler} 
+      setEditLiftModal={setEditLiftModal}
       /> 
       : null}
       <section className="workout">
+        {!addLiftModal ? <button onClick={() => setAddLiftModal(true)} className="workout__add-button"><img src={add} alt="" className="workout__add" /></button> : null}
         <div className="workout__top-container">
           <h2 className="workout__title">{workout ? workout.name : "Loading..."}</h2>
         </div>
@@ -137,6 +156,7 @@ const WorkoutPage = ({token}) => {
                 lift={lift}
                 index={index}
                 settings={userSettings}
+                setEditLiftModal={handleSetEditLiftModal}
                 className="workout__lift" 
                 />
               )
@@ -145,7 +165,7 @@ const WorkoutPage = ({token}) => {
           :
           <div className="workout__lifts-container">
             <p className="workout__no-lifts">No lifts tracked yet!</p>
-            <button onClick={() => setOpenLiftModal(true)} className="workout__first-lift">Track first lift!</button>
+            <button onClick={() => setAddLiftModal(true)} className="workout__first-lift">Track first lift!</button>
           </div>
           }
       </section>
