@@ -20,11 +20,12 @@ router.post("/", authorize, (req, res) => {
   })
 })
 
-router.get("/", authorize, (req, res) => {
+router.get("/:workoutId", authorize, (req, res) => {
   const {userId} = req.decoded
+  const {workoutId} = req.params
   knex.from('workouts')
   .innerJoin('lifts', 'workouts.id', 'lifts.workout_id')
-  .where({userId: userId})
+  .where({userId: userId, workout_id: workoutId})
   .innerJoin('exercises', 'exercises.id', 'lifts.exercise_id')
   .then(response => {
     console.log(response)

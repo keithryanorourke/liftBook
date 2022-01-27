@@ -26,5 +26,6 @@
 
   &__first-lift {
     @include generic-button;
+    margin-bottom: 1rem;
   }
 }

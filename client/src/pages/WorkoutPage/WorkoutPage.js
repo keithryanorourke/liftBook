@@ -17,7 +17,7 @@ const WorkoutPage = ({token}) => {
   const [userSettings, setUserSettings] = useState(null)
 
   const getLifts = () => {
-    axios.get("http://localhost:8080/lifts/", { headers: 
+    axios.get(`http://localhost:8080/lifts/${workoutId}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
