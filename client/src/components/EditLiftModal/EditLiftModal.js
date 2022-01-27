@@ -2,11 +2,23 @@ import axios from "axios";
 import "./EditLiftModal.scss"
 import close from "../../assets/icons/clear_black_24dp.svg"
 import LiftModal from "../AddLiftModal/AddLiftModal";
+import { useEffect, useState } from "react";
 
 const EditLiftModal = ({settings, lift, exercises, addLiftHandler, setEditLiftModal}) => {
   const closeModal = (e) => {
     e.preventDefault()
     setEditLiftModal(false)
+  }
+
+  const [valueHook, setValueHook] = useState(lift.name)
+
+  useEffect(() => {
+    console.log(lift.name)
+    setValueHook(lift.name)}, [])
+
+  const handleSelect = (e) => {
+    e.preventDefault()
+    setValueHook(e.target.value)
   }
 
   let difficulty;
@@ -34,9 +46,10 @@ const EditLiftModal = ({settings, lift, exercises, addLiftHandler, setEditLiftMo
         </div>
         <form onSubmit={addLiftHandler} className="edit-lift__form">
           <label htmlFor="" className="edit-lift__label">Exercise:
-            <select name="exercise" id="" className="edit-lift__exercise-dropdown">
+          {/* THE DEFAULT VALUE FOR THIS ISN'T WORKING!! AND IT SHOULD!! FIX!! */}
+            <select name="exercise" id="" value={valueHook} onChange={handleSelect} className="edit-lift__exercise-dropdown"> 
               {exercises.map(exercise => {
-                return <option key={exercise.id} value={JSON.stringify(exercise)} selected={exercise.name === lift.name} className="edit-lift__exercise-option">{exercise.name}</option>
+                return <option key={exercise.id} value={JSON.stringify(exercise)} className="edit-lift__exercise-option">{exercise.name}</option>
               })}
             </select>
           </label>

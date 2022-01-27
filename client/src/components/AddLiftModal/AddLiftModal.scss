@@ -14,13 +14,7 @@
   }
 
   &__overlay {
-    z-index: 2;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(55, 84, 107, 0.349)
+    @include modal-overlay;
   }
 
   &__top-container {
