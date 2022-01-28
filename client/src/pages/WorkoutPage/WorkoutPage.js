@@ -1,6 +1,7 @@
 import "./WorkoutPage.scss"
 import EditLiftModal from "../../components/EditLiftModal/EditLiftModal";
 import AddLiftModal from "../../components/AddLiftModal/AddLiftModal"
+import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import IndividualLift from "../../components/IndividualLift/IndividualLift"
 import add from "../../assets/icons/add_black_24dp.svg";
 import axios from "axios"
@@ -15,11 +16,13 @@ const WorkoutPage = ({token}) => {
   const [workout, setWorkout] = useState(null)
   const [exercises, setExercises] = useState(null)
   const [lifts, setLifts] = useState([])
+  const [userSettings, setUserSettings] = useState(null)
   const [addLiftModal, setAddLiftModal] = useState(false)
   const [editLiftModal, setEditLiftModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
   const [closeModalAnimation, setCloseModalAnimation] = useState(false)
   const [currentLift, setCurrentLift] = useState(null)
-  const [userSettings, setUserSettings] = useState(null)
+  const [setNumber, setSetNumber] = useState(null)
 
   const getLifts = () => {
     axios.get(`http://localhost:8080/lifts/${workoutId}`, { headers: 
@@ -177,6 +180,12 @@ const WorkoutPage = ({token}) => {
     setEditLiftModal(true)
   } 
 
+  const handleSetDeleteModal = (lift, setNum) => {
+    setSetNumber(setNum)
+    setCurrentLift(lift)
+    setDeleteModal(true)
+  }
+
   return (
     <>
       {addLiftModal ? <AddLiftModal 
@@ -196,6 +205,13 @@ const WorkoutPage = ({token}) => {
       close={closeModalAnimation}
       /> 
       : null}
+      {deleteModal ? 
+      <DeleteModal
+      setDeleteModal={setDeleteModal}
+      close={closeModalAnimation}
+      title={currentLift.name + ` (set # ${setNumber} from ${workout.name})`}
+      />
+      : null}
       <section className="workout">
         {!addLiftModal ? <button onClick={() => setAddLiftModal(true)} className="workout__add-button"><img src={add} alt="" className="workout__add" /></button> : null}
         <div className="workout__top-container">
@@ -212,6 +228,7 @@ const WorkoutPage = ({token}) => {
                 index={index}
                 settings={userSettings}
                 setEditLiftModal={handleSetEditLiftModal}
+                setDeleteModal={handleSetDeleteModal}
                 className="workout__lift" 
                 />
               )

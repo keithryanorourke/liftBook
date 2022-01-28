@@ -9,7 +9,7 @@
 
   &__closing {
     opacity: 0;
-    transform: scale(0);
+    transform: scale(3);
   }
 
   &__container {
@@ -21,7 +21,8 @@
 
   &__overlay {
     @include modal-overlay;
-    transition: 1s;
+    background-color: $accent1;
+    transition: 0.3s;
   }
 
   &__top-container {

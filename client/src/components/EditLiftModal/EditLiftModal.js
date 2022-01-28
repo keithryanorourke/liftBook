@@ -46,7 +46,6 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
           </div>
           <form onSubmit={(e) => editLiftHandler(e, lift.id)} className="edit-lift__form">
             <label htmlFor="" className="edit-lift__label">Exercise:
-
               <select name="exercise" id="" value={exerciseValue} onChange={handleSelect} className="edit-lift__exercise-dropdown"> 
                 {exercises.map(exercise => {
                   return <option key={exercise.id} value={exercise.name} className="edit-lift__exercise-option">{exercise.name}</option>
