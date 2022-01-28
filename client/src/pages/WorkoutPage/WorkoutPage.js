@@ -1,6 +1,8 @@
 import "./WorkoutPage.scss"
-import LiftModal from "../../components/LiftModal/LiftModal"
+import EditLiftModal from "../../components/EditLiftModal/EditLiftModal";
+import AddLiftModal from "../../components/AddLiftModal/AddLiftModal"
 import IndividualLift from "../../components/IndividualLift/IndividualLift"
+import add from "../../assets/icons/add_black_24dp.svg";
 import axios from "axios"
 import React, {useState, useEffect} from "react"
 import {NavLink, Navigate, useNavigate} from "react-router-dom"
@@ -13,7 +15,10 @@ const WorkoutPage = ({token}) => {
   const [workout, setWorkout] = useState(null)
   const [exercises, setExercises] = useState(null)
   const [lifts, setLifts] = useState([])
-  const [openLiftModal, setOpenLiftModal] = useState(false)
+  const [addLiftModal, setAddLiftModal] = useState(false)
+  const [editLiftModal, setEditLiftModal] = useState(false)
+  const [closeModalAnimation, setCloseModalAnimation] = useState(false)
+  const [currentLift, setCurrentLift] = useState(null)
   const [userSettings, setUserSettings] = useState(null)
 
   const getLifts = () => {
@@ -105,8 +110,12 @@ const WorkoutPage = ({token}) => {
       } 
     })
     .then(response => {
-      console.log(response)
       getLifts()
+      setCloseModalAnimation(true)
+      setTimeout(() => {
+      setAddLiftModal(false)
+      setCloseModalAnimation(false)
+      }, 300)
     })
     .catch (error => {
       console.log(error)
@@ -114,16 +123,82 @@ const WorkoutPage = ({token}) => {
     }
   }
 
+  const editLiftHandler = (e, id) => {
+    e.preventDefault()
+    let exit = false;
+    const exercise = JSON.parse(e.target.exercise.value)
+    const newLift = {
+      workout_id: workoutId,
+      reps: parseInt(e.target.reps.value),
+      exercise_id: exercise.id,
+      weight: 0,
+      measure: e.target.weightMetric.value,
+      difficulty: 0,
+      percentageOfMax: 0,
+      metric: userSettings.preferredMetric,
+      id: id
+    }
+
+    if (e.target.weight.value > 0 && e.target.weight.value < 500) {
+      newLift.weight = parseInt(e.target.weight.value)
+    }
+
+    if(userSettings.trackDifficulty && e.target.difficulty.value) {
+      newLift.difficulty = parseFloat(e.target.difficulty.value)
+    }
+
+    if(!newLift.reps) {
+      alert("Please enter a positive whole number into the reps field!")
+      exit=true;
+    }
+
+    if(!exit) {
+      axios.put(`http://localhost:8080/lifts`, newLift, { headers: 
+      {
+        Authorization: `Bearer: ${token}`
+      } 
+    })
+    .then(response => {
+      getLifts()
+      setCloseModalAnimation(true)
+      setTimeout(() => {
+      setEditLiftModal(false)
+      setCloseModalAnimation(false)
+      }, 300)
+    })
+    .catch (error => {
+      alert.log(error)
+    })
+    }
+    
+  }
+
+  const handleSetEditLiftModal = (lift) => {
+    setCurrentLift(lift)
+    setEditLiftModal(true)
+  } 
+
   return (
     <>
-      {openLiftModal ? <LiftModal 
+      {addLiftModal ? <AddLiftModal 
       settings={userSettings} 
       exercises={exercises} 
       addLiftHandler={addLiftHandler} 
-      setOpenLiftModal={setOpenLiftModal}
+      setAddLiftModal={setAddLiftModal}
+      close={closeModalAnimation}
+      /> 
+      : null}
+      {editLiftModal ? <EditLiftModal 
+      settings={userSettings} 
+      lift={currentLift}
+      exercises={exercises} 
+      editLiftHandler={editLiftHandler} 
+      setEditLiftModal={setEditLiftModal}
+      close={closeModalAnimation}
       /> 
       : null}
       <section className="workout">
+        {!addLiftModal ? <button onClick={() => setAddLiftModal(true)} className="workout__add-button"><img src={add} alt="" className="workout__add" /></button> : null}
         <div className="workout__top-container">
           <h2 className="workout__title">{workout ? workout.name : "Loading..."}</h2>
         </div>
@@ -137,6 +212,7 @@ const WorkoutPage = ({token}) => {
                 lift={lift}
                 index={index}
                 settings={userSettings}
+                setEditLiftModal={handleSetEditLiftModal}
                 className="workout__lift" 
                 />
               )
@@ -145,7 +221,7 @@ const WorkoutPage = ({token}) => {
           :
           <div className="workout__lifts-container">
             <p className="workout__no-lifts">No lifts tracked yet!</p>
-            <button onClick={() => setOpenLiftModal(true)} className="workout__first-lift">Track first lift!</button>
+            <button onClick={() => setAddLiftModal(true)} className="workout__first-lift">Track first lift!</button>
           </div>
           }
       </section>

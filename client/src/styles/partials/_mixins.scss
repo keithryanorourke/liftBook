@@ -22,12 +22,22 @@
 }
 
 @mixin modal {
-  position: absolute;
+  position: fixed;
   width: 100%;
   padding: 0 2rem;
   top: 6rem;
   left: 0;
   z-index: 3;
+}
+
+@mixin modal-overlay {
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(55, 84, 107, 0.556);
 }
 
 @mixin top-level-container {

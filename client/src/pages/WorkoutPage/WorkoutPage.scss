@@ -4,17 +4,37 @@
 @use "../../styles/partials/mixins" as *;
 
 .workout {
+  z-index: 1;
+  position: relative;
   animation: popup 0.2s;
   @include top-level-container;
-
-  &__title {
-    text-align: center;
-  }
+  overflow: visible;
 
   &__top-container {
     display: flex;
     justify-content: center;
     background-color: $primary3;
+    border-top-right-radius: 2rem;
+    border-top-left-radius: 2rem;
+  }
+  
+  &__title {
+    text-align: center;
+  }
+
+  &__add-button {
+    position: absolute;
+    background-color: $accent5;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.5rem;
+    width: 2.5rem;
+    right: -0.75rem;
+    top: -0.75rem;
+    box-shadow: $lightshadow1;
   }
 
   &__lifts-container {
