@@ -107,7 +107,7 @@ const HomePage = ({token}) => {
                 </NavLink>
                 <div className="home__button-container">
                   <button className="home__button"><img src={edit} alt="Pencil icon" className="home__icon" /></button>
-                  <button className="home__button"><img src={listIcon} alt="Paper document icon" className="home__icon" /></button>
+                  <NavLink to={`/workouts/${workout.id}`} className="home__button"><img src={listIcon} alt="Paper document icon" className="home__icon" /></NavLink>
                   <button onClick={() => handleSetDeleteModal(workout)} className="home__button"><img src={deleteIcon} alt="Trash bin icon" className="home__icon" /></button>
                 </div>
               </article>
