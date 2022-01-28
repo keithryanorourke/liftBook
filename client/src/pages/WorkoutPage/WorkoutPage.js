@@ -17,6 +17,7 @@ const WorkoutPage = ({token}) => {
   const [lifts, setLifts] = useState([])
   const [addLiftModal, setAddLiftModal] = useState(false)
   const [editLiftModal, setEditLiftModal] = useState(false)
+  const [closeModalAnimation, setCloseModalAnimation] = useState(false)
   const [currentLift, setCurrentLift] = useState(null)
   const [userSettings, setUserSettings] = useState(null)
 
@@ -118,8 +119,56 @@ const WorkoutPage = ({token}) => {
     }
   }
 
+  const editLiftHandler = (e, id) => {
+    e.preventDefault()
+    let exit = false;
+    const exercise = JSON.parse(e.target.exercise.value)
+    const newLift = {
+      workout_id: workoutId,
+      reps: parseInt(e.target.reps.value),
+      exercise_id: exercise.id,
+      weight: 0,
+      measure: e.target.weightMetric.value,
+      difficulty: 0,
+      percentageOfMax: 0,
+      metric: userSettings.preferredMetric,
+      id: id
+    }
+
+    if (e.target.weight.value > 0 && e.target.weight.value < 500) {
+      newLift.weight = parseInt(e.target.weight.value)
+    }
+
+    if(userSettings.trackDifficulty && e.target.difficulty.value) {
+      newLift.difficulty = parseFloat(e.target.difficulty.value)
+    }
+
+    if(!newLift.reps) {
+      alert("Please enter a positive whole number into the reps field!")
+      exit=true;
+    }
+
+    if(!exit) {
+      axios.put(`http://localhost:8080/lifts`, newLift, { headers: 
+      {
+        Authorization: `Bearer: ${token}`
+      } 
+    })
+    .then(response => {
+      getLifts()
+    })
+    .catch (error => {
+      alert.log(error)
+    })
+    }
+    setCloseModalAnimation(true)
+    setTimeout(() => {
+      setEditLiftModal(false)
+      setCloseModalAnimation(false)
+    }, 1000)
+  }
+
   const handleSetEditLiftModal = (lift) => {
-    console.log("SETTING")
     setCurrentLift(lift)
     setEditLiftModal(true)
   } 
@@ -137,8 +186,9 @@ const WorkoutPage = ({token}) => {
       settings={userSettings} 
       lift={currentLift}
       exercises={exercises} 
-      addLiftHandler={addLiftHandler} 
+      editLiftHandler={editLiftHandler} 
       setEditLiftModal={setEditLiftModal}
+      close={closeModalAnimation}
       /> 
       : null}
       <section className="workout">

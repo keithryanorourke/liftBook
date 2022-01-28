@@ -5,7 +5,14 @@
 
 .edit-lift {
   @include modal;
-  
+  transition: 0.3s;
+
+  &__closing {
+    opacity: 0;
+    filter: blur(4.25rem);
+    transform: scale(3);
+  }
+
   &__container {
     @include top-level-container;
     width: 100%;
@@ -15,6 +22,7 @@
 
   &__overlay {
     @include modal-overlay;
+    transition: 1s;
   }
 
   &__top-container {
