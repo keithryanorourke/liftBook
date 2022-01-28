@@ -44,7 +44,8 @@ router.get("/:workoutId", authorize, (req, res) => {
   const {workoutId} = req.params
   knex.from('workouts')
   .select(['lifts.id', 'lifts.weight', 'lifts.measure', 'lifts.reps', 
-  'lifts.difficulty', 'lifts.metric', 'lifts.percentageOfMax', 'lifts.userId', 'exercises.name', 'exercises.muscle'])
+  'lifts.difficulty', 'lifts.metric', 'lifts.percentageOfMax', 
+  'lifts.userId', 'exercises.name', 'exercises.muscle'])
   .innerJoin('lifts', 'workouts.id', 'lifts.workout_id')
   .innerJoin('exercises', 'exercises.id', 'lifts.exercise_id')
   .where({userId: userId, workout_id: workoutId})
