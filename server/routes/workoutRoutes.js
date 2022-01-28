@@ -56,6 +56,7 @@ router.delete("/:workoutId", authorize, (req, res) => {
   })
 })
 
+// Create new workout
 router.post("/", authorize, (req, res) => {
   const {userId} = req.decoded
   knex('workouts')
@@ -72,5 +73,23 @@ router.post("/", authorize, (req, res) => {
   })
 })
 
+// Rename workout
+router.post("/:workoutId", authorize, (req, res) => {
+  const {userId} = req.decoded
+  const {workoutId} = req.params
+  knex('workouts')
+  .where({id: workoutId})
+  .update({
+    name: (req.body.name || "Freestyle Workout")
+  })
+  .then(response => {
+    console.log(response)
+    return res.status(200).json(`Workout renamed to ${req.body.name}`)
+  })
+  .catch(error => {
+    console.log(error)
+    return res.status(400).send("Workout rename failed")
+  })
+})
 
 module.exports=router
