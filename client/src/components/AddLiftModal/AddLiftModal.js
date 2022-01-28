@@ -12,7 +12,7 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}
 
   return (
     <>
-    <div onClick={() => setAddLiftModal(false)} className={"add-lift__overlay "  + (close ? "add-lift__closing" : "")}></div>
+    <div onClick={() => setAddLiftModal(false)} className="add-lift__overlay"></div>
     <section className={"add-lift " + (close ? "add-lift__closing" : "")}>
       <div className="add-lift__container">
         <div className="add-lift__top-container">
