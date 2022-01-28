@@ -115,7 +115,7 @@ const WorkoutPage = ({token}) => {
       setTimeout(() => {
       setAddLiftModal(false)
       setCloseModalAnimation(false)
-      }, 1000)
+      }, 300)
     })
     .catch (error => {
       console.log(error)
@@ -164,7 +164,7 @@ const WorkoutPage = ({token}) => {
       setTimeout(() => {
       setEditLiftModal(false)
       setCloseModalAnimation(false)
-      }, 1000)
+      }, 300)
     })
     .catch (error => {
       alert.log(error)
