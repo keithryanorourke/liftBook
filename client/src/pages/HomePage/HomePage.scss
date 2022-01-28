@@ -78,9 +78,8 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    border-radius: 1rem;
-    background-color: $accent5;
-    box-shadow: $darkshadow1;
+    background: linear-gradient(-230deg, $primary1, $primary2);
+    box-shadow: $darkshadow3;
   }
 
   &__button-container {
