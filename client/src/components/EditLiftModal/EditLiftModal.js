@@ -10,17 +10,15 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
     setEditLiftModal(false)
   }
 
-  const [valueHook, setValueHook] = useState(lift.name)
-  console.log(valueHook)
+  const [exerciseValue, setExerciseValue] = useState(lift.name)
 
   useEffect(() => {
-    console.log(lift.name)
-    setValueHook(lift.name)
+    setExerciseValue(lift.name)
   }, [])
 
   const handleSelect = (e) => {
     e.preventDefault()
-    setValueHook(e.target.value)
+    setExerciseValue(e.target.value)
   }
 
   let difficulty;
@@ -48,8 +46,8 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
           </div>
           <form onSubmit={(e) => editLiftHandler(e, lift.id)} className="edit-lift__form">
             <label htmlFor="" className="edit-lift__label">Exercise:
-            
-              <select name="exercise" id="" value={valueHook} onChange={handleSelect} className="edit-lift__exercise-dropdown"> 
+
+              <select name="exercise" id="" value={exerciseValue} onChange={handleSelect} className="edit-lift__exercise-dropdown"> 
                 {exercises.map(exercise => {
                   return <option key={exercise.id} value={exercise.name} className="edit-lift__exercise-option">{exercise.name}</option>
                 })}
