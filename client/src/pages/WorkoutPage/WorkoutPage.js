@@ -28,8 +28,7 @@ const WorkoutPage = ({token}) => {
     } 
     })
     .then(response => {
-      console.log("lifts here!", response.data)
-      setLifts(response.data)
+      setLifts(response.data.sort((liftA, liftB) => liftA.id - liftB.id))
     })
     .catch(error => console.log(error))
   }

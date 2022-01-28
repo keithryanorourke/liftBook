@@ -30,7 +30,7 @@
     margin-bottom: 1rem;
   }
 
-  &__field, &__submit {
+  &__field {
     box-shadow: $darkshadow1;
     outline: none;
     border: none;
@@ -38,17 +38,20 @@
     background-color: $primary2;
     padding: 0.65rem 1rem;
     margin-top: 0.25rem;
-    border-radius: 2rem;
+    border-radius: 1rem;
   }
 
   &__submit {
-    align-self: flex-end;
+    @include generic-button;
+    padding: 0.65rem 1rem;
+    margin-top: 0.25rem;
     width: 50%;
+    align-self: flex-end;
   }
 
   &__link {
     text-decoration: none;
-    border-radius: 2rem;
+    border-radius: 1rem;
     color: $globaltextcolor;
     font-size: 0.8rem;
     text-align: center;

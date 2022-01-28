@@ -76,9 +76,9 @@ const HomePage = ({token}) => {
                   <span className="home__workout-date">{convertDate(workout.timestamp)}</span>
                 </NavLink>
                 <div className="home__button-container">
-                  <button className="home__button"><img src={edit} alt="Pencil icon" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--edit"></div></button>
-                  <button className="home__button"><img src={listIcon} alt="Paper document icon" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--open"></div></button>
-                  <button onClick={(e) => deleteHandler(e, workout.id)} className="home__button"><img src={deleteIcon} alt="Trash bin icon" className="home__icon" /><div className="home__icon-overlay home__icon-overlay--delete"></div></button>
+                  <button className="home__button"><img src={edit} alt="Pencil icon" className="home__icon" /></button>
+                  <button className="home__button"><img src={listIcon} alt="Paper document icon" className="home__icon" /></button>
+                  <button onClick={(e) => deleteHandler(e, workout.id)} className="home__button"><img src={deleteIcon} alt="Trash bin icon" className="home__icon" /></button>
                 </div>
               </article>
               )

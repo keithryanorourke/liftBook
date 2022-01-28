@@ -21,13 +21,23 @@
   }
 }
 
+@mixin modal-padding {
+  padding: 0 2rem;
+  @include tablet {
+    padding: 0 15rem;
+  }
+  @include desktop {
+    padding: 0 30%;
+  }
+}
+
 @mixin modal {
   position: fixed;
   width: 100%;
-  padding: 0 2rem;
   top: 6rem;
   left: 0;
   z-index: 3;
+  @include modal-padding;
 }
 
 @mixin modal-overlay {
@@ -40,11 +50,20 @@
   background-color: rgba(55, 84, 107, 0.556);
 }
 
+@mixin modal-top-level-container {
+  box-shadow: $lightshadow1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  overflow: hidden;
+  background-color: $primary4;
+}
+
 @mixin top-level-container {
   box-shadow: $lightshadow1;
   display: flex;
   flex-direction: column;
-  border-radius: 2rem;
+  border-radius: 1rem;
   overflow: hidden;
   background-color: $primary4;
   @include page-margins
@@ -57,7 +76,6 @@
     outline: none;
     border: none;
     background-color: $primary2;
-    border-radius: 2rem;
     padding: 0.65rem 1rem;
     margin: 1rem 0 0;
 }

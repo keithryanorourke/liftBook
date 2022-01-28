@@ -14,8 +14,8 @@
     display: flex;
     justify-content: center;
     background-color: $primary3;
-    border-top-right-radius: 2rem;
-    border-top-left-radius: 2rem;
+    border-top-right-radius:1rem;
+    border-top-left-radius:1rem;
   }
   
   &__title {
@@ -41,7 +41,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    // padding: 1rem 1.5rem;
+    border-bottom-left-radius:1rem;
+    border-bottom-right-radius:1rem;
+    overflow: hidden;
   }
 
   &__first-lift {

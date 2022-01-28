@@ -1,24 +1,31 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/global" as *;
 @use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
 
 .informative {
   animation: popup cubic-bezier(.12,.98,.35,1.5) 0.2s;
-  position: absolute;
-  top: 25%;
-  margin: 0 3rem;
-  background-color: $primary4;
-  z-index: 2;
-  border-radius: 2rem;
-  overflow: hidden;
+  // position: absolute;
+  // top: 25%;
+  // margin: 0 3rem;
+  // background-color: $primary4;
+  // z-index: 2;
+  // border-radius: 1rem;
+  // overflow: hidden;
+  @include modal;
 
   &__overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(55, 84, 107, 0.349)
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    // height: 100%;
+    // width: 100%;
+    // background-color: rgba(55, 84, 107, 0.349)
+    @include modal-overlay;
+  }
+
+  &__container {
+    @include modal-top-level-container;
   }
   
   &__top-container {
