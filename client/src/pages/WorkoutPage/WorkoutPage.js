@@ -172,7 +172,25 @@ const WorkoutPage = ({token}) => {
       alert.log(error)
     })
     }
-    
+  }
+
+  const deleteLiftHandler = (id) => {
+    console.log("Delete handler")
+    axios.delete(`http://localhost:8080/lifts/${id}`, { headers: 
+    {
+      Authorization: `Bearer: ${token}`
+    } 
+    })
+    .then(response => {
+      console.log(response)
+      getLifts()
+      setCloseModalAnimation(true)
+      setTimeout(() => {
+      setDeleteModal(false)
+      setCloseModalAnimation(false)
+      }, 300)
+    })
+    .catch(error => alert(error))
   }
 
   const handleSetEditLiftModal = (lift) => {
@@ -209,7 +227,9 @@ const WorkoutPage = ({token}) => {
       <DeleteModal
       setDeleteModal={setDeleteModal}
       close={closeModalAnimation}
-      title={currentLift.name + ` (set # ${setNumber} from ${workout.name})`}
+      deleteHandler={deleteLiftHandler}
+      title={currentLift.name + ` (set # ${setNumber}) from ${workout.name}`}
+      id={currentLift.id}
       />
       : null}
       <section className="workout">

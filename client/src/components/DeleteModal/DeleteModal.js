@@ -1,11 +1,11 @@
 import "./DeleteModal.scss"
 import closeIcon from "../../assets/icons/clear_black_24dp.svg"
 
-const DeleteModal = ({setDeleteModal, close, title, deleteHandler}) => {
+const DeleteModal = ({setDeleteModal, close, title, deleteHandler, id}) => {
   return(
     <>
-    <div onClick={() => setDeleteModal(false)} className={"delete-modal__overlay "  + (close ? "delete-modal__closing" : "")}></div>
-    <section className="delete-modal">
+    <div onClick={() => setDeleteModal(false)} className="delete-modal__overlay"></div>
+    <section className={"delete-modal " + (close ? "delete-modal--closing" : "")}>
       <div className="delete-modal__container">
         <div className="delete-modal__top-container">
           <div className="delete-modal__empty"></div>
@@ -16,7 +16,7 @@ const DeleteModal = ({setDeleteModal, close, title, deleteHandler}) => {
           <p className="delete-modal__copy">Are you sure you want to delete {title}? This is permanent and cannot be undone!</p>
           <div className="delete-modal__button-container">
             <button onClick={() => setDeleteModal(false)} className="delete-modal__button">Cancel</button>
-            <button className="delete-modal__button delete-modal__button--delete">Delete</button>
+            <button onClick={() => deleteHandler(id)} className="delete-modal__button delete-modal__button--delete">Delete</button>
           </div>
         </div>
       </div>
