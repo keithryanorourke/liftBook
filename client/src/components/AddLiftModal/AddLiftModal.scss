@@ -14,7 +14,7 @@
   }
   
   &__container {
-    @include top-level-container;
+    @include modal-top-level-container;
     width: 100%;
     margin: 0;
     animation: popup 0.2s;

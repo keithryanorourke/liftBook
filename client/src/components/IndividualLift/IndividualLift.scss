@@ -14,7 +14,8 @@
   }
 
   &__title {
-    background-color: rgba(11, 118, 112, 0.501);
+    background-color: $accent5;
+    width: 9rem;
     text-align: center;
     margin: 0;
     padding: 0.5rem;
@@ -26,7 +27,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 1rem 1.5rem 0;
+    padding: 0 1.5rem;
   }
 
   &__set-number {
