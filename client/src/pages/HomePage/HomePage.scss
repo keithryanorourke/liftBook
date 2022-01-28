@@ -38,7 +38,8 @@
     box-shadow: $darkshadow1;
     border-bottom-left-radius:1rem;
     border-bottom-right-radius:1rem;
-    overflow: hidden;
+    max-height: 80vh;
+    overflow-y: scroll;
   }
 
   
