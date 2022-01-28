@@ -1,8 +1,8 @@
 import "./RenameWorkoutModal.scss"
-import close from "../../assets/icons/clear_black_24dp.svg"
+import closeIcon from "../../assets/icons/clear_black_24dp.svg"
 import React, {useState} from "react"
 
-const RenameWorkoutModal = ({handler, setRenameWorkout, workout}) => {
+const RenameWorkoutModal = ({handler, setRenameWorkout, workout, close}) => {
   const closeModal = (e) => {
     e.preventDefault()
     setRenameWorkout(false)
@@ -12,21 +12,21 @@ const RenameWorkoutModal = ({handler, setRenameWorkout, workout}) => {
 
   return (
   <>
-  <div className="new-workout__overlay" onClick={closeModal}></div>
-  <section className="new-workout">
-  <div className="new-workout__container">
-    <div className="new-workout__top-container">
-      <div className="new-workout__empty"></div>
-      <h2 className="new-workout__title">Rename Workout</h2>
-      <button onClick={closeModal} className="new-workout__close"><img src={close} alt="" className="new-workout__x" /></button>
+  <div className="rename-workout__overlay" onClick={closeModal}></div>
+  <section className={"rename-workout " + (close ? "rename-workout--closing" : "")}>
+  <div className="rename-workout__container">
+    <div className="rename-workout__top-container">
+      <div className="rename-workout__empty"></div>
+      <h2 className="rename-workout__title">Rename Workout</h2>
+      <button onClick={closeModal} className="rename-workout__close"><img src={closeIcon} alt="" className="rename-workout__x" /></button>
     </div>
-    <form onSubmit={(e) => handler(e, workout)} className="new-workout__form">
-      <label htmlFor="" className="new-workout__label">Workout Name:
+    <form onSubmit={(e) => handler(e, workout)} className="rename-workout__form">
+      <label htmlFor="" className="rename-workout__label">Workout Name:
         <input name="name" type="text" defaultValue={workout.name} placeholder="Leave blank for freestyle workout!" className="new-workout__name" />
       </label>
-      <div className="new-workout__button-container">
-        <button onClick={closeModal} className="new-workout__button new-workout__button--cancel">Cancel</button>
-        <button type="submit" className="new-workout__button new-workout__button--submit">Start!</button>
+      <div className="rename-workout__button-container">
+        <button onClick={closeModal} className="rename-workout__button rename-workout__button--cancel">Cancel</button>
+        <button type="submit" className="rename-workout__button rename-workout__button--submit">Save</button>
       </div>
     </form>
   </div>

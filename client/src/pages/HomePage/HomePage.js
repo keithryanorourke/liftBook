@@ -82,6 +82,11 @@ const HomePage = ({token}) => {
     })
     .then(response => {
       getWorkouts()
+      setCloseModalAnimation(true)
+      setTimeout(() => {
+        setCloseModalAnimation(false)
+        setRenameWorkoutModal(false)
+      }, 300)
     })
     .catch(error => alert(error))
 
@@ -102,6 +107,7 @@ const HomePage = ({token}) => {
       {newWorkout ? <NewWorkoutModal 
       handler={newWorkoutHandler} 
       setNewWorkout={setNewWorkout} 
+      close={closeModalAnimation}
       /> 
       : null}
       {deleteModal ? <DeleteModal 
@@ -116,6 +122,7 @@ const HomePage = ({token}) => {
       setRenameWorkout={setRenameWorkoutModal}
       handler={renameWorkoutHandler}
       workout={currentWorkout}
+      close={closeModalAnimation}
       />
       : null}
       <section className="home">
