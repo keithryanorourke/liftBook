@@ -6,6 +6,7 @@ const InformativeModal = ({title, copy, close}) => {
     <>
     <div className="informative__overlay" onClick={close}></div>
     <article className="informative">
+      <div className="informative__container">
       <div className="informative__top-container">
         <div className="informative__empty"></div>
         <h3 className="informative__title">{title}</h3>
@@ -15,6 +16,7 @@ const InformativeModal = ({title, copy, close}) => {
       </div>
       <div className="informative__bottom-container">
         <p className="informative__copy">{copy}</p>
+      </div>
       </div>
     </article>
     </>
