@@ -1,8 +1,8 @@
 import axios from "axios";
 import "./AddLiftModal.scss"
-import close from "../../assets/icons/clear_black_24dp.svg"
+import closeIcon from "../../assets/icons/clear_black_24dp.svg"
 
-const LiftModal = ({settings, exercises, addLiftHandler, setAddLiftModal}) => {
+const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}) => {
   const closeModal = (e) => {
     e.preventDefault()
     setAddLiftModal(false)
@@ -12,13 +12,13 @@ const LiftModal = ({settings, exercises, addLiftHandler, setAddLiftModal}) => {
 
   return (
     <>
-    <div onClick={() => setAddLiftModal(false)} className="add-lift__overlay"></div>
-    <section className="add-lift">
+    <div onClick={() => setAddLiftModal(false)} className={"add-lift__overlay "  + (close ? "add-lift__closing" : "")}></div>
+    <section className={"add-lift " + (close ? "add-lift__closing" : "")}>
       <div className="add-lift__container">
         <div className="add-lift__top-container">
           <div className="add-lift__empty"></div>
           <h2 className="add-lift__title">Add New Lift</h2>
-          <button onClick={closeModal} className="add-lift__close"><img src={close} alt="X icon" className="add-lift__x" /></button>
+          <button onClick={closeModal} className="add-lift__close"><img src={closeIcon} alt="X icon" className="add-lift__x" /></button>
         </div>
         <form onSubmit={addLiftHandler} className="add-lift__form">
           <label htmlFor="" className="add-lift__label">Exercise:

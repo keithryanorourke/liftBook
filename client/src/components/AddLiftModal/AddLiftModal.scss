@@ -5,6 +5,13 @@
 
 .add-lift {
   @include modal;
+  transition: 0.3s;
+
+  &__closing {
+    opacity: 0;
+    filter: blur(4.25rem);
+    transform: scale(3);
+  }
   
   &__container {
     @include top-level-container;
@@ -14,6 +21,7 @@
   }
 
   &__overlay {
+    transition: 0.3s;
     @include modal-overlay;
   }
 

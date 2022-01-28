@@ -110,8 +110,12 @@ const WorkoutPage = ({token}) => {
       } 
     })
     .then(response => {
-      console.log(response)
       getLifts()
+      setCloseModalAnimation(true)
+      setTimeout(() => {
+      setAddLiftModal(false)
+      setCloseModalAnimation(false)
+      }, 1000)
     })
     .catch (error => {
       console.log(error)
@@ -156,16 +160,17 @@ const WorkoutPage = ({token}) => {
     })
     .then(response => {
       getLifts()
+      setCloseModalAnimation(true)
+      setTimeout(() => {
+      setEditLiftModal(false)
+      setCloseModalAnimation(false)
+      }, 1000)
     })
     .catch (error => {
       alert.log(error)
     })
     }
-    setCloseModalAnimation(true)
-    setTimeout(() => {
-      setEditLiftModal(false)
-      setCloseModalAnimation(false)
-    }, 1000)
+    
   }
 
   const handleSetEditLiftModal = (lift) => {
@@ -180,6 +185,7 @@ const WorkoutPage = ({token}) => {
       exercises={exercises} 
       addLiftHandler={addLiftHandler} 
       setAddLiftModal={setAddLiftModal}
+      close={closeModalAnimation}
       /> 
       : null}
       {editLiftModal ? <EditLiftModal 
