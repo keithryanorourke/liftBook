@@ -1,8 +1,8 @@
 import "./NewWorkoutModal.scss"
-import close from "../../assets/icons/clear_black_24dp.svg"
+import closeIcon from "../../assets/icons/clear_black_24dp.svg"
 import React, {useState} from "react"
 
-const NewWorkoutModal = ({handler, setNewWorkout}) => {
+const NewWorkoutModal = ({handler, setNewWorkout, close}) => {
   const closeModal = (e) => {
     e.preventDefault()
     setNewWorkout(false)
@@ -11,12 +11,12 @@ const NewWorkoutModal = ({handler, setNewWorkout}) => {
   return (
   <>
   <div className="new-workout__overlay" onClick={closeModal}></div>
-  <section className="new-workout">
+  <section className={"new-workout " + (close ? "new-workout--closing" : "")}>
   <div className="new-workout__container">
     <div className="new-workout__top-container">
       <div className="new-workout__empty"></div>
       <h2 className="new-workout__title">New Workout</h2>
-      <button onClick={closeModal} className="new-workout__close"><img src={close} alt="" className="new-workout__x" /></button>
+      <button onClick={closeModal} className="new-workout__close"><img src={closeIcon} alt="" className="new-workout__x" /></button>
     </div>
     <form onSubmit={handler} className="new-workout__form">
       <label htmlFor="" className="new-workout__label">Workout Name:

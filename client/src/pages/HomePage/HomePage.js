@@ -4,6 +4,7 @@ import {useState, useEffect} from "react";
 import convertDate from "../../functions/dateConversion";
 import {NavLink} from "react-router-dom"
 import NewWorkoutModal from "../../components/NewWorkoutModal/NewWorkoutModal";
+import RenameWorkoutModal from "../../components/RenameWorkoutModal/RenameWorkoutModal";
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import add from "../../assets/icons/add_black_24dp.svg";
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
@@ -19,6 +20,7 @@ const HomePage = ({token}) => {
   const [newWorkout, setNewWorkout] = useState(false)
   const [currentWorkout, setCurrentWorkout] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false)
+  const [renameWorkoutModal, setRenameWorkoutModal] = useState(false)
   const [closeModalAnimation, setCloseModalAnimation] = useState(false)
 
   const getWorkouts = () => {
@@ -58,7 +60,7 @@ const HomePage = ({token}) => {
     {
     Authorization: `Bearer: ${token}`
     } 
-  })
+    })
   .then(response => {
     getWorkouts()
     setCloseModalAnimation(true)
@@ -70,9 +72,34 @@ const HomePage = ({token}) => {
   .catch(error => console.log(error))
   }
 
+  const renameWorkoutHandler = (e, workout) => {
+    e.preventDefault()
+    workout.name = e.target.name.value
+    axios.put(`http://localhost:8080/workouts/${workout.id}`, workout, { headers: 
+    {
+    Authorization: `Bearer: ${token}`
+    } 
+    })
+    .then(response => {
+      getWorkouts()
+      setCloseModalAnimation(true)
+      setTimeout(() => {
+        setCloseModalAnimation(false)
+        setRenameWorkoutModal(false)
+      }, 300)
+    })
+    .catch(error => alert(error))
+
+  }
+
   const handleSetDeleteModal = (workout) => {
     setCurrentWorkout(workout)
     setDeleteModal(true)
+  }
+
+  const handleSetRenameModal = (workout) => {
+    setCurrentWorkout(workout)
+    setRenameWorkoutModal(true)
   }
 
   return (
@@ -80,6 +107,7 @@ const HomePage = ({token}) => {
       {newWorkout ? <NewWorkoutModal 
       handler={newWorkoutHandler} 
       setNewWorkout={setNewWorkout} 
+      close={closeModalAnimation}
       /> 
       : null}
       {deleteModal ? <DeleteModal 
@@ -88,6 +116,13 @@ const HomePage = ({token}) => {
       deleteHandler={deleteWorkoutHandler}
       title={currentWorkout.name}
       id={currentWorkout.id}
+      />
+      : null}
+      {renameWorkoutModal ? <RenameWorkoutModal 
+      setRenameWorkout={setRenameWorkoutModal}
+      handler={renameWorkoutHandler}
+      workout={currentWorkout}
+      close={closeModalAnimation}
       />
       : null}
       <section className="home">
@@ -106,8 +141,8 @@ const HomePage = ({token}) => {
                   <span className="home__workout-date">{convertDate(workout.timestamp)}</span>
                 </NavLink>
                 <div className="home__button-container">
-                  <button className="home__button"><img src={edit} alt="Pencil icon" className="home__icon" /></button>
-                  <button className="home__button"><img src={listIcon} alt="Paper document icon" className="home__icon" /></button>
+                  <button onClick={() => handleSetRenameModal(workout)} className="home__button"><img src={edit} alt="Pencil icon" className="home__icon" /></button>
+                  <NavLink to={`/workouts/${workout.id}`} className="home__button"><img src={listIcon} alt="Paper document icon" className="home__icon" /></NavLink>
                   <button onClick={() => handleSetDeleteModal(workout)} className="home__button"><img src={deleteIcon} alt="Trash bin icon" className="home__icon" /></button>
                 </div>
               </article>

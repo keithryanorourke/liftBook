@@ -3,7 +3,7 @@
 @use "../../styles/partials/animations" as *;
 @use "../../styles/partials/mixins" as *;
 
-.new-workout {
+.rename-workout {
   @include modal;
   transition: 0.3s;
 
