@@ -125,7 +125,7 @@ const WorkoutPage = ({token}) => {
   const editLiftHandler = (e, id) => {
     e.preventDefault()
     let exit = false;
-    const exercise = JSON.parse(e.target.exercise.value)
+    const exercise = exercises.find(exercise => exercise.name === e.target.exercise.value)
     const newLift = {
       workout_id: workoutId,
       reps: parseInt(e.target.reps.value),

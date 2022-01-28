@@ -11,10 +11,12 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
   }
 
   const [valueHook, setValueHook] = useState(lift.name)
+  console.log(valueHook)
 
   useEffect(() => {
     console.log(lift.name)
-    setValueHook(lift.name)}, [])
+    setValueHook(lift.name)
+  }, [])
 
   const handleSelect = (e) => {
     e.preventDefault()
@@ -46,10 +48,10 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
           </div>
           <form onSubmit={(e) => editLiftHandler(e, lift.id)} className="edit-lift__form">
             <label htmlFor="" className="edit-lift__label">Exercise:
-            {/* THE DEFAULT VALUE FOR THIS ISN'T WORKING!! AND IT SHOULD!! FIX!! */}
+            
               <select name="exercise" id="" value={valueHook} onChange={handleSelect} className="edit-lift__exercise-dropdown"> 
                 {exercises.map(exercise => {
-                  return <option key={exercise.id} value={JSON.stringify(exercise)} className="edit-lift__exercise-option">{exercise.name}</option>
+                  return <option key={exercise.id} value={exercise.name} className="edit-lift__exercise-option">{exercise.name}</option>
                 })}
               </select>
             </label>
