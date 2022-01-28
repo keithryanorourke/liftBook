@@ -55,6 +55,7 @@
 
   &__name {
     @include generic-button;
+    border-radius: 2rem;
     &::placeholder {
       color: $placeholdertext;
     }
