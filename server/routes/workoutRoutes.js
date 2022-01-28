@@ -74,7 +74,7 @@ router.post("/", authorize, (req, res) => {
 })
 
 // Rename workout
-router.post("/:workoutId", authorize, (req, res) => {
+router.put("/:workoutId", authorize, (req, res) => {
   const {userId} = req.decoded
   const {workoutId} = req.params
   knex('workouts')

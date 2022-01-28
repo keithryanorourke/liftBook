@@ -60,7 +60,7 @@ const HomePage = ({token}) => {
     {
     Authorization: `Bearer: ${token}`
     } 
-  })
+    })
   .then(response => {
     getWorkouts()
     setCloseModalAnimation(true)
@@ -73,8 +73,18 @@ const HomePage = ({token}) => {
   }
 
   const renameWorkoutHandler = (e, workout) => {
-    console.log(e)
-    console.log(workout)
+    e.preventDefault()
+    workout.name = e.target.name.value
+    axios.put(`http://localhost:8080/workouts/${workout.id}`, workout, { headers: 
+    {
+    Authorization: `Bearer: ${token}`
+    } 
+    })
+    .then(response => {
+      getWorkouts()
+    })
+    .catch(error => alert(error))
+
   }
 
   const handleSetDeleteModal = (workout) => {
