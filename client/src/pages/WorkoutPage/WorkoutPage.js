@@ -1,6 +1,7 @@
 import "./WorkoutPage.scss"
 import EditLiftModal from "../../components/EditLiftModal/EditLiftModal";
 import AddLiftModal from "../../components/AddLiftModal/AddLiftModal"
+import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import IndividualLift from "../../components/IndividualLift/IndividualLift"
 import add from "../../assets/icons/add_black_24dp.svg";
 import axios from "axios"
@@ -10,16 +11,19 @@ import {useParams} from "react-router";
 import Cookie from 'js-cookie'
 
 const WorkoutPage = ({token}) => {
-  const paramaters=useParams();
+  const navigate = useNavigate()
+  const paramaters = useParams();
   const {workoutId} = paramaters
   const [workout, setWorkout] = useState(null)
   const [exercises, setExercises] = useState(null)
   const [lifts, setLifts] = useState([])
+  const [userSettings, setUserSettings] = useState(null)
   const [addLiftModal, setAddLiftModal] = useState(false)
   const [editLiftModal, setEditLiftModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
   const [closeModalAnimation, setCloseModalAnimation] = useState(false)
   const [currentLift, setCurrentLift] = useState(null)
-  const [userSettings, setUserSettings] = useState(null)
+  const [setNumber, setSetNumber] = useState(null)
 
   const getLifts = () => {
     axios.get(`http://localhost:8080/lifts/${workoutId}`, { headers: 
@@ -58,7 +62,8 @@ const WorkoutPage = ({token}) => {
       
     })
     .catch(error => {
-      alert(`${error}.\nThe workout you are trying to access is not associated with your account! `)
+      alert(`${error}.\nThe workout you are trying to access is not associated with your account! You will now be redirected to your home page.`)
+      navigate("../workouts", {replace: true})
     })
 
   axios.get(`http://localhost:8080/exercises/`, { headers: 
@@ -125,7 +130,7 @@ const WorkoutPage = ({token}) => {
   const editLiftHandler = (e, id) => {
     e.preventDefault()
     let exit = false;
-    const exercise = JSON.parse(e.target.exercise.value)
+    const exercise = exercises.find(exercise => exercise.name === e.target.exercise.value)
     const newLift = {
       workout_id: workoutId,
       reps: parseInt(e.target.reps.value),
@@ -169,13 +174,37 @@ const WorkoutPage = ({token}) => {
       alert.log(error)
     })
     }
-    
+  }
+
+  const deleteLiftHandler = (id) => {
+    console.log("Delete handler")
+    axios.delete(`http://localhost:8080/lifts/${id}`, { headers: 
+    {
+      Authorization: `Bearer: ${token}`
+    } 
+    })
+    .then(response => {
+      console.log(response)
+      getLifts()
+      setCloseModalAnimation(true)
+      setTimeout(() => {
+      setDeleteModal(false)
+      setCloseModalAnimation(false)
+      }, 300)
+    })
+    .catch(error => alert(error))
   }
 
   const handleSetEditLiftModal = (lift) => {
     setCurrentLift(lift)
     setEditLiftModal(true)
   } 
+
+  const handleSetDeleteModal = (lift, setNum) => {
+    setSetNumber(setNum)
+    setCurrentLift(lift)
+    setDeleteModal(true)
+  }
 
   return (
     <>
@@ -196,6 +225,15 @@ const WorkoutPage = ({token}) => {
       close={closeModalAnimation}
       /> 
       : null}
+      {deleteModal ? 
+      <DeleteModal
+      setDeleteModal={setDeleteModal}
+      close={closeModalAnimation}
+      deleteHandler={deleteLiftHandler}
+      title={currentLift.name + ` (set # ${setNumber}) from ${workout.name}`}
+      id={currentLift.id}
+      />
+      : null}
       <section className="workout">
         {!addLiftModal ? <button onClick={() => setAddLiftModal(true)} className="workout__add-button"><img src={add} alt="" className="workout__add" /></button> : null}
         <div className="workout__top-container">
@@ -212,6 +250,7 @@ const WorkoutPage = ({token}) => {
                 index={index}
                 settings={userSettings}
                 setEditLiftModal={handleSetEditLiftModal}
+                setDeleteModal={handleSetDeleteModal}
                 className="workout__lift" 
                 />
               )

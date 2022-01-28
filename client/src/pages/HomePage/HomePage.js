@@ -4,6 +4,7 @@ import {useState, useEffect} from "react";
 import convertDate from "../../functions/dateConversion";
 import {NavLink} from "react-router-dom"
 import NewWorkoutModal from "../../components/NewWorkoutModal/NewWorkoutModal";
+import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import add from "../../assets/icons/add_black_24dp.svg";
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
 import edit from "../../assets/icons/edit_black_24dp.svg"
@@ -11,23 +12,29 @@ import listIcon from "../../assets/icons/post_add_black_24dp.svg"
 import { useNavigate } from "react-router-dom";
 
 const HomePage = ({token}) => {
+  const navigate = useNavigate()
   const [user, setUser] = useState({
     workouts: null
   })
   const [newWorkout, setNewWorkout] = useState(false)
-  const navigate = useNavigate()
+  const [currentWorkout, setCurrentWorkout] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [closeModalAnimation, setCloseModalAnimation] = useState(false)
 
-  useEffect(() => {
+  const getWorkouts = () => {
     axios.get("http://localhost:8080/workouts", { headers: 
       {
       Authorization: `Bearer: ${token}`
       } 
     })
     .then(response => {
-      console.log(response)
       return setUser({workouts: response.data})
     })
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
+  }
+
+  useEffect(() => {
+    getWorkouts()
   }, [])
 
   const newWorkoutHandler = (e) => {
@@ -45,21 +52,44 @@ const HomePage = ({token}) => {
     .catch(error => console.log(error))
   }
 
-  const deleteHandler = (e, id) => {
-    e.preventDefault()
+  const deleteWorkoutHandler = (id) => {
     console.log("delete handler")
     axios.delete(`http://localhost:8080/workouts/${id}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
   })
-  .then(response => console.log(response))
+  .then(response => {
+    getWorkouts()
+    setCloseModalAnimation(true)
+    setTimeout(() => {
+      setCloseModalAnimation(false)
+      setDeleteModal(false)
+    }, 300)
+  })
   .catch(error => console.log(error))
+  }
+
+  const handleSetDeleteModal = (workout) => {
+    setCurrentWorkout(workout)
+    setDeleteModal(true)
   }
 
   return (
     <>
-      {newWorkout ? <NewWorkoutModal handler={newWorkoutHandler} setNewWorkout={setNewWorkout} /> : null}
+      {newWorkout ? <NewWorkoutModal 
+      handler={newWorkoutHandler} 
+      setNewWorkout={setNewWorkout} 
+      /> 
+      : null}
+      {deleteModal ? <DeleteModal 
+      setDeleteModal={setDeleteModal}
+      close={closeModalAnimation}
+      deleteHandler={deleteWorkoutHandler}
+      title={currentWorkout.name}
+      id={currentWorkout.id}
+      />
+      : null}
       <section className="home">
         {!newWorkout ? <button onClick={() => setNewWorkout(true)} className="home__new"><img src={add} alt="" className="home__add" /></button> : null}
         <div className="home__top-container">
@@ -78,7 +108,7 @@ const HomePage = ({token}) => {
                 <div className="home__button-container">
                   <button className="home__button"><img src={edit} alt="Pencil icon" className="home__icon" /></button>
                   <button className="home__button"><img src={listIcon} alt="Paper document icon" className="home__icon" /></button>
-                  <button onClick={(e) => deleteHandler(e, workout.id)} className="home__button"><img src={deleteIcon} alt="Trash bin icon" className="home__icon" /></button>
+                  <button onClick={() => handleSetDeleteModal(workout)} className="home__button"><img src={deleteIcon} alt="Trash bin icon" className="home__icon" /></button>
                 </div>
               </article>
               )

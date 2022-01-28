@@ -3,6 +3,8 @@ const router = express.Router()
 const knex = require('knex')(require('../knexfile').development)
 const authorize = require ("../middleware/authorize").authorize;
 
+
+// Post a new lift
 router.post("/", authorize, (req, res) => {
   const {userId} = req.decoded
   const lift = req.body
@@ -20,6 +22,8 @@ router.post("/", authorize, (req, res) => {
   })
 })
 
+
+// Edit existing lift
 router.put("/", authorize, (req, res) => {
   const {userId} = req.decoded
   const lift = req.body
@@ -39,6 +43,7 @@ router.put("/", authorize, (req, res) => {
   })
 })
 
+// Get ALL lifts contained in one workout
 router.get("/:workoutId", authorize, (req, res) => {
   const {userId} = req.decoded
   const {workoutId} = req.params
@@ -56,6 +61,22 @@ router.get("/:workoutId", authorize, (req, res) => {
   .catch(error => {
     console.log(error)
     return res.status(400).send("Ya done goofed")
+  })
+})
+
+// Delete a single lift
+router.delete("/:liftId", authorize, (req, res) => {
+  const {userId} = req.decoded
+  const {liftId} = req.params
+  knex('lifts')
+  .where({id: liftId, userId: userId})
+  .delete()
+  .then(response => {
+    console.log(response)
+    return res.status(200).send("Lift succesfully deleted!")
+  })
+  .catch(error => {
+    return res.status(400).send("Lift not found OR lift was not associated with user account")
   })
 })
 
