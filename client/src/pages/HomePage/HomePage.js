@@ -28,10 +28,9 @@ const HomePage = ({token}) => {
       } 
     })
     .then(response => {
-      console.log(response)
       return setUser({workouts: response.data})
     })
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   useEffect(() => {

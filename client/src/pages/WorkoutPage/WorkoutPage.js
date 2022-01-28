@@ -11,7 +11,8 @@ import {useParams} from "react-router";
 import Cookie from 'js-cookie'
 
 const WorkoutPage = ({token}) => {
-  const paramaters=useParams();
+  const navigate = useNavigate()
+  const paramaters = useParams();
   const {workoutId} = paramaters
   const [workout, setWorkout] = useState(null)
   const [exercises, setExercises] = useState(null)
@@ -61,7 +62,8 @@ const WorkoutPage = ({token}) => {
       
     })
     .catch(error => {
-      alert(`${error}.\nThe workout you are trying to access is not associated with your account! `)
+      alert(`${error}.\nThe workout you are trying to access is not associated with your account! You will now be redirected to your home page.`)
+      navigate("../workouts", {replace: true})
     })
 
   axios.get(`http://localhost:8080/exercises/`, { headers: 
