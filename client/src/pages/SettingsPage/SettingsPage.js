@@ -18,19 +18,23 @@ const SettingsPage = ({token}) => {
   })
   const [modal, setModal] = useState(false)
 
-  const basicHandler = () => {
-    const settings = {
-      mode: "basic",
-      trackDifficulty: false,
-      preferredMetric: "RPE",
-      trackPercentageOfMax: false
-    }
-    axios.put("http://localhost:8080/account/settings", settings, {
-      headers: {Authorization: `Bearer: ${token}`}
+  useEffect(()=> {
+    axios.get(`http://localhost:8080/account/settings`, { headers: 
+    {
+    Authorization: `Bearer: ${token}`
+    } 
     })
-    .then(response => navigate("../", {replace: true}))
-    .catch(error => console.log(error))
-  }
+    .then(response => {
+      setSettings(response.data)
+      setMode(response.data.mode)
+      setTrackDifficulty(response.data.trackDifficulty)
+    })
+    .catch(error =>{
+      alert(`${error}.\nUser settings not retrieved! You will now be logged out.`)
+      Cookie.remove('token')
+      navigate('../login', {replace: true})
+    })
+  }, [])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -47,11 +51,6 @@ const SettingsPage = ({token}) => {
     .catch(error => console.log(error))
   }
 
-  const changeHandler = (e) => {
-    e.preventDefault()
-    console.log(formEl)
-  }
-
   const difficultyHandler = (e) => {
     if(e.target.checked) {
       return setTrackDifficulty(true)
@@ -62,8 +61,6 @@ const SettingsPage = ({token}) => {
   const modeHandler = (e) => {
     return setMode(e.target.value)
   }
-
-  
 
   const closeModal = () => {
     setModal(false)
@@ -107,27 +104,20 @@ const SettingsPage = ({token}) => {
         copy: "Advanced mode allows you to customize what you want to track! Preferrable if you want to be as detailed as possible when you're tracking a lift!"
       })
     }
+    if(subject === "about") {
+      setHelpInformation({
+        title: "About liftBook",
+        copy: "liftBook is a passion project web app made by Keith Ryan O'Rourke! The concept of the app is to provide people at various stages of fitness with a tool to track their workouts and give THEM the option to choose how much they want to track and how much they want to see in their logs. liftBook is currently in its first stages of development, I hope to implement more advanced tracking features and chart based progress data for users in the future."
+      })
+    }
     setModal(true)
   }
 
-
-  useEffect(()=> {
-    axios.get(`http://localhost:8080/account/settings`, { headers: 
-    {
-    Authorization: `Bearer: ${token}`
-    } 
-    })
-    .then(response => {
-      setSettings(response.data)
-      setMode(response.data.mode)
-      setTrackDifficulty(response.data.trackDifficulty)
-    })
-    .catch(error =>{
-      alert(`${error}.\nUser settings not retrieved! You will now be logged out.`)
-      Cookie.remove('token')
-      navigate('../login', {replace: true})
-    })
-  }, [])
+  const logoutHandler = () => {
+    Cookie.remove('token')
+    navigate('../login', {replace: true})
+  }
+  
 
   if(!settings){
     return (
@@ -212,8 +202,12 @@ const SettingsPage = ({token}) => {
             : null}
             </div>
             : null}
-            <button className="settings__submit">Save</button>
+            <button className="settings__button settings__button--submit">Save</button>
           </form>
+          <div className="settings__extra-buttons">
+            <button onClick={logoutHandler} className="settings__button">Logout</button>
+            <button onClick={(e) => openModal(e, "about")} className="settings__button">About</button>
+          </div>
       </section>
     </>
   )

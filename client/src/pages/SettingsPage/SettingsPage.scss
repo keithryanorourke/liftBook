@@ -38,7 +38,7 @@
   &__form {
     display: flex;
     flex-direction: column;
-    padding: 1rem 1.5rem 1.5rem;
+    padding: 1rem 1.5rem 0.5rem;
   }
 
   &__wrapper {
@@ -92,9 +92,22 @@
     animation: popup cubic-bezier(.12,.98,.35,1.5) 0.4s ;
   }
 
-  &__submit {
-    align-self: flex-end;
+  &__button {
     @include generic-button;
-    min-width: 7.75rem;
+
+    &--submit {
+      align-self: flex-end;
+      min-width: 7.75rem;
+      border: 0.25rem solid $accent6;
+      background: none;
+      color: $accent6;
+      box-shadow: $lightshadow1;
+    }
+  }
+
+  &__extra-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.5rem 1rem;
   }
 }
