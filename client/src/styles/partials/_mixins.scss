@@ -12,12 +12,12 @@
 }
 
 @mixin page-margins {
-  margin: 3rem 1rem;
+  margin: 4rem 1rem;
   @include tablet {
-    margin: 3rem 5rem;
+    margin: 4rem 5rem;
   }
   @include desktop {
-    margin: 3rem 15%;
+    margin: 4rem 15%;
   }
 }
 
@@ -41,7 +41,7 @@
 }
 
 @mixin modal-overlay {
-  z-index: 2;
+  z-index: 3;
   position: fixed;
   top: 0;
   left: 0;

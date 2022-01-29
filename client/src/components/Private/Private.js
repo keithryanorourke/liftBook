@@ -1,3 +1,4 @@
+import Footer from '../Footer/Footer';
 import React, {useEffect, useState} from 'react';
 import { Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
@@ -47,9 +48,9 @@ const Private = ({children}) => {
             return null;
         }
         else if (authentication.isAuthenticated) {
-            return <div>
-                <ElementToRender token={authentication.token} />
-            </div>
+            return <main>
+                <ElementToRender token={authentication.token} /><Footer />
+            </main>
         }
         else {
             return <Navigate to="/login"/>

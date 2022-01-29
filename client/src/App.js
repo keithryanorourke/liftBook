@@ -6,6 +6,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import Header from './components/Header/Header';
 import Private from './components/Private/Private';
 import {LoginPage} from './pages/LoginPage/LoginPage';
 import {SignUpPage} from './pages/SignUpPage/SignUpPage';
@@ -17,6 +18,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <Header />
         <Routes>
           <Route exact path="/workouts" element={<Private><HomePage /></Private>}></Route>
           <Route path="/workouts/:workoutId" element={<Private><WorkoutPage /></Private>}></Route>
