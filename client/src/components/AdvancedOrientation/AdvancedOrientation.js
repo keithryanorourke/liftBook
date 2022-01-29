@@ -46,7 +46,12 @@ const AdvancedOrientation = ({advancedHandler, difficultyHandler, setAdvanced, t
 
   return (
     <>
-    {modal ? <InformativeModal title={helpInformation.title} copy={helpInformation.copy} close={closeModal}/> : null}
+    {modal ? <InformativeModal 
+    title={helpInformation.title} 
+    copy={helpInformation.copy} 
+    close={closeModal}
+    /> 
+    : null}
     <section className="advanced">
       <div className="advanced__container">
         <div className="advanced__top-container">

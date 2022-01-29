@@ -13,6 +13,7 @@ import {SignUpPage} from './pages/SignUpPage/SignUpPage';
 import HomePage from "./pages/HomePage/HomePage"
 import OrientationPage from "./pages/OrientationPage/OrientationPage"
 import WorkoutPage from './pages/WorkoutPage/WorkoutPage';
+import SettingsPage from './pages/SettingsPage/SettingsPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/signup" element={<SignUpPage />}></Route>
           <Route path="/setup" element={<Private><OrientationPage /></Private>}></Route>
+          <Route path="/settings" element={<Private><SettingsPage /></Private>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

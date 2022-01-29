@@ -3,21 +3,19 @@
 @use "../../styles/partials/animations" as *;
 @use "../../styles/partials/mixins" as *;
 
-.advanced {
+.settings {
   animation: popup 0.2s;
   display: flex;
   flex-direction: column;
+  @include top-level-container;
   
-  &__container {
-    @include top-level-container;
-  }
   
   &__top-container {
     padding: 0 1.5rem;
     background-color: $primary3;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   &__back {
@@ -40,7 +38,11 @@
   &__form {
     display: flex;
     flex-direction: column;
-    padding: 1rem 1.5rem 1.5rem;
+    padding: 1rem 1.5rem 0.5rem;
+  }
+
+  &__advanced-container {
+    animation: popup cubic-bezier(.12,.98,.35,1.5) 0.2s;
   }
 
   &__wrapper {
@@ -57,7 +59,6 @@
   }
 
   &__option {
-    cursor: pointer;
     transition: 0.5s;
     margin: 0;
     margin-right: 0.5rem;
@@ -95,9 +96,22 @@
     animation: popup cubic-bezier(.12,.98,.35,1.5) 0.4s ;
   }
 
-  &__submit {
-    align-self: flex-end;
+  &__button {
     @include generic-button;
-    min-width: 7.75rem;
+
+    &--submit {
+      align-self: flex-end;
+      min-width: 7.75rem;
+      border: 0.25rem solid $accent6;
+      background: none;
+      color: $accent6;
+      box-shadow: $lightshadow1;
+    }
+  }
+
+  &__extra-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.5rem 1rem;
   }
 }

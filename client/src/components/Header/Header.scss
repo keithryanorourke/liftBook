@@ -5,6 +5,7 @@
 
 .header {
   position: fixed;
+  display: flex;
   top: 0;
   left: 0;
   width: 100%;
@@ -14,6 +15,15 @@
   }
   @include desktop {
     padding: 1rem 15%;
+  }
+
+  &__link {
+    text-decoration: none;
+    width: fit-content;
+    transition: 0.2s;
+    &:hover {
+      transform: scale(1.2) translateX(0.5rem)
+    }
   }
 
   &__title {
