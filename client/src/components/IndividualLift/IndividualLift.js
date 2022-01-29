@@ -34,24 +34,24 @@ const IndividualLift = ({lift, settings, index, setNum, setEditLiftModal, setDel
           <span className="lift__specifier">REPS:</span>
           <span className="lift__stat">{lift.reps}</span>
         </div>
-        {settings.trackDifficulty 
+        {settings.mode==="advanced" ?
+        (settings.trackDifficulty 
         ? 
         <div className="lift__stat-container">
           <span className="lift__specifier">DIFFICULTY:</span>
           <span className="lift__stat">{showDifficulty()}</span>
         </div>
         :
-        null
-        }
-        {settings.trackPercentageOfMax
+        null)
+        (settings.trackPercentageOfMax
         ?
         <div className="lift__stat-container">
           <span className="lift__specifier">%of1RM:</span>
-          <span className="lift__stat">{showPercentage}</span>
+          <span className="lift__stat">{showPercentage()}</span>
         </div>
         :
-        null
-        }
+        null)
+        : null}
       </div>
       <div className="lift__button-container">
         <button className="lift__button" onClick={() => setEditLiftModal(lift)}><img src={edit} alt="Pencil Icon" className="lift__edit-icon" /></button>

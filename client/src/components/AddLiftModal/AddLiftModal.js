@@ -82,15 +82,15 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}
           <label className="add-lift__label">Reps:
             <input type="number" placeholder="Enter a whole number greater than 0" name="reps" className="add-lift__input" />
           </label>
-          {settings.trackDifficulty ? 
-          <label className="add-lift__label">{settings.preferredMetric}:
-            <input type="number" step=".5" placeholder={settings.preferredMetric === "RPE" ? "Number between 1-10" : "Any non negative number"} name="difficulty" className="add-lift__input" />
+          {settings.trackDifficulty && settings.mode==="advanced" ? 
+          <label className="add-lift__label">{settings.preferredMetric} (optional):
+            <input type="number" step=".5" placeholder={settings.preferredMetric === "RPE" ? "Number between 1.0-10.0" : "Any non negative number"} name="difficulty" className="add-lift__input" />
           </label>
           : null
           }
-          {settings.trackPercentageOfMax ? 
-          <label className="add-lift__label">%of1RM:
-            <input type="number" name="percentage" className="add-lift__input" />
+          {settings.trackPercentageOfMax && settings.mode==="advanced" ? 
+          <label className="add-lift__label">%of1RM (optional):
+            <input type="number" name="percentage" step=".5" placeholder="Any number between 1.0 and 100.0" className="add-lift__input" />
           </label>
           : null
           }

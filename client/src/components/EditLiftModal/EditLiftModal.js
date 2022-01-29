@@ -76,7 +76,7 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
           }
             {settings.trackPercentageOfMax ? 
             <label className="edit-lift__label">%of1RM:
-              <input type="number" name="percentage" className="edit-lift__input" />
+              <input type="number" step=".5" placeholder="untracked" name="percentage" className="edit-lift__input" />
             </label>
             : null
           }

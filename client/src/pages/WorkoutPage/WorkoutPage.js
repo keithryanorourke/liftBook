@@ -57,8 +57,8 @@ const WorkoutPage = ({token}) => {
     .catch(error =>{
       alert(`${error}.\nUser settings not retrieved! You will now be logged out.`)
       Cookie.remove('token')
-      Navigate('../login', {replace: true})
-    }, [])
+      navigate('../login', {replace: true})
+    })
 
     axios.get(`http://localhost:8080/workouts/${workoutId}`, { headers: 
     {
@@ -109,6 +109,10 @@ const WorkoutPage = ({token}) => {
       newLift.difficulty = parseFloat(e.target.difficulty.value)
     }
 
+    if(userSettings.trackPercentageOfMax && e.target.percentage.value) {
+      newLift.percentageOfMax = parseFloat(e.target.percentage.value)
+    }
+
     if(!newLift.reps) {
       alert("Please enter a positive whole number into the reps field!")
       exit=true;
@@ -154,6 +158,10 @@ const WorkoutPage = ({token}) => {
       newLift.difficulty = parseFloat(e.target.difficulty.value)
     }
 
+    if(userSettings.trackPercentageOfMax && e.target.percentage.value) {
+      newLift.percentageOfMax = parseFloat(e.target.percentage.value)
+    }
+
     if(!newLift.reps) {
       alert("Please enter a positive whole number into the reps field!")
       exit=true;
@@ -170,7 +178,7 @@ const WorkoutPage = ({token}) => {
       closingAnimationFunction(setEditLiftModal)
     })
     .catch (error => {
-      alert.log(error)
+      alert(error)
     })
     }
   }

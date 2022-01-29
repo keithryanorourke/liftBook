@@ -9,7 +9,7 @@ const Footer = () => {
     <section className="footer">
       <NavLink className="footer__link" to="/"><img src={workout} alt="" className="footer__icon" /></NavLink>
       <NavLink className="footer__link" to="/"><img src={home} alt="" className="footer__icon footer__icon--home" /></NavLink>
-      <NavLink className="footer__link" to="/"><img src={settings} alt="" className="footer__icon" /></NavLink>
+      <NavLink className="footer__link" to="/settings"><img src={settings} alt="" className="footer__icon" /></NavLink>
     </section>
   )
 }
