@@ -25,6 +25,14 @@ const WorkoutPage = ({token}) => {
   const [currentLift, setCurrentLift] = useState(null)
   const [setNumber, setSetNumber] = useState(null)
 
+  const closingAnimationFunction = (modalSetter) => {
+    setCloseModalAnimation(true)
+    setTimeout(() => {
+      modalSetter(false)
+      setCloseModalAnimation(false)
+    }, 300)
+  }
+
   const getLifts = () => {
     axios.get(`http://localhost:8080/lifts/${workoutId}`, { headers: 
     {
@@ -50,7 +58,7 @@ const WorkoutPage = ({token}) => {
       alert(`${error}.\nUser settings not retrieved! You will now be logged out.`)
       Cookie.remove('token')
       Navigate('../login', {replace: true})
-    })
+    }, [])
 
     axios.get(`http://localhost:8080/workouts/${workoutId}`, { headers: 
     {
@@ -105,7 +113,6 @@ const WorkoutPage = ({token}) => {
       alert("Please enter a positive whole number into the reps field!")
       exit=true;
     }
-    console.log(newLift)
 
     if(!exit) {
       axios.post(`http://localhost:8080/lifts`, newLift, { headers: 
@@ -115,11 +122,7 @@ const WorkoutPage = ({token}) => {
     })
     .then(response => {
       getLifts()
-      setCloseModalAnimation(true)
-      setTimeout(() => {
-      setAddLiftModal(false)
-      setCloseModalAnimation(false)
-      }, 300)
+      closingAnimationFunction(setAddLiftModal)
     })
     .catch (error => {
       console.log(error)
@@ -164,11 +167,7 @@ const WorkoutPage = ({token}) => {
     })
     .then(response => {
       getLifts()
-      setCloseModalAnimation(true)
-      setTimeout(() => {
-      setEditLiftModal(false)
-      setCloseModalAnimation(false)
-      }, 300)
+      closingAnimationFunction(setEditLiftModal)
     })
     .catch (error => {
       alert.log(error)
@@ -177,20 +176,14 @@ const WorkoutPage = ({token}) => {
   }
 
   const deleteLiftHandler = (id) => {
-    console.log("Delete handler")
     axios.delete(`http://localhost:8080/lifts/${id}`, { headers: 
     {
       Authorization: `Bearer: ${token}`
     } 
     })
     .then(response => {
-      console.log(response)
       getLifts()
-      setCloseModalAnimation(true)
-      setTimeout(() => {
-      setDeleteModal(false)
-      setCloseModalAnimation(false)
-      }, 300)
+      closingAnimationFunction(setDeleteModal)
     })
     .catch(error => alert(error))
   }

@@ -43,11 +43,41 @@
     height: 1.5rem;
     background: none;
     border: none;
+  }
 
+  &__scroll-container {
+    max-height: 60vh;
+    overflow-y: scroll;
+  }
+
+  &__subtitle {
+    padding: 0.5rem 1rem;
+    margin: 0;
+  }
+
+  &__muscle-container {
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__muscle-button {
+    color: $globaltextcolor;
+    background-color: $primary1;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    box-shadow: $darkshadow1;
+    border-radius: 1rem;
+    margin-top: 0.25rem;
+
+    &--toggled {
+      background-color: $accent5;
+    }
   }
 
   &__form {
-    padding: 1rem 1.5rem 1.5rem;
+    padding: 0 1.5rem 1.5rem;
     display: flex;
     flex-direction: column;
   }

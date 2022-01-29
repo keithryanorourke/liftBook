@@ -1,14 +1,45 @@
 import axios from "axios";
+import muscleList from "../../assets/data/muscleList.json"
 import "./AddLiftModal.scss"
 import closeIcon from "../../assets/icons/clear_black_24dp.svg"
+import uniqid from "uniqid"
+import { useState, useEffect } from "react";
 
 const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}) => {
+
+  // setInterval(()=>console.log(toggledMuscles), 3000)
+  
   const closeModal = (e) => {
     e.preventDefault()
     setAddLiftModal(false)
   }
 
-  console.log(settings)
+  const [toggledMuscles, setToggledMuscles] = useState([])
+  const [filteredExercises, setFilteredExercises] = useState(exercises)
+
+  const toggleMuscle = (muscle) => {
+    if(toggledMuscles.includes(muscle)) {
+      let newArray = toggledMuscles
+        const indexToRemove = newArray.indexOf(muscle)
+        newArray.splice(indexToRemove, 1)
+        setToggledMuscles(newArray)
+        if(!newArray.length) {
+          return setFilteredExercises(exercises)
+        }
+      } else {
+        let newArray = toggledMuscles
+        newArray.push(muscle)
+        setToggledMuscles(newArray)
+      }
+      const filterByMuscles = exercises.filter(exercise => {
+        const musclesSpaceRemoved = exercise.muscle.replaceAll(' ', '')
+        const splitMuscles = musclesSpaceRemoved.split(',')
+        return splitMuscles.some(muscle => toggledMuscles.includes(muscle))
+      })
+    setFilteredExercises(filterByMuscles)
+  }
+
+  
 
   return (
     <>
@@ -20,11 +51,18 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}
           <h2 className="add-lift__title">Add New Lift</h2>
           <button onClick={closeModal} className="add-lift__close"><img src={closeIcon} alt="X icon" className="add-lift__x" /></button>
         </div>
+        <div className="add-lift__scroll-container">
+        <p className="add-lift__subtitle">Filter exercises by muscles:</p>
+        <div className="add-lift__muscle-container">
+          {muscleList.array.map((muscle, index) => {
+            return <button onClick={() => toggleMuscle(muscle)} key={uniqid()} className={"add-lift__muscle-button " + (toggledMuscles.includes(muscle) ? "add-lift__muscle-button--toggled" : "")}>{muscle}</button>
+          })}
+        </div>
         <form onSubmit={addLiftHandler} className="add-lift__form">
           <label htmlFor="" className="add-lift__label">Exercise:
             <select name="exercise" id="" className="add-lift__exercise-dropdown">
-              {exercises.map(exercise => {
-                return <option key={exercise.id} value={JSON.stringify(exercise)} className="add-lift__exercise-option">{exercise.name}</option>
+              {filteredExercises.map(exercise => {
+                return <option key={uniqid()} value={JSON.stringify(exercise)} className="add-lift__exercise-option">{exercise.name}</option>
               })}
             </select>
           </label>
@@ -61,6 +99,7 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}
             <button className="add-lift__button add-lift__button--submit">Save</button>
           </div>
         </form>
+        </div>
       </div>
     </section>
     </>
