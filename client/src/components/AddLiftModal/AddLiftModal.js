@@ -7,8 +7,6 @@ import { useState, useEffect } from "react";
 
 const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}) => {
 
-  // setInterval(()=>console.log(toggledMuscles), 3000)
-  
   const closeModal = (e) => {
     e.preventDefault()
     setAddLiftModal(false)

@@ -36,13 +36,64 @@
     text-align: center;
   }
 
-  &__form {
+  &__bottom-container {
     padding: 1rem 1.5rem;
+  }
+
+  &__muscle-container {
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__muscle-button {
+    color: $globaltextcolor;
+    background-color: $primary1;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    box-shadow: $darkshadow1;
+    border-radius: 1rem;
+    margin-top: 0.25rem;
+    cursor: pointer;
+
+    &--toggled {
+      background-color: $accent5;
+    }
+  }
+
+  &__copy {
+    margin: 0 0 0.5rem;
+  }
+
+  &__label {
+    display: inline-block;
+    margin-top: 1rem;
   }
 
   &__name {
     @include generic-field
   }
 
+  &__button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__button {
+    @include generic-button;
+
+    &--submit {
+      background: none;
+      border: 0.25rem solid $accent1;
+      color: $accent1;
+    }
+  }
 
 }

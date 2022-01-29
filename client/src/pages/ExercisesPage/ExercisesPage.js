@@ -10,21 +10,45 @@ const ExercisesPage = ({token}) => {
   const [closeModalAnimation, setCloseModalAnimation] = useState(false)
   const [exercises, setExercises] = useState([])
 
-  useEffect(() => {
+  const getUserExercises = () => {
     axios.get(`http://localhost:8080/exercises/user`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
     })
-    .then(response => {
-      console.log(response.data)
-      setExercises(response.data)
-    })
+    .then(response => setExercises(response.data))
     .catch(error => alert(error))
+  }
+
+  useEffect(() => {
+    getUserExercises()
   }, [])
 
-  const addHandler = (e) => {
-    console.log(e)
+  const addHandler = (e, muscles) => {
+    e.preventDefault()
+    const formattedMuscles = muscles.map((muscle, index) => {
+      if(index !== muscles.length-1) {
+        return muscle + ", "
+      }
+      return muscle
+    }).join('')
+    if(!formattedMuscles.length) {
+      return alert("Please select at least one muscle before submitting a new exercise!")
+    }
+    if(!e.target.name.value || e.target.name.value.length > 25) {
+      return alert("Make sure to give your exercise a name less than 25 characters long!")
+    }
+    if(e.target.name.value.match(/[^A-Za-z ]/)) {
+      return alert("Exercise names may not contain any numbers or special characters!")
+    }
+    const newExercise = {name: e.target.name.value, muscle: formattedMuscles}
+    axios.post(`http://localhost:8080/exercises`, newExercise, { headers: 
+    {
+    Authorization: `Bearer: ${token}`
+    } 
+    })
+    .then(response => getUserExercises())
+    .catch(error => alert(error + `\nYou may have entered a duplicate exercise name. Try using a different name than ${newExercise.name}!`))
   }
 
   return (
