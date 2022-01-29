@@ -12,7 +12,7 @@ exports.seed = function(knex) {
         {name: "Pull Up", muscle: "Back, Biceps"},
         {name: "Push Up", muscle: "Chest, Shoulders, Triceps"},
         {name: "Shoulder Press", muscle: "Shoulders, Triceps"},
-        {name: "Lunge", muscle: "Quadriceps, Glutes, Hamstrings"},
+        {name: "Lunges", muscle: "Quadriceps, Glutes, Hamstrings"},
         {name: "Calf Raise", muscle: "Calves,"},
         {name: "Crunches", muscle: "Abs,"},
         {name: "Sit Ups", muscle: "Abs,"}

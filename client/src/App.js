@@ -14,6 +14,7 @@ import HomePage from "./pages/HomePage/HomePage"
 import OrientationPage from "./pages/OrientationPage/OrientationPage"
 import WorkoutPage from './pages/WorkoutPage/WorkoutPage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
+import ExercisesPage from './pages/ExercisesPage/ExercisesPage';
 
 function App() {
   return (
@@ -21,10 +22,11 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route exact path="/" element={<Private><HomePage /></Private>}></Route>
-          <Route path="/workouts/:workoutId" element={<Private><WorkoutPage /></Private>}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/signup" element={<SignUpPage />}></Route>
+          <Route exact path="/" element={<Private><HomePage /></Private>}></Route>
+          <Route path="/workouts/:workoutId" element={<Private><WorkoutPage /></Private>}></Route>
+          <Route exact path="/exercises" element={<Private><ExercisesPage /></Private>}></Route>
           <Route path="/setup" element={<Private><OrientationPage /></Private>}></Route>
           <Route path="/settings" element={<Private><SettingsPage /></Private>}></Route>
         </Routes>

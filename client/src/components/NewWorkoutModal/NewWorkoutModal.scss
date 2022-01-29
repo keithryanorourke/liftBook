@@ -55,12 +55,10 @@
   }
 
   &__name {
-    @include generic-button;
-    border-radius: 1rem;
+    @include generic-field;
     &::placeholder {
       color: $placeholdertext;
     }
-    width: 100%;
   }
 
   &__button-container {
