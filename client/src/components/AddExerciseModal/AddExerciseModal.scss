@@ -1,0 +1,48 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.add-exercise {
+  @include modal;
+
+  &__overlay {
+    @include modal-overlay;
+    background-color: $accent1;
+  }
+
+  &__container {
+    @include modal-top-level-container;
+  }
+  
+  &__top-container {
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $primary3;
+  }
+
+  &__empty {
+    width: 2.3rem;
+    height: 2.3rem;
+  }
+
+  &__close-button {
+    @include icon-button;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__form {
+    padding: 1rem 1.5rem;
+  }
+
+  &__name {
+    @include generic-field
+  }
+
+
+}

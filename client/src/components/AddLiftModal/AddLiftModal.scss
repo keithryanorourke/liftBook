@@ -102,12 +102,7 @@
   }
 
   &__input {
-    margin-top: 0.25rem;
-    color: $globaltextcolor;
-    border: none;
-    background-color: $primary2;
-    padding: 0.65rem 1rem;
-    border-radius: 1rem;
+    @include generic-field;
   }
 
   &__radio {

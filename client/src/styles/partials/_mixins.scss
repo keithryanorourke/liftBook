@@ -85,6 +85,22 @@
     }
 }
 
+@mixin generic-field {
+  margin-top: 0.25rem;
+  width: 100%;
+  color: $globaltextcolor;
+  border: none;
+  background-color: $primary2;
+  padding: 0.65rem 1rem;
+  border-radius: 1rem;
+  outline: none;
+  transition: 0.1s;
+
+  &:focus {
+    transform: scale(1.05);
+  }
+}
+
 @mixin icon-button {
   position: relative;
   display: flex;
