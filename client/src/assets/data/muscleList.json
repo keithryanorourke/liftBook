@@ -1,1 +1,3 @@
-["Quads", "Chest", "Shoulders", "Triceps", "Biceps", "Hamstrings", "Back", "Abs", "Glutes"]
+{
+  "array": ["Quadriceps", "Chest", "Shoulders", "Triceps", "Biceps", "Hamstrings", "Back", "Abs", "Glutes"]
+}
