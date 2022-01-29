@@ -104,3 +104,23 @@
     transform: scale(1.15) translateY(-0.1rem)
   }
 }
+
+@mixin add-button {
+  position: absolute;
+    background-color: $accent4;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.5rem;
+    width: 2.5rem;
+    right: -0.75rem;
+    top: -0.75rem;
+    box-shadow: $lightshadow1;
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover {
+      transform: scale(1.15) translateY(-0.1rem)
+    }
+}
