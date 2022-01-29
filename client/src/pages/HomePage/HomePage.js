@@ -23,6 +23,14 @@ const HomePage = ({token}) => {
   const [renameWorkoutModal, setRenameWorkoutModal] = useState(false)
   const [closeModalAnimation, setCloseModalAnimation] = useState(false)
 
+  const closingAnimationFunction = (modalSetter) => {
+    setCloseModalAnimation(true)
+    setTimeout(() => {
+      modalSetter(false)
+      setCloseModalAnimation(false)
+    }, 300)
+  }
+
   const getWorkouts = () => {
     axios.get("http://localhost:8080/workouts", { headers: 
       {
@@ -55,7 +63,6 @@ const HomePage = ({token}) => {
   }
 
   const deleteWorkoutHandler = (id) => {
-    console.log("delete handler")
     axios.delete(`http://localhost:8080/workouts/${id}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
@@ -63,11 +70,7 @@ const HomePage = ({token}) => {
     })
   .then(response => {
     getWorkouts()
-    setCloseModalAnimation(true)
-    setTimeout(() => {
-      setCloseModalAnimation(false)
-      setDeleteModal(false)
-    }, 300)
+    closingAnimationFunction(setDeleteModal)
   })
   .catch(error => console.log(error))
   }
@@ -82,11 +85,7 @@ const HomePage = ({token}) => {
     })
     .then(response => {
       getWorkouts()
-      setCloseModalAnimation(true)
-      setTimeout(() => {
-        setCloseModalAnimation(false)
-        setRenameWorkoutModal(false)
-      }, 300)
+      closingAnimationFunction(setRenameWorkoutModal)
     })
     .catch(error => alert(error))
 
