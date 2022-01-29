@@ -36,7 +36,6 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}
         const splitMuscles = musclesSpaceRemoved.split(',')
         return splitMuscles.some(muscle => toggledMuscles.includes(muscle))
       })
-    console.log(toggledMuscles)
     setFilteredExercises(filterByMuscles)
   }
 
