@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookie from "js-cookie"
+import Footer from '../Footer/Footer';
 
 const Private = ({children}) => {
     const [authentication, setAuthentication] = useState({
@@ -48,7 +49,7 @@ const Private = ({children}) => {
         }
         else if (authentication.isAuthenticated) {
             return <div>
-                <ElementToRender token={authentication.token} />
+                <ElementToRender token={authentication.token} /><Footer />
             </div>
         }
         else {
