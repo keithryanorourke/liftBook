@@ -8,9 +8,19 @@
   top: 0;
   left: 0;
   width: 100%;
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1rem;
+  @include tablet {
+    padding: 1rem 5rem;
+  }
+  @include desktop {
+    padding: 1rem 15%;
+  }
 
   &__title {
+    background-color: $primary1;
+    box-shadow: $darkshadow3;
+    width: fit-content;
+    font-size: 1.75rem;
     color: $accent4;
     margin: 0;
 
