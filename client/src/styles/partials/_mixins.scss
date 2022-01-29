@@ -79,3 +79,18 @@
     padding: 0.65rem 1rem;
     margin: 1rem 0 0;
 }
+
+@mixin icon-button {
+  position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0 0.25rem;
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(230deg, $primary1, $primary2);
+    border-radius: 0.5rem;
+    box-shadow: $darkshadow1;
+    border: none;
+}

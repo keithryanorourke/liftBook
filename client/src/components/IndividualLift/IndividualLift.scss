@@ -71,15 +71,6 @@
   }
 
   &__button {
-    border: none;
-    padding: 0;
-    background:linear-gradient(230deg, $primary2, $primary1);
-    box-shadow: $darkshadow2;
-    border-radius: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include icon-button;
   }
 }
