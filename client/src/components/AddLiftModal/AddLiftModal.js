@@ -2,6 +2,7 @@ import axios from "axios";
 import muscleList from "../../assets/data/muscleList.json"
 import "./AddLiftModal.scss"
 import closeIcon from "../../assets/icons/clear_black_24dp.svg"
+import uniqid from "uniqid"
 import { useState, useEffect } from "react";
 
 const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}) => {
@@ -19,25 +20,23 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}
   const toggleMuscle = (muscle) => {
     if(toggledMuscles.includes(muscle)) {
       let newArray = toggledMuscles
-      newArray = newArray.filter(prevMuscle => {
-        console.log(prevMuscle, muscle, prevMuscle !== muscle)
-        return prevMuscle !== muscle
-      })
-      setToggledMuscles(newArray)
-      // This is a bit hacky but it allows the select list to work even if state of hook takes too long to update.
-      if(!newArray.length) {
-        return setFilteredExercises(exercises)
+        const indexToRemove = newArray.indexOf(muscle)
+        newArray.splice(indexToRemove, 1)
+        setToggledMuscles(newArray)
+        if(!newArray.length) {
+          return setFilteredExercises(exercises)
+        }
+      } else {
+        let newArray = toggledMuscles
+        newArray.push(muscle)
+        setToggledMuscles(newArray)
       }
-    } else {
-      let newArray = toggledMuscles
-      newArray.push(muscle)
-      setToggledMuscles(newArray)
-    }
-    const filterByMuscles = exercises.filter(exercise => {
-      const musclesSpaceRemoved = exercise.muscle.replaceAll(' ', '')
-      const splitMuscles = musclesSpaceRemoved.split(',')
-      return splitMuscles.some(muscle => toggledMuscles.includes(muscle))
-    })
+      const filterByMuscles = exercises.filter(exercise => {
+        const musclesSpaceRemoved = exercise.muscle.replaceAll(' ', '')
+        const splitMuscles = musclesSpaceRemoved.split(',')
+        return splitMuscles.some(muscle => toggledMuscles.includes(muscle))
+      })
+    console.log(toggledMuscles)
     setFilteredExercises(filterByMuscles)
   }
 
@@ -57,14 +56,14 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}
         <p className="add-lift__subtitle">Filter exercises by muscles:</p>
         <div className="add-lift__muscle-container">
           {muscleList.array.map((muscle, index) => {
-            return <button onClick={() => toggleMuscle(muscle)} key={index} className={"add-lift__muscle-button " + (toggledMuscles.includes(muscle) ? "add-lift__muscle-button--toggled" : "")}>{muscle}</button>
+            return <button onClick={() => toggleMuscle(muscle)} key={uniqid()} className={"add-lift__muscle-button " + (toggledMuscles.includes(muscle) ? "add-lift__muscle-button--toggled" : "")}>{muscle}</button>
           })}
         </div>
         <form onSubmit={addLiftHandler} className="add-lift__form">
           <label htmlFor="" className="add-lift__label">Exercise:
             <select name="exercise" id="" className="add-lift__exercise-dropdown">
               {filteredExercises.map(exercise => {
-                return <option key={exercise.id} value={JSON.stringify(exercise)} className="add-lift__exercise-option">{exercise.name}</option>
+                return <option key={uniqid()} value={JSON.stringify(exercise)} className="add-lift__exercise-option">{exercise.name}</option>
               })}
             </select>
           </label>
