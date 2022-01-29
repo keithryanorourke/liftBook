@@ -63,7 +63,7 @@ const WorkoutPage = ({token}) => {
     })
     .catch(error => {
       alert(`${error}.\nThe workout you are trying to access is not associated with your account! You will now be redirected to your home page.`)
-      navigate("../workouts", {replace: true})
+      navigate("../", {replace: true})
     })
 
   axios.get(`http://localhost:8080/exercises/`, { headers: 
