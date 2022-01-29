@@ -78,19 +78,29 @@
     background-color: $primary2;
     padding: 0.65rem 1rem;
     margin: 1rem 0 0;
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover {
+      transform: scale(1.1) translateY(-0.1rem)
+    }
 }
 
 @mixin icon-button {
   position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin: 0 0.25rem;
-    width: 2rem;
-    height: 2rem;
-    background: linear-gradient(230deg, $primary1, $primary2);
-    border-radius: 0.5rem;
-    box-shadow: $darkshadow1;
-    border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0 0.25rem;
+  width: 2rem;
+  height: 2rem;
+  background: linear-gradient(230deg, $primary1, $primary2);
+  border-radius: 0.5rem;
+  box-shadow: $darkshadow1;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    transform: scale(1.15) translateY(-0.1rem)
+  }
 }
