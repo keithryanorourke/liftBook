@@ -5,6 +5,13 @@
 
 .add-exercise {
   @include modal;
+  animation: popup 0.2s;
+  transition: 0.3s;
+
+  &--closing {
+    opacity: 0;
+    transform: scale(3);
+  }
 
   &__overlay {
     @include modal-overlay;

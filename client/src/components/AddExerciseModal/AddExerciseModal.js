@@ -34,7 +34,7 @@ const AddExerciseModal = ({close, addExerciseHandler, setAddExerciseModal}) => {
   return (
     <>
       <div onClick={closeModal} className="add-exercise__overlay"></div>
-      <section className="add-exercise">
+      <section className={"add-exercise " + (close ? "add-exercise--closing" : "")}>
         <div className="add-exercise__container">
           <div className="add-exercise__top-container">
             <div className="add-exercise__empty"></div>

@@ -47,8 +47,19 @@ const ExercisesPage = ({token}) => {
     Authorization: `Bearer: ${token}`
     } 
     })
-    .then(response => getUserExercises())
+    .then(response => {
+      getUserExercises()
+      closingAnimationFunction(setAddExerciseModal)
+    })
     .catch(error => alert(error + `\nYou may have entered a duplicate exercise name. Try using a different name than ${newExercise.name}!`))
+  }
+
+  const closingAnimationFunction = (modalSetter) => {
+    setCloseModalAnimation(true)
+    setTimeout(() => {
+      modalSetter(false)
+      setCloseModalAnimation(false)
+    }, 300)
   }
 
   return (
