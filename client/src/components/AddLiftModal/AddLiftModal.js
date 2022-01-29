@@ -1,4 +1,5 @@
 import axios from "axios";
+import muscleList from "../../assets/data/muscleList.json"
 import "./AddLiftModal.scss"
 import closeIcon from "../../assets/icons/clear_black_24dp.svg"
 
@@ -7,6 +8,8 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}
     e.preventDefault()
     setAddLiftModal(false)
   }
+
+  console.log(muscleList)
 
   console.log(settings)
 
