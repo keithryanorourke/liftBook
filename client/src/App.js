@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route exact path="/workouts" element={<Private><HomePage /></Private>}></Route>
+          <Route exact path="/" element={<Private><HomePage /></Private>}></Route>
           <Route path="/workouts/:workoutId" element={<Private><WorkoutPage /></Private>}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/signup" element={<SignUpPage />}></Route>

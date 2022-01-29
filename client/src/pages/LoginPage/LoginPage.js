@@ -29,7 +29,7 @@ export const LoginPage = () => {
       axios.post("http://localhost:8080/account/login", submission)
       .then(response => {
         Cookie.set("token", response.data, {expires: 7})
-        navigate("../workouts", {replace: true})
+        navigate("../", {replace: true})
       })
       .catch(error => {
         if(error.status === 404) {
