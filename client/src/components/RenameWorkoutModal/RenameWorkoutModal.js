@@ -25,8 +25,8 @@ const RenameWorkoutModal = ({handler, setRenameWorkout, workout, close}) => {
         <input name="name" type="text" defaultValue={workout.name} placeholder="Leave blank for freestyle workout!" className="new-workout__name" />
       </label>
       <div className="rename-workout__button-container">
-        <button onClick={closeModal} className="rename-workout__button rename-workout__button--cancel">Cancel</button>
         <button type="submit" className="rename-workout__button rename-workout__button--submit">Save</button>
+        <button onClick={closeModal} className="rename-workout__button rename-workout__button--cancel">Cancel</button>
       </div>
     </form>
   </div>

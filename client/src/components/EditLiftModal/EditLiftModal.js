@@ -82,8 +82,8 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
               : null
             }
               <div className="edit-lift__button-container">
-                <button onClick={closeModal} className="edit-lift__button">Cancel</button>
                 <button className="edit-lift__button edit-lift__button--submit">Save</button>
+                <button onClick={closeModal} className="edit-lift__button">Cancel</button>
               </div>
             </form>
           </div>

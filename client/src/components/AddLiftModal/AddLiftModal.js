@@ -93,8 +93,8 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}
           : null
           }
           <div className="add-lift__button-container">
-            <button onClick={closeModal} className="add-lift__button">Cancel</button>
             <button className="add-lift__button add-lift__button--submit">Save</button>
+            <button onClick={closeModal} className="add-lift__button">Cancel</button>
           </div>
         </form>
         </div>
