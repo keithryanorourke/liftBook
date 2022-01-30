@@ -98,6 +98,14 @@
   border-radius: 1rem;
   outline: none;
   transition: 0.1s;
+  -moz-appearance: textfield;
+
+  &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+
 
   &:focus {
     transform: scale(1.05);

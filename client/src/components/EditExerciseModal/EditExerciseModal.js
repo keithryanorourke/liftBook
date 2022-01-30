@@ -34,8 +34,9 @@ const EditExerciseModal = ({exercise, close, editExerciseHandler, setEditExercis
         newArray.push(muscle)
         setToggledMuscles(newArray)
       }
+      console.log(toggledMuscles.includes(muscle))
       // WHY DOES THIS WORK??????????
-      return setRandomBool(!randomBool)
+      // setRandomBool(!randomBool)
   }
 
   return (
@@ -52,7 +53,7 @@ const EditExerciseModal = ({exercise, close, editExerciseHandler, setEditExercis
             <p className="edit-exercise__copy">Select all muscles involved in exercise:</p>
             <div className="edit-exercise__muscle-container">
             {muscleList.array.map(muscle => {
-              return <button onClick={() => toggleMuscle(muscle)} key={uniqid()} className={"edit-exercise__muscle-button " + (toggledMuscles.includes(muscle) ? "edit-exercise__muscle-button--toggled" : null)}>{muscle}</button>
+              return <button onClick={() => toggleMuscle(muscle)} key={uniqid()} className={"edit-exercise__muscle-button " + (toggledMuscles.includes(muscle) ? "edit-exercise__muscle-button--toggled" : "")}>{muscle}</button>
             })}
             </div>
             <form onSubmit={(e) => editExerciseHandler(e, exercise, toggledMuscles)} className="edit-exercise__form">
