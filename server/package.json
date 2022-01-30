@@ -10,8 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "dotenv": "^14.2.0",
     "epxress": "^0.0.1-security",
-    "knex": "^1.0.1"
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^1.0.1",
+    "mysql": "^2.18.1",
+    "uniqid": "^5.4.0"
   }
 }

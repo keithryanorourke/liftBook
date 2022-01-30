@@ -1,0 +1,110 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.home {
+  position: relative;
+  animation: popup 0.2s;
+  @include top-level-container;
+  overflow: visible;
+
+  &__new {
+    @include add-button;
+  }
+  
+  &__top-container {
+    border-top-left-radius:1rem;
+    border-top-right-radius:1rem;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: center;
+    background-color: $primary3;;
+  }
+
+
+  &__workouts-container {
+    box-shadow: $darkshadow1;
+    border-bottom-left-radius:1rem;
+    border-bottom-right-radius:1rem;
+    max-height: 70vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+  }
+
+  
+  &__workout {
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    &--even {
+      background-color: $primary5;
+    }
+  }
+
+  &__workout-name {
+    font-weight: 600;
+    color: $textcolor2;
+    margin-bottom: 0.5rem;
+  }
+
+  &__workout-date {
+    font-weight: 600;
+  }
+
+  &__workout-instruct {
+    font-size: 0.7rem;
+    text-decoration: underline;
+  } 
+ 
+  &__open-workout {
+    text-align: center;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    color: $globaltextcolor;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background: linear-gradient(-230deg, $primary1, $primary2);
+    box-shadow: $darkshadow3;
+    transition: 0.2s;
+    &:hover {
+      transform: scale(1.02) translateY(-0.1rem)
+    }
+  }
+
+  &__button-container {
+    margin-left: 0.5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__button {
+    @include icon-button;
+  }
+  
+  &__icon {
+    position: relative;
+    border-radius: 50%;
+    z-index: 2;
+  }
+
+
+  &__null {
+    text-align: center;
+    margin: 1rem 0 0;
+  }
+
+  &__get-started {
+    @include generic-button;
+    align-self: center;
+    margin-bottom: 1rem;
+  }
+}

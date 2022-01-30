@@ -1,0 +1,41 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.header {
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  @include tablet {
+    padding: 1rem 5rem;
+  }
+  @include desktop {
+    padding: 1rem 15%;
+  }
+
+  &__link {
+    text-decoration: none;
+    width: fit-content;
+    transition: 0.2s;
+    &:hover {
+      transform: scale(1.2) translateX(0.5rem)
+    }
+  }
+
+  &__title {
+    background-color: $primary1;
+    box-shadow: $darkshadow3;
+    width: fit-content;
+    font-size: 1.75rem;
+    color: $accent4;
+    margin: 0;
+
+    &--pop {
+      color: $accent2;
+    }
+  }
+}

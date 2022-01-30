@@ -1,0 +1,95 @@
+const express = require('express')
+const router = express.Router()
+const knex = require('knex')(require('../knexfile').development)
+const authorize = require ("../middleware/authorize").authorize;
+
+
+// Get all workouts for specific user
+router.get("/", authorize, (req, res) => {
+  const {userId} = req.decoded
+  console.log("received")
+  knex.from('users')
+  .innerJoin('workouts', 'users.id', 'workouts.user_id')
+  .select('workouts.id', 'workouts.name', 'workouts.timestamp')
+  .where({user_id: userId})
+  .then(response => {
+    console.log(response, "THEN")
+    return res.status(200).send(response)
+  })
+  .catch(error => {
+    console.log(error, "ERROR")
+    return res.status(400).send(error)
+  })
+})
+
+// Get specific workout from user account
+router.get("/:workoutId", authorize, (req, res) => {
+  const {userId} = req.decoded
+  knex('workouts')
+  .where({user_id: userId, 'id': req.params.workoutId})
+  .then(response => {
+    if (response.length) {
+      console.log(response, "got")
+      return res.status(200).send(response[0])
+    }
+    return res.status(404).json("Workout not found within user account!")
+  })
+  .catch(error => {
+    console.log(error, "did not get")
+    return res.status(400).send(error)
+  })
+})
+
+// Delete specific workout
+router.delete("/:workoutId", authorize, (req, res) => {
+  const {userId} = req.decoded
+  knex.from('workouts')
+  .where({id: req.params.workoutId, user_id: userId})
+  .delete()
+  .then(response => {
+    console.log(response, "workout deleted!")
+    return res.status(200).send("workout deleted")
+  })
+  .catch(error => {
+    console.log(error, "delete failed")
+    return res.status(400).send("deleted failed")
+  })
+})
+
+// Create new workout
+router.post("/", authorize, (req, res) => {
+  const {userId} = req.decoded
+  knex('workouts')
+  .insert({
+    name: (req.body.name || "Freestyle Workout"), user_id: userId
+  })
+  .then(response => {
+    console.log(response)
+    return res.status(200).json(response[response.length-1])
+  })
+  .catch(error => {
+    console.log(error)
+    return res.status(400).send("Workout not added!!")
+  })
+})
+
+// Rename workout
+router.put("/:workoutId", authorize, (req, res) => {
+  const {userId} = req.decoded
+  const {workoutId} = req.params
+  knex('workouts')
+  .where({id: workoutId})
+  .update({
+    name: (req.body.name || "Freestyle Workout")
+  })
+  .then(response => {
+    console.log(response)
+    return res.status(200).json(`Workout renamed to ${req.body.name}`)
+  })
+  .catch(error => {
+    console.log(error)
+    return res.status(400).send("Workout rename failed")
+  })
+})
+
+module.exports=router

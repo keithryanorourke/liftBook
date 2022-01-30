@@ -1,0 +1,71 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/animations" as *;
+
+.delete-modal {
+  @include modal;
+  transition: 0.3s;
+
+  &--closing {
+    opacity: 0;
+    transform: scale(3);
+  }
+
+  &__overlay {
+    @include modal-overlay;
+    background-color: $accent2;
+  }
+
+  &__container {
+    @include modal-top-level-container;
+  }
+
+  &__top-container {
+    padding: 0 1.5rem;
+    background-color: $primary3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__empty {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__close {
+    border: none;
+    background: none;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &__bottom-container {
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__button-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__button {
+    @include generic-button;
+
+    &--delete {
+      border: 0.25rem solid $accent2;
+      background: none;
+      color: $accent2;
+      box-shadow: $lightshadow1;
+    }
+  }
+}

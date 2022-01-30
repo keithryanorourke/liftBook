@@ -1,0 +1,79 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.new-workout {
+  @include modal;
+  transition: 0.3s;
+
+  &--closing {
+    opacity: 0;
+    transform: scale(3);
+  }
+
+  &__container {
+    @include modal-top-level-container;
+    margin: 0;
+    animation: popup 0.2s;
+    width: 100%;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__overlay {
+    @include modal-overlay;
+    background-color: $accent1;
+  }
+
+  &__top-container {
+    padding: 0 1.5rem;
+    background-color: $primary3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__empty {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &__close {
+    height: 1.5rem;
+    background: none;
+    border: none;
+
+  }
+
+  &__form {
+    padding: 1rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    @include generic-field;
+    &::placeholder {
+      color: $placeholdertext;
+    }
+  }
+
+  &__button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__button {
+    @include generic-button;
+
+    &--submit {
+      color: $accent1;
+      background: none;
+      border: 0.25rem solid $accent1;
+      box-shadow: $lightshadow1;
+    }
+  }
+}

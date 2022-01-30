@@ -1,0 +1,76 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/animations" as *;
+
+.lift {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: $primary5;
+  
+  &--even {
+    background-color: $primary4;
+  }
+
+  &__title {
+    background-color: $accent5;
+    width: 9rem;
+    text-align: center;
+    margin: 0;
+    padding: 0.5rem;
+    box-shadow: $darkshadow2;
+  }
+
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 1.5rem;
+  }
+
+  &__set-number {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    opacity: 0.5;
+    background-color: $primary1;
+    padding: 0.25rem 1rem;
+    border-top-right-radius: 0.75rem;
+    box-shadow: $darkshadow1;
+  }
+
+  &__stat-container {
+    min-width: 7.8125rem;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__specifier {
+    box-shadow: $darkshadow1;
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+  }
+
+  &__stat {
+    font-weight: 600;
+    color: $textcolor2;
+  }
+
+  &__button-container {
+    display: flex;
+    justify-content: space-between;
+    align-self: flex-end;
+    width: 5rem;
+    margin: 0 .5rem .5rem;
+  }
+
+  &__button {
+    @include icon-button;
+  }
+}

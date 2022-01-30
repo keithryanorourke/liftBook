@@ -1,0 +1,71 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/animations" as *;
+
+.orientation {
+  display: flex;
+  flex-direction: column;
+  @include page-margins;
+  text-align: center;
+  
+  &__container {
+    border-radius: 1rem;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  
+  &__top-container {
+    position: relative;
+    z-index: 2;
+  }
+  
+  &__title {
+    color: $textcolor2;
+    text-align: center;
+    margin: 0;
+    padding: 0.8rem 0;
+  }
+  
+  &__mode {
+    background-color: $primary3;
+    box-shadow: $darkshadow2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    border-radius: 1rem;
+    list-style-type: none;
+    margin: 0.5rem 0 1rem;
+    padding: 1rem 1.5rem;
+    &--basic {
+      animation: popup 0.5s;
+    }
+
+    &--advanced {
+      opacity: 0%;
+      animation: popup 0.5s 0.2s forwards;
+    }
+  }
+
+  &__mode-copy {
+    padding: 0.5rem 0;
+  }
+
+  &__button {
+    @include generic-button;
+    min-width: 50%;
+    padding: 0.65rem 1rem;
+    margin: 0.5rem 0;
+  }
+
+  &__disclaimer {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+}
+

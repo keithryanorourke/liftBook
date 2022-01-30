@@ -1,0 +1,38 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.exercises {
+  position: relative;
+  @include top-level-container;
+  overflow: visible;
+
+  &__top-container {
+    display: flex;
+    justify-content: center;
+    background-color: $primary3;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
+
+  &__add-button {
+    @include add-button;
+  }
+
+  &__bottom-container {
+    box-shadow: $darkshadow1;
+    border-bottom-left-radius:1rem;
+    border-bottom-right-radius:1rem;
+    max-height: 70vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__button {
+    @include generic-button;
+    margin-top: 0.5rem;
+    width: fit-content;
+  }
+}

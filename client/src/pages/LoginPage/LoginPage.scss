@@ -1,0 +1,62 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/animations" as *;
+
+.login {
+  animation: popup 0.2s;
+  @include top-level-container;
+
+  &__top-container {
+    background-color: $primary3;
+  }
+  
+  &__title {
+    text-align: center
+  }
+  
+  &__form {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $primary4;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  &__field {
+    box-shadow: $darkshadow1;
+    outline: none;
+    border: none;
+    color: $globaltextcolor;
+    background-color: $primary2;
+    padding: 0.65rem 1rem;
+    margin-top: 0.25rem;
+    border-radius: 1rem;
+  }
+
+  &__submit {
+    @include generic-button;
+    padding: 0.65rem 1rem;
+    margin-top: 0.25rem;
+    width: 50%;
+    align-self: flex-end;
+  }
+
+  &__link {
+    text-decoration: none;
+    border-radius: 1rem;
+    color: $globaltextcolor;
+    font-size: 0.8rem;
+    text-align: center;
+    width: fit-content;
+    padding: 0 1rem;
+    margin: 1rem 0 0;
+  }
+}
