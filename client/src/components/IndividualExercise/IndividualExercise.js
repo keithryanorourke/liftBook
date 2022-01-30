@@ -38,7 +38,10 @@ const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => 
             })}
         </div>
       </div>
-      
+      <div className="exercise__button-container">
+        <button className="exercise__button"><img src={edit} alt="" className="exercise__icon" /></button>
+        <button onClick={() => setDeleteModal(exercise)} className="exercise__button"><img src={deleteIcon} alt="" className="exercise__icon" /></button>
+      </div>
     </article>
     )
 }

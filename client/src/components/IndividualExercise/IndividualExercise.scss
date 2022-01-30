@@ -66,4 +66,15 @@
     width: 7rem;
   }
 
+  &__button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding-top: 0.5rem;
+  }
+
+  &__button {
+    @include icon-button;
+  }
+
 }

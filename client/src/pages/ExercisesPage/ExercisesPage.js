@@ -4,12 +4,16 @@ import { useState, useEffect } from "react"
 import add from "../../assets/icons/add_black_24dp.svg"
 import AddExerciseModal from "../../components/AddExerciseModal/AddExerciseModal"
 import IndividualExercise from "../../components/IndividualExercise/IndividualExercise"
+import DeleteModal from "../../components/DeleteModal/DeleteModal"
 
 const ExercisesPage = ({token}) => {
 
   const [addExerciseModal, setAddExerciseModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [editModal, setEditModal] = useState(false)
   const [closeModalAnimation, setCloseModalAnimation] = useState(false)
   const [exercises, setExercises] = useState([])
+  const [currentExercise, setCurrentExercise] = useState(false)
 
   const getUserExercises = () => {
     axios.get(`http://localhost:8080/exercises/user`, { headers: 
@@ -55,6 +59,32 @@ const ExercisesPage = ({token}) => {
     .catch(error => alert(error + `\nYou may have entered a duplicate exercise name. Try using a different name than ${newExercise.name}!`))
   }
 
+
+
+
+  const deleteExerciseHandler = (id) => {
+    axios.delete(`http://localhost:8080/exercises/${id}`, { headers: 
+    {
+    Authorization: `Bearer: ${token}`
+    } 
+    })
+    .then(response => {
+      getUserExercises()
+      closingAnimationFunction(setDeleteModal)
+    })
+    .catch(error => alert(error))
+  } 
+
+  const handleSetDeleteModal = (exercise) => {
+    setCurrentExercise(exercise)
+    setDeleteModal(true)
+  }
+
+  const handleSetEditModal = (exercise) => {
+    setCurrentExercise(exercise)
+    setEditModal(true)
+  }
+
   const closingAnimationFunction = (modalSetter) => {
     setCloseModalAnimation(true)
     setTimeout(() => {
@@ -71,6 +101,14 @@ const ExercisesPage = ({token}) => {
     close={closeModalAnimation}
     />
     : null}
+    {deleteModal ? <DeleteModal 
+    setDeleteModal={setDeleteModal}
+    close={closeModalAnimation}
+    deleteHandler={deleteExerciseHandler}
+    title={currentExercise.name + " from your exercises?"}
+    id={currentExercise.id}
+    /> 
+    : null}
     <section className="exercises">
       <button onClick={() => setAddExerciseModal(true)} className="exercises__add-button"><img src={add} alt="Plus sign icon" className="exercises__add" /></button>
       <div className="exercises__top-container">
@@ -82,6 +120,8 @@ const ExercisesPage = ({token}) => {
         key={exercise.id}
         exercise={exercise}
         index={index}
+        setDeleteModal={handleSetDeleteModal}
+        setEditModal={handleSetEditModal}
         />
       })
       :

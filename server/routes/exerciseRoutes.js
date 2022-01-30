@@ -47,5 +47,15 @@ router.post("/", authorize, (req, res) => {
   .catch(error => res.status(400).send("Exercise not created, may be a duplicate."))
 })
 
+// Delete single user exercise
+router.delete("/:exerciseId", authorize, (req, res) => {
+  const {userId} = req.decoded
+  const {exerciseId} = req.params
+  knex('exercises')
+  .where({id: exerciseId, user_id: userId})
+  .delete()
+  .then(response => res.status(200).send(`Exercise ${exerciseId} succesfully deleted!`))
+  .catch(error => res.status(400).send(`Exercise ${exerciseId} was not deleted. It either does not exist or does not belong to your account.`))
+})
 
 module.exports = router
