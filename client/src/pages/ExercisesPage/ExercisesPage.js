@@ -168,10 +168,12 @@ const ExercisesPage = ({token}) => {
         })}
         </div>
         :
-          <div className="exercises__bottom-container">
-          <p className="exercises__copy">Not finding the exercise you want in our list? You can add any exercise you want to our database! Each exercise you add is only accessible to you, so it's like you're getting your own personalized exercise database!</p>
-          <button onClick={() => setAddExerciseModal(true)} className="exercises__button">Add first exercise!</button>
-        </div>
+            <div className="exercises__bottom-container">
+              <div className="exercises__default-container">
+                <p className="exercises__copy">Not finding the exercise you want in our list? You can add any exercise you want to our database! Each exercise you add is only accessible to you, so it's like you're getting your own personalized exercise database!</p>
+                <button onClick={() => setAddExerciseModal(true)} className="exercises__button">Add first exercise!</button>
+              </div>
+            </div>
         }
       </div>
     </section>

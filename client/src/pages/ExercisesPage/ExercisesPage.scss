@@ -27,12 +27,20 @@
     overflow: hidden;
   }
 
+  
   &__bottom-container {
     box-shadow: $darkshadow1;
     max-height: 68vh;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+  }
+  
+  &__default-container {
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__button {
