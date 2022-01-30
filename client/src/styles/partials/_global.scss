@@ -2,6 +2,20 @@
 
 *, *::before, *::after {
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: $primary1 $primary5;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  // color: $primary1;
+  // background-color: $primary5;
+  &-thumb {
+    background-color: $primary1
+  }
+  &-track {
+    background-color: $primary5;
+  }
 }
 
 body {
@@ -10,7 +24,6 @@ body {
   font-family:Arial, Helvetica, sans-serif;
   background: linear-gradient(-20deg, $primary1, $primary2);
   color: $globaltextcolor;
-  overflow: scroll;
 }
 
 html, body, #root {

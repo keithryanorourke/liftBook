@@ -32,17 +32,24 @@
     align-items: center;
   }
 
+  &__title {
+    text-align: center;
+  }
+
   &__empty {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2.3rem;
+    height: 2.3rem;
   }
 
   &__close {
-    width: 1.5rem;
-    height: 1.5rem;
-    background: none;
-    border: none;
+    @include icon-button
+  }
 
+  &__scroll-container {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    max-height: 60vh;
+    overflow-y: auto;
   }
 
   &__form {

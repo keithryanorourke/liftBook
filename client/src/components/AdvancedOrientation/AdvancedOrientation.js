@@ -56,7 +56,7 @@ const AdvancedOrientation = ({advancedHandler, difficultyHandler, setAdvanced, t
       <div className="advanced__container">
         <div className="advanced__top-container">
           <button onClick={() => setAdvanced(false)} className="advanced__back"><img src={back} alt="" className="advanced__arrow" /></button>
-          <h2 className="advanced__subtitle">Advanced Mode:</h2>
+          <h2 className="advanced__subtitle">Advanced Mode</h2>
           <div className="advanced__empty"></div>
         </div>
         <form onSubmit={advancedHandler} className="advanced__form">

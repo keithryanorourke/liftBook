@@ -7,6 +7,8 @@
   display: flex;
   flex-direction: column;
   @include page-margins;
+  overflow-y: auto;
+  max-height: 75vh;
   text-align: center;
   
   &__container {

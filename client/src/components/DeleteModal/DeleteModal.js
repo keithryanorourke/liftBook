@@ -9,7 +9,7 @@ const DeleteModal = ({setDeleteModal, close, title, deleteHandler, id}) => {
       <div className="delete-modal__container">
         <div className="delete-modal__top-container">
           <div className="delete-modal__empty"></div>
-          <h2 className="delete-modal__title">Delete?</h2>
+          <h3 className="delete-modal__title">Delete?</h3>
           <button onClick={() => setDeleteModal(false)} className="delete-modal__close"><img src={closeIcon} alt="X shaped icon" className="delete-modal__close-icon" /></button>
         </div>
         <div className="delete-modal__bottom-container">

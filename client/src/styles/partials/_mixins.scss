@@ -12,12 +12,12 @@
 }
 
 @mixin page-margins {
-  margin: 5rem 1rem;
+  margin: 4.5rem 1rem;
   @include tablet {
-    margin: 5rem 5rem;
+    margin: 4.5rem 5rem;
   }
   @include desktop {
-    margin: 5rem 15%;
+    margin: 4.5rem 15%;
   }
 }
 
@@ -98,6 +98,14 @@
   border-radius: 1rem;
   outline: none;
   transition: 0.1s;
+  -moz-appearance: textfield;
+
+  &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+
 
   &:focus {
     transform: scale(1.05);

@@ -129,6 +129,7 @@ const HomePage = ({token}) => {
         <div className="home__top-container">
           <h2 className="home__title">Workouts</h2>
         </div>
+        <div className="home__scroll-container">
           <div className="home__workouts-container">
           {user.workouts && user.workouts.length ? user.workouts.map((workout, index) => {
             return (
@@ -153,6 +154,7 @@ const HomePage = ({token}) => {
             </>
           }
           </div>
+        </div>
       </section>
     </>
   )

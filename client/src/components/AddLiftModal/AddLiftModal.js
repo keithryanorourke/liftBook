@@ -46,7 +46,7 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}
       <div className="add-lift__container">
         <div className="add-lift__top-container">
           <div className="add-lift__empty"></div>
-          <h2 className="add-lift__title">Add New Lift</h2>
+          <h3 className="add-lift__title">Add Lift</h3>
           <button onClick={closeModal} className="add-lift__close"><img src={closeIcon} alt="X icon" className="add-lift__x" /></button>
         </div>
         <div className="add-lift__scroll-container">
