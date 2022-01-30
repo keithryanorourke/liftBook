@@ -7,8 +7,16 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  min-width: 100%;
   background-color: $primary5;
+  border-top: 2px solid $primary2;
+  flex-grow: 1;
+  @include tablet {
+    min-width: 50%;
+  }
+  @include desktop {
+    min-width: 33%;
+  }
   
   &--even {
     background-color: $primary4;

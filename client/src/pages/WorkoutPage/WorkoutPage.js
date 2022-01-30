@@ -105,12 +105,16 @@ const WorkoutPage = ({token}) => {
       newLift.weight = parseInt(e.target.weight.value)
     }
 
-    if(userSettings.trackDifficulty && e.target.difficulty.value) {
-      newLift.difficulty = parseFloat(e.target.difficulty.value)
+    if(userSettings.trackDifficulty && userSettings.mode==="advanced") {
+      if(e.target.difficulty.value) {
+        newLift.difficulty = parseFloat(e.target.difficulty.value)
+      }
     }
 
-    if(userSettings.trackPercentageOfMax && e.target.percentage.value) {
-      newLift.percentageOfMax = parseFloat(e.target.percentage.value)
+    if(userSettings.trackPercentageOfMax && userSettings.mode==="advanced") {
+      if(e.target.percentage.value) {
+        newLift.percentageOfMax = parseFloat(e.target.percentage.value)
+      }
     }
 
     if(!newLift.reps) {
