@@ -68,11 +68,11 @@ const HomePage = ({token}) => {
     Authorization: `Bearer: ${token}`
     } 
     })
-  .then(response => {
-    getWorkouts()
-    closingAnimationFunction(setDeleteModal)
-  })
-  .catch(error => console.log(error))
+    .then(response => {
+      getWorkouts()
+      closingAnimationFunction(setDeleteModal)
+    })
+    .catch(error => console.log(error))
   }
 
   const renameWorkoutHandler = (e, workout) => {
