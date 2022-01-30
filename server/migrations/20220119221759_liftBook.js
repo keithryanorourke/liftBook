@@ -15,7 +15,7 @@
     })
     .createTable('exercises', (table) => {
       table.increments('id').notNullable;
-      table.string('name').notNullable().unique();
+      table.string('name').notNullable();
       table.string('muscle').notNullable();
       table
         .integer('user_id')
@@ -54,6 +54,14 @@
         .notNullable()
         .references('id')
         .inTable('workouts')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
+      table
+        .integer('user_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('users')
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
       table.integer('weight').unsigned().notNullable();
