@@ -240,6 +240,7 @@ const WorkoutPage = ({token}) => {
         <div className="workout__top-container">
           <h2 className="workout__title">{workout ? workout.name : "Loading..."}</h2>
         </div>
+        <div className="workout__scroll-container">
           {lifts.length ?
           <div className="workout__lifts-container">
             {lifts.map((lift, index) => {
@@ -263,6 +264,7 @@ const WorkoutPage = ({token}) => {
             <button onClick={() => setAddLiftModal(true)} className="workout__first-lift">Track first lift!</button>
           </div>
           }
+          </div>
       </section>
     </>
   )
