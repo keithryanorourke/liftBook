@@ -45,7 +45,7 @@ export const LoginPage = () => {
   return (
     <section className="login">
       <div className="login__top-container">
-        <h2 className="login__title">Login:</h2>
+        <h2 className="login__title">Login</h2>
       </div>
       <form onSubmit={loginHandler} className="login__form">
         <label className="login__label">Username:

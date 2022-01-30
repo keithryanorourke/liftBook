@@ -51,7 +51,6 @@ router.post("/", authorize, (req, res) => {
 router.put("/", authorize, (req, res) => {
   const {userId} = req.decoded
   const newExercise = req.body
-  console.log(newExercise)
   knex('exercises')
   .where({id: newExercise.id, user_id: userId})
   .update({
