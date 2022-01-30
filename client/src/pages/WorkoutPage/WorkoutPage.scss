@@ -38,10 +38,21 @@
     align-items: center;
     max-height: 68vh;
     overflow-y: auto;
+    @include tablet {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
   }
 
   &__first-lift {
     @include generic-button;
     margin-bottom: 1rem;
+  }
+
+  &__null-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

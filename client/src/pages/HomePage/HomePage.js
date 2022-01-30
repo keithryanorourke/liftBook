@@ -1,11 +1,11 @@
 import axios from "axios";
 import "./HomePage.scss"
 import {useState, useEffect} from "react";
-import convertDate from "../../functions/dateConversion";
-import {NavLink} from "react-router-dom"
+
 import NewWorkoutModal from "../../components/NewWorkoutModal/NewWorkoutModal";
 import RenameWorkoutModal from "../../components/RenameWorkoutModal/RenameWorkoutModal";
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
+import IndividualWorkout from "../../components/IndividualWorkout/IndividualWorkout";
 import add from "../../assets/icons/add_black_24dp.svg";
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
 import edit from "../../assets/icons/edit_black_24dp.svg"
@@ -133,19 +133,12 @@ const HomePage = ({token}) => {
           <div className="home__workouts-container">
           {user.workouts && user.workouts.length ? user.workouts.map((workout, index) => {
             return (
-              <article key={workout.id} 
-              className={"home__workout " + (index % 2 === 0 ? "home__workout--even " : "")}
-              >
-                <NavLink to={`/workouts/${workout.id}`} className="home__open-workout">
-                  <span className="home__workout-name">{workout.name}</span>
-                  <span className="home__workout-date">{convertDate(workout.timestamp)}</span>
-                </NavLink>
-                <div className="home__button-container">
-                  <button onClick={() => handleSetRenameModal(workout)} className="home__button"><img src={edit} alt="Pencil icon" className="home__icon" /></button>
-                  <NavLink to={`/workouts/${workout.id}`} className="home__button"><img src={listIcon} alt="Paper document icon" className="home__icon" /></NavLink>
-                  <button onClick={() => handleSetDeleteModal(workout)} className="home__button"><img src={deleteIcon} alt="Trash bin icon" className="home__icon" /></button>
-                </div>
-              </article>
+              <IndividualWorkout 
+              workout={workout}
+              index={index}
+              handleSetDeleteModal={handleSetDeleteModal}
+              handleSetRenameModal={handleSetRenameModal}
+              />
               )
             }) : 
             <>

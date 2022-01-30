@@ -9,6 +9,15 @@
   flex-direction: column;
   width: 100%;
   background-color: $primary5;
+  border-top: 2px solid $primary2;
+  flex-grow: 1;
+  @include tablet {
+    box-shadow: $darkshadow2;
+    width: 50%;
+  }
+  @include desktop {
+    width: 33%;
+  }
   
   &--even {
     background-color: $primary4;
@@ -21,6 +30,9 @@
     margin: 0;
     padding: 0.5rem;
     box-shadow: $darkshadow2;
+    @include tablet {
+      width: 15rem;
+    }
   }
 
   &__container {
