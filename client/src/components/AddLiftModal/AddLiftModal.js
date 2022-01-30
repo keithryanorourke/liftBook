@@ -5,7 +5,7 @@ import closeIcon from "../../assets/icons/clear_black_24dp.svg"
 import uniqid from "uniqid"
 import { useState, useEffect } from "react";
 
-const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}) => {
+const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal, previousLift}) => {
 
   const closeModal = (e) => {
     e.preventDefault()
@@ -36,8 +36,6 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal}
       })
     setFilteredExercises(filterByMuscles)
   }
-
-  
 
   return (
     <>

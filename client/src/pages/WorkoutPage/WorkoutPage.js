@@ -125,6 +125,7 @@ const WorkoutPage = ({token}) => {
       } 
     })
     .then(response => {
+      sessionStorage.setItem('previousLift', JSON.stringify(newLift))
       getLifts()
       closingAnimationFunction(setAddLiftModal)
     })
@@ -215,6 +216,7 @@ const WorkoutPage = ({token}) => {
       addLiftHandler={addLiftHandler} 
       setAddLiftModal={setAddLiftModal}
       close={closeModalAnimation}
+      previousLift={JSON.parse(sessionStorage.getItem('previousLift'))}
       /> 
       : null}
       {editLiftModal ? <EditLiftModal 

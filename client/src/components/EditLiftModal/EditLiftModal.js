@@ -54,7 +54,7 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
                 </select>
               </label>
               <label className="edit-lift__label">Weight:
-                <input type="number" step=".01" name="weight" defaultValue={lift.weight} placeholder="Leave blank for bodyweight" className="edit-lift__input" />
+                <input type="number" step=".01" name="weight" defaultValue={lift.weight || ""} placeholder="Leave blank for bodyweight" className="edit-lift__input" />
               </label>
               <div className="edit-lift__radio-container">
                 <div className="edit-lift__separator">
