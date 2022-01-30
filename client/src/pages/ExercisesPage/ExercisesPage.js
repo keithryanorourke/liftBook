@@ -71,6 +71,7 @@ const ExercisesPage = ({token}) => {
     e.preventDefault()
     const newExercise = {
       ...exercise,
+      name: e.target.name.value,
       muscle: formatMusclesIntoString(muscles)
     }
     if(!newExercise.muscle.length) {
@@ -88,6 +89,7 @@ const ExercisesPage = ({token}) => {
     } 
     })
     .then(response => {
+      console.log(response)
       getUserExercises()
       closingAnimationFunction(setEditModal)
     })

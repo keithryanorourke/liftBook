@@ -1,7 +1,8 @@
 import axios from "axios";
 import "./HomePage.scss"
 import {useState, useEffect} from "react";
-
+import { useNavigate } from "react-router-dom";
+import uniqid from "uniqid"
 import NewWorkoutModal from "../../components/NewWorkoutModal/NewWorkoutModal";
 import RenameWorkoutModal from "../../components/RenameWorkoutModal/RenameWorkoutModal";
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
@@ -10,7 +11,6 @@ import add from "../../assets/icons/add_black_24dp.svg";
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
 import edit from "../../assets/icons/edit_black_24dp.svg"
 import listIcon from "../../assets/icons/post_add_black_24dp.svg"
-import { useNavigate } from "react-router-dom";
 
 const HomePage = ({token}) => {
   const navigate = useNavigate()
@@ -134,6 +134,7 @@ const HomePage = ({token}) => {
           {user.workouts && user.workouts.length ? user.workouts.map((workout, index) => {
             return (
               <IndividualWorkout 
+              key={uniqid()}
               workout={workout}
               index={index}
               handleSetDeleteModal={handleSetDeleteModal}
@@ -141,10 +142,10 @@ const HomePage = ({token}) => {
               />
               )
             }) : 
-            <>
+            <div className="home__null-container">
               <h3 className="home__null">You're all set up!</h3>
               <button onClick={() => setNewWorkout(true)} className="home__get-started">Track your first workout!</button>
-            </>
+            </div>
           }
           </div>
         </div>

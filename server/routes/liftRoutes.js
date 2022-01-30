@@ -10,7 +10,7 @@ router.post("/", authorize, (req, res) => {
   const lift = req.body
   knex('lifts')
   .insert({
-    ...lift, userId: userId
+    ...lift, user_id: userId
   })
   .then(response => {
     console.log(response)
@@ -29,7 +29,7 @@ router.put("/", authorize, (req, res) => {
   const lift = req.body
   console.log(lift.id)
   knex('lifts')
-  .where({id: lift.id})
+  .where({id: lift.id, user_id: userId})
   .update({
     ...lift
   })
@@ -50,10 +50,10 @@ router.get("/:workoutId", authorize, (req, res) => {
   knex.from('workouts')
   .select(['lifts.id', 'lifts.weight', 'lifts.measure', 'lifts.reps', 
   'lifts.difficulty', 'lifts.metric', 'lifts.percentageOfMax', 
-  'lifts.userId', 'exercises.name', 'exercises.muscle'])
+  'lifts.user_id', 'exercises.name', 'exercises.muscle'])
   .innerJoin('lifts', 'workouts.id', 'lifts.workout_id')
   .innerJoin('exercises', 'exercises.id', 'lifts.exercise_id')
-  .where({userId: userId, workout_id: workoutId})
+  .where({'lifts.user_id': userId, workout_id: workoutId})
   .then(response => {
     console.log(response[0])
     return res.status(200).json(response)
@@ -69,7 +69,7 @@ router.delete("/:liftId", authorize, (req, res) => {
   const {userId} = req.decoded
   const {liftId} = req.params
   knex('lifts')
-  .where({id: liftId, userId: userId})
+  .where({id: liftId, user_id: userId})
   .delete()
   .then(response => {
     console.log(response)
