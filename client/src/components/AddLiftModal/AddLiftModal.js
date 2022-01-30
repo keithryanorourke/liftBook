@@ -56,37 +56,37 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal,
         </div>
         <form onSubmit={addLiftHandler} className="add-lift__form">
           <label htmlFor="" className="add-lift__label">Exercise:
-            <select name="exercise" id="" className="add-lift__exercise-dropdown">
+            <select name="exercise" defaultValue={previousLift ? previousLift.name : "Squat"} id="" className="add-lift__exercise-dropdown">
               {filteredExercises.map(exercise => {
-                return <option key={uniqid()} value={JSON.stringify(exercise)} className="add-lift__exercise-option">{exercise.name}</option>
+                return <option key={uniqid()} value={exercise.name} className="add-lift__exercise-option">{exercise.name}</option>
               })}
             </select>
           </label>
           <label className="add-lift__label">Weight:
-            <input type="number" step=".01" name="weight" placeholder="Leave blank for bodyweight" className="add-lift__input" />
+            <input type="number" step=".01" name="weight" defaultValue={previousLift ? (previousLift.weight || "") : ""} placeholder="Leave blank for bodyweight" className="add-lift__input" />
           </label>
           <div className="add-lift__radio-container">
             <div className="add-lift__separator">
-              <input type="radio" id="lbs" defaultChecked value="lbs" name="weightMetric" className="add-lift__radio"/>
+              <input type="radio" id="lbs" defaultChecked={previousLift ? (previousLift.measure === "lbs") : true} value="lbs" name="weightMetric" className="add-lift__radio"/>
               <label htmlFor="lbs" className="add-lift__label add-lift__label--radio">lbs</label>
             </div>
             <div className="add-lift__separator">
-              <input type="radio" id="kg" value="kg" name="weightMetric" className="add-lift__radio"/>
+              <input type="radio" id="kg" defaultChecked={previousLift ? (previousLift.measure === "kg") : false} value="kg" name="weightMetric" className="add-lift__radio"/>
               <label htmlFor="kg" className="add-lift__label add-lift__label--radio">kg</label>
             </div>
           </div>
           <label className="add-lift__label">Reps:
-            <input type="number" placeholder="Enter a whole number greater than 0" name="reps" className="add-lift__input" />
+            <input type="number" defaultValue={previousLift ? previousLift.reps : ""} placeholder="Enter a whole number greater than 0" name="reps" className="add-lift__input" />
           </label>
           {settings.trackDifficulty && settings.mode==="advanced" ? 
           <label className="add-lift__label">{settings.preferredMetric} (optional):
-            <input type="number" step=".5" placeholder={settings.preferredMetric === "RPE" ? "Number between 1.0-10.0" : "Any non negative number"} name="difficulty" className="add-lift__input" />
+            <input type="number" step=".5" defaultValue={previousLift ? (settings.preferredMetric === "RIR" ? previousLift.difficulty : previousLift.difficulty || "") : ""} placeholder={settings.preferredMetric === "RPE" ? "Number between 1.0-10.0" : "Any non negative number"} name="difficulty" className="add-lift__input" />
           </label>
           : null
           }
           {settings.trackPercentageOfMax && settings.mode==="advanced" ? 
           <label className="add-lift__label">%of1RM (optional):
-            <input type="number" name="percentage" step=".5" placeholder="Any number between 1.0 and 100.0" className="add-lift__input" />
+            <input type="number" defaultValue={previousLift ? (previousLift.percentageOfMax || "") : ""} name="percentage" step=".5" placeholder="Any number between 1.0 and 100.0" className="add-lift__input" />
           </label>
           : null
           }
