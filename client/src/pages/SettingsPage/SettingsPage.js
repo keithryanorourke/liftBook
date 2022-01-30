@@ -1,6 +1,6 @@
 import "./SettingsPage.scss"
 import axios from "axios"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import Cookie from "js-cookie"
 import { useNavigate } from "react-router-dom"
 import InformativeModal from "../../components/InformativeModal/InformativeModal"
@@ -8,7 +8,6 @@ import help from "../../assets/icons/help_outline_black_24dp.svg"
 
 const SettingsPage = ({token}) => {
   const navigate=useNavigate()
-  const formEl = useRef(null)
   const [mode, setMode] = useState(null)
   const [trackDifficulty, setTrackDifficulty] = useState(false)
   const [settings, setSettings] = useState(null)
@@ -47,7 +46,7 @@ const SettingsPage = ({token}) => {
     axios.put("http://localhost:8080/account/settings", newSettings, {
       headers: {Authorization: `Bearer: ${token}`}
     })
-    .then(response => navigate("../", {replace: true}))
+    .then(response => navigate(-1))
     .catch(error => console.log(error))
   }
 
@@ -141,7 +140,7 @@ const SettingsPage = ({token}) => {
         <div className="settings__top-container">
           <h2 className="settings__title">Settings</h2>
         </div>
-        <form ref={formEl} onSubmit={submitHandler} className="settings__form">
+        <form onSubmit={submitHandler} className="settings__form">
 
         <p className="settings__prefer">Mode:</p>
             <div className="settings__wrapper">
