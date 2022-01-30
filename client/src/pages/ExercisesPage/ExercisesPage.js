@@ -5,6 +5,7 @@ import add from "../../assets/icons/add_black_24dp.svg"
 import AddExerciseModal from "../../components/AddExerciseModal/AddExerciseModal"
 import IndividualExercise from "../../components/IndividualExercise/IndividualExercise"
 import DeleteModal from "../../components/DeleteModal/DeleteModal"
+import EditExerciseModal from "../../components/EditExerciseModal/EditExerciseModal"
 
 const ExercisesPage = ({token}) => {
 
@@ -21,7 +22,10 @@ const ExercisesPage = ({token}) => {
     Authorization: `Bearer: ${token}`
     } 
     })
-    .then(response => setExercises(response.data))
+    .then(response => {
+      const sortedExercises = response.data.sort((exerciseA, exerciseB) => exerciseB.id - exerciseA.id)
+      setExercises(sortedExercises)
+    })
     .catch(error => alert(error))
   }
 
@@ -29,14 +33,18 @@ const ExercisesPage = ({token}) => {
     getUserExercises()
   }, [])
 
-  const addHandler = (e, muscles) => {
-    e.preventDefault()
-    const formattedMuscles = muscles.map((muscle, index) => {
-      if(index !== muscles.length-1) {
+  const formatMusclesIntoString = (musclesToFormat) => {
+    return musclesToFormat.map((muscle, index) => {
+      if(index !== musclesToFormat.length-1) {
         return muscle + ", "
       }
       return muscle
     }).join('')
+  }
+
+  const addHandler = (e, muscles) => {
+    e.preventDefault()
+    const formattedMuscles = formatMusclesIntoString(muscles)
     if(!formattedMuscles.length) {
       return alert("Please select at least one muscle before submitting a new exercise!")
     }
@@ -59,10 +67,35 @@ const ExercisesPage = ({token}) => {
     .catch(error => alert(error + `\nYou may have entered a duplicate exercise name. Try using a different name than ${newExercise.name}!`))
   }
 
-
-
+  const editExerciseHandler = (e, exercise, muscles) => {
+    e.preventDefault()
+    const newExercise = {
+      ...exercise,
+      muscle: formatMusclesIntoString(muscles)
+    }
+    if(!newExercise.muscle.length) {
+      return alert("Please select at least one muscle before editing exercise!")
+    }
+    if(!newExercise.name || e.target.name.length > 25) {
+      return alert("Make sure to give your exercise a name less than 25 characters long!")
+    }
+    if(newExercise.name.match(/[^A-Za-z ]/)) {
+      return alert("Exercise names may not contain any numbers or special characters!")
+    }
+    axios.put(`http://localhost:8080/exercises/`, newExercise, { headers: 
+    {
+    Authorization: `Bearer: ${token}`
+    } 
+    })
+    .then(response => {
+      getUserExercises()
+      closingAnimationFunction(setEditModal)
+    })
+    .catch(error => alert(error + `\nYou may have entered a duplicate exercise name. Try using a different name than ${newExercise.name}!`))
+  }
 
   const deleteExerciseHandler = (id) => {
+    console.log(id)
     axios.delete(`http://localhost:8080/exercises/${id}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
@@ -101,6 +134,13 @@ const ExercisesPage = ({token}) => {
     close={closeModalAnimation}
     />
     : null}
+    {editModal ? <EditExerciseModal 
+    setEditExerciseModal={setEditModal}
+    editExerciseHandler={editExerciseHandler}
+    close={closeModalAnimation}
+    exercise={currentExercise}
+    /> 
+    : null}
     {deleteModal ? <DeleteModal 
     setDeleteModal={setDeleteModal}
     close={closeModalAnimation}
@@ -114,8 +154,10 @@ const ExercisesPage = ({token}) => {
       <div className="exercises__top-container">
         <h2 className="exercises__title">Exercises</h2>
       </div>
+
       {exercises.length ?
-      exercises.map((exercise, index) => {
+      <div className="exercises__bottom-container">
+      {exercises.map((exercise, index) => {
         return <IndividualExercise 
         key={exercise.id}
         exercise={exercise}
@@ -123,7 +165,8 @@ const ExercisesPage = ({token}) => {
         setDeleteModal={handleSetDeleteModal}
         setEditModal={handleSetEditModal}
         />
-      })
+      })}
+      </div>
       :
         <div className="exercises__bottom-container">
         <p className="exercises__copy">Not finding the exercise you want in our list? You can add any exercise you want to our database! Each exercise you add is only accessible to you, so it's like you're getting your own personalized exercise database!</p>

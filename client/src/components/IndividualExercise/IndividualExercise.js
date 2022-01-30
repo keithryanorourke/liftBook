@@ -12,7 +12,6 @@ const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => 
   })
 
   const exerciseColor = (muscle) => {
-    console.log(muscle)
     if(muscle === "Triceps" || muscle === "Chest" || muscle === "Shoulders") {
       return "exercise__muscle--push"
     }
@@ -39,7 +38,7 @@ const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => 
         </div>
       </div>
       <div className="exercise__button-container">
-        <button className="exercise__button"><img src={edit} alt="" className="exercise__icon" /></button>
+        <button onClick={() => setEditModal(exercise)} className="exercise__button"><img src={edit} alt="" className="exercise__icon" /></button>
         <button onClick={() => setDeleteModal(exercise)} className="exercise__button"><img src={deleteIcon} alt="" className="exercise__icon" /></button>
       </div>
     </article>

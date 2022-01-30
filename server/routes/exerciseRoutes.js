@@ -47,6 +47,19 @@ router.post("/", authorize, (req, res) => {
   .catch(error => res.status(400).send("Exercise not created, may be a duplicate."))
 })
 
+// Edit single user exercise 
+router.put("/", authorize, (req, res) => {
+  const {userId} = req.decoded
+  const newExercise = req.body
+  knex('exercises')
+  .where({id: newExercise.id, user_id: userId})
+  .update({
+    ...newExercise, user_id: userId
+  })
+  .then(response => res.status(201).json(response))
+  .catch(error => res.status(400).send("Exercise not created, may be a duplicate."))
+})
+
 // Delete single user exercise
 router.delete("/:exerciseId", authorize, (req, res) => {
   const {userId} = req.decoded
