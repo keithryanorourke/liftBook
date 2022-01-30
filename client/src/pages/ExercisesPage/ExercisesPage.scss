@@ -6,6 +6,7 @@
 .exercises {
   position: relative;
   @include top-level-container;
+  animation: popup 0.2s;
   overflow: visible;
 
   &__top-container {
@@ -28,7 +29,7 @@
 
   &__bottom-container {
     box-shadow: $darkshadow1;
-    max-height: 70vh;
+    max-height: 68vh;
     overflow-y: auto;
     display: flex;
     flex-direction: column;

@@ -15,7 +15,7 @@ const NewWorkoutModal = ({handler, setNewWorkout, close}) => {
   <div className="new-workout__container">
     <div className="new-workout__top-container">
       <div className="new-workout__empty"></div>
-      <h2 className="new-workout__title">New Workout</h2>
+      <h3 className="new-workout__title">New Workout</h3>
       <button onClick={closeModal} className="new-workout__close"><img src={closeIcon} alt="" className="new-workout__x" /></button>
     </div>
     <form onSubmit={handler} className="new-workout__form">

@@ -51,7 +51,7 @@ const OrientationPage = ({token}) => {
   return (
     <section className="orientation">
       <div className="orientation__top-container">
-        <h1 className="orientation__title">Welcome to liftBook!</h1>
+        <h2 className="orientation__title">Welcome to liftBook!</h2>
       </div>
       <p className="orientation__copy">Before you get started, please select a tracking mode:</p>
       <div className="orientation__container">

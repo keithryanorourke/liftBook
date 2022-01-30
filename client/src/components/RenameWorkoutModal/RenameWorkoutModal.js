@@ -17,7 +17,7 @@ const RenameWorkoutModal = ({handler, setRenameWorkout, workout, close}) => {
   <div className="rename-workout__container">
     <div className="rename-workout__top-container">
       <div className="rename-workout__empty"></div>
-      <h2 className="rename-workout__title">Rename Workout</h2>
+      <h3 className="rename-workout__title">Rename Workout</h3>
       <button onClick={closeModal} className="rename-workout__close"><img src={closeIcon} alt="" className="rename-workout__x" /></button>
     </div>
     <form onSubmit={(e) => handler(e, workout)} className="rename-workout__form">
