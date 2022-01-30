@@ -89,7 +89,7 @@ const WorkoutPage = ({token}) => {
   const addLiftHandler = (e) => {
     e.preventDefault()
     let exit = false;
-    const exercise = JSON.parse(e.target.exercise.value)
+    const exercise = exercises.find(exercise => exercise.name === e.target.exercise.value)
     const newLift = {
       workout_id: workoutId,
       reps: parseInt(e.target.reps.value),
@@ -125,6 +125,8 @@ const WorkoutPage = ({token}) => {
       } 
     })
     .then(response => {
+      newLift.name = exercise.name
+      sessionStorage.setItem('previousLift', JSON.stringify(newLift))
       getLifts()
       closingAnimationFunction(setAddLiftModal)
     })
@@ -215,6 +217,7 @@ const WorkoutPage = ({token}) => {
       addLiftHandler={addLiftHandler} 
       setAddLiftModal={setAddLiftModal}
       close={closeModalAnimation}
+      previousLift={JSON.parse(sessionStorage.getItem('previousLift'))}
       /> 
       : null}
       {editLiftModal ? <EditLiftModal 

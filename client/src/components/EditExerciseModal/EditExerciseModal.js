@@ -46,7 +46,7 @@ const EditExerciseModal = ({exercise, close, editExerciseHandler, setEditExercis
         <div className="edit-exercise__container">
           <div className="edit-exercise__top-container">
             <div className="edit-exercise__empty"></div>
-            <h3 className="edit-exercise__title">Edit {exercise.name}:</h3>
+            <h3 className="edit-exercise__title">Edit {exercise.name}</h3>
             <button onClick={closeModal} className="edit-exercise__close-button"><img src={closeIcon} alt="X shaped icon" className="edit-exercise__close" /></button>
           </div>
           <div className="edit-exercise__bottom-container">
@@ -61,8 +61,8 @@ const EditExerciseModal = ({exercise, close, editExerciseHandler, setEditExercis
                 <input type="text" defaultValue={exercise.name} placeholder="Exercise name is required" className="edit-exercise__name" name="name" />
               </label>
               <div className="edit-exercise__button-container">
-                <button onClick={closeModal} className="edit-exercise__button">Cancel</button>
                 <button className="edit-exercise__button edit-exercise__button--submit">Submit</button>
+                <button onClick={closeModal} className="edit-exercise__button">Cancel</button>
               </div>
             </form>
           </div>

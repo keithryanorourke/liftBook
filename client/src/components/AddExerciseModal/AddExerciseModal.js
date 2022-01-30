@@ -38,7 +38,7 @@ const AddExerciseModal = ({close, addExerciseHandler, setAddExerciseModal}) => {
         <div className="add-exercise__container">
           <div className="add-exercise__top-container">
             <div className="add-exercise__empty"></div>
-            <h3 className="add-exercise__title">New Exercise:</h3>
+            <h3 className="add-exercise__title">New Exercise</h3>
             <button onClick={closeModal} className="add-exercise__close-button"><img src={closeIcon} alt="X shaped icon" className="add-exercise__close" /></button>
           </div>
           <div className="add-exercise__bottom-container">
@@ -53,8 +53,8 @@ const AddExerciseModal = ({close, addExerciseHandler, setAddExerciseModal}) => {
                 <input type="text" placeholder="Exercise name is required" className="add-exercise__name" name="name" />
               </label>
               <div className="add-exercise__button-container">
-                <button onClick={closeModal} className="add-exercise__button">Cancel</button>
                 <button className="add-exercise__button add-exercise__button--submit">Submit</button>
+                <button onClick={closeModal} className="add-exercise__button">Cancel</button>
               </div>
             </form>
           </div>
