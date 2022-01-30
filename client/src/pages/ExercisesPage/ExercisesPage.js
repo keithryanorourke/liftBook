@@ -3,6 +3,7 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import add from "../../assets/icons/add_black_24dp.svg"
 import AddExerciseModal from "../../components/AddExerciseModal/AddExerciseModal"
+import IndividualExercise from "../../components/IndividualExercise/IndividualExercise"
 
 const ExercisesPage = ({token}) => {
 
@@ -75,10 +76,20 @@ const ExercisesPage = ({token}) => {
       <div className="exercises__top-container">
         <h2 className="exercises__title">Exercises</h2>
       </div>
-      <div className="exercises__bottom-container">
+      {exercises.length ?
+      exercises.map((exercise, index) => {
+        return <IndividualExercise 
+        key={exercise.id}
+        exercise={exercise}
+        index={index}
+        />
+      })
+      :
+        <div className="exercises__bottom-container">
         <p className="exercises__copy">Not finding the exercise you want in our list? You can add any exercise you want to our database! Each exercise you add is only accessible to you, so it's like you're getting your own personalized exercise database!</p>
         <button onClick={() => setAddExerciseModal(true)} className="exercises__button">Add first exercise!</button>
       </div>
+      }
     </section>
     </>
   )
