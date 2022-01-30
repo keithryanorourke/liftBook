@@ -7,15 +7,16 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  min-width: 100%;
+  width: 100%;
   background-color: $primary5;
   border-top: 2px solid $primary2;
   flex-grow: 1;
   @include tablet {
-    min-width: 50%;
+    box-shadow: $darkshadow2;
+    width: 50%;
   }
   @include desktop {
-    min-width: 33%;
+    width: 33%;
   }
   
   &--even {
@@ -29,6 +30,9 @@
     margin: 0;
     padding: 0.5rem;
     box-shadow: $darkshadow2;
+    @include tablet {
+      width: 15rem;
+    }
   }
 
   &__container {

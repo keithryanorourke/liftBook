@@ -1,0 +1,81 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+
+.individual-workout {
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-grow: 1;
+  border-top: 2px solid $primary2;
+  border-left: 1px solid $primary2;
+  border-right: 1px solid $primary2;
+  @include tablet {
+    box-shadow: $darkshadow2;
+    width: 50%;
+  }
+  @include desktop {
+    width: 33%;
+  }
+  &--even {
+    background-color: $primary5;
+  }
+
+
+  &__name {
+    font-weight: 600;
+    color: $textcolor2;
+    margin-bottom: 0.5rem;
+  }
+
+  &__date {
+    font-weight: 600;
+  }
+
+  &__instruct {
+    font-size: 0.7rem;
+    text-decoration: underline;
+  } 
+
+  &__open-workout {
+    text-align: center;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    color: $globaltextcolor;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 50rem;
+    background: linear-gradient(-230deg, $primary1, $primary2);
+    box-shadow: $darkshadow3;
+    transition: 0.2s;
+    &:hover {
+      transform: scale(1.02) translateY(-0.1rem)
+    }
+  }
+
+  &__button-container {
+    margin-left: 0.5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__button {
+    @include icon-button;
+  }
+
+  &__icon {
+    position: relative;
+    border-radius: 50%;
+    z-index: 2;
+  }
+}

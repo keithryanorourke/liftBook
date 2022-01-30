@@ -266,7 +266,7 @@ const WorkoutPage = ({token}) => {
             })}
           </div>
           :
-          <div className="workout__lifts-container">
+          <div className="workout__null-container">
             <p className="workout__no-lifts">No lifts tracked yet!</p>
             <button onClick={() => setAddLiftModal(true)} className="workout__first-lift">Track first lift!</button>
           </div>
