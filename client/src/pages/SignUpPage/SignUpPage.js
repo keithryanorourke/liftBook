@@ -2,7 +2,8 @@ import "./SignUpPage.scss"
 import axios from "axios"
 import {useState} from "react"
 import Cookie from "js-cookie"
-import { Navigate } from "react-router-dom"
+import { Navigate, NavLink } from "react-router-dom"
+import back from "../../assets/icons/arrow_back_black_24dp.svg"
 
 export const SignUpPage = () => {
   const [formFields, setFormFields] = useState({
@@ -50,7 +51,9 @@ export const SignUpPage = () => {
   return (
     <section className="signup">
         <div className="signup__top-container">
+          <NavLink to="/login" className="signup__back-button"><img src={back} alt="Arrow icon pointing left" className="signup__back" /></NavLink>
           <h2 className="signup__title">Create Account:</h2>
+          <div className="signup__empty"></div>
         </div>
         <form onSubmit={loginHandler} className="signup__form">
           <label className="signup__label">Username:
