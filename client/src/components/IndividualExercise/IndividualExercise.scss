@@ -52,6 +52,7 @@
   }
 
   &__muscle {
+    color: $textcolor2;
     padding: 0.5rem;
     width: 6rem;
     margin-top: 0;
@@ -64,11 +65,11 @@
     }
 
     &--pull {
-      background-color: $accent5;
-    }
-
-    &--legs {
       background-color: $accent2;
+    }
+    
+    &--legs {
+      background-color: $accent5;
     }
   }
 
