@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 require('dotenv').config()
 const {KEY} = process.env
 
-const insertAccount = async(newUser) => {
+const createAccount = async(newUser) => {
   // Validate user object
   if(!newUser.password) {
     return {code: 400, message: "Password required for sign up"}
@@ -52,7 +52,7 @@ const insertAccount = async(newUser) => {
   return response
 }
 
-const checkLogin = async(user) => {
+const authenticateLogin = async(user) => {
   let response
   try {
   response = await knex('users')
@@ -73,7 +73,7 @@ const checkLogin = async(user) => {
   return response
 }
 
-const findSettings = async(userId) => {
+const retrieveSettings = async(userId) => {
   let response
   try {
     response = await knex
@@ -92,7 +92,7 @@ const findSettings = async(userId) => {
   return response
 }
 
-const changeSettings = async(userId, settings) => {
+const editSettings = async(userId, settings) => {
   let response;
   try {
     response = await knex('users')
@@ -111,8 +111,8 @@ const changeSettings = async(userId, settings) => {
 }
 
 module.exports = {
-  insertAccount,
-  checkLogin,
-  findSettings,
-  changeSettings,
+  createAccount,
+  authenticateLogin,
+  retrieveSettings,
+  editSettings
 }

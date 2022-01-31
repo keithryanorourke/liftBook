@@ -3,22 +3,22 @@ const router = express.Router()
 const authorize = require ("../middleware/authorize").authorize;
 const accountController = require('../controllers/accountController')
 
-const {createAccount,
+const {postAccount,
   login,
   getSettings,
-  editSettings,
+  putSettings,
   checkAuth} = accountController
 
 require('dotenv').config()
 const {KEY} = process.env
 
-router.post('/signup', createAccount)
+router.post('/signup', postAccount)
 
 router.post('/login', login)
 
 router.get("/settings", authorize, getSettings)
 
-router.put('/settings', authorize, editSettings)
+router.put('/settings', authorize, putSettings)
 
 router.get("/check-auth", authorize, checkAuth)
 

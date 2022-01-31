@@ -1,11 +1,9 @@
 const accountModel = require('../models/accountModel.js')
+const {createAccount, authenticateLogin, retrieveSettings, editSettings} = accountModel
 
-const {insertAccount, checkLogin, findSettings, changeSettings} = accountModel
-
-const createAccount = async(req, res) => {
+const postAccount = async(req, res) => {
   let newUser = req.body
-  const response = await insertAccount(newUser)
-  console.log(response)
+  const response = await createAccount(newUser)
   if(response.message) {
     return res.status(response.code).send(response.message)
   }
@@ -14,7 +12,7 @@ const createAccount = async(req, res) => {
 
 const login = async(req, res) => {
   const user = req.body
-  const response = await checkLogin(user)
+  const response = await authenticateLogin(user)
   if(response.message) {
     return res.status(response.code).send(response.message)
   }
@@ -23,17 +21,17 @@ const login = async(req, res) => {
 
 const getSettings = async(req, res) => {
   const {userId} = req.decoded
-  const response = await findSettings(userId)
+  const response = await retrieveSettings(userId)
   if(response.message) {
     return res.status(response.code).send(response.message)
   }
   return res.status(200).json(response.settings)
 }
 
-const editSettings = async(req, res) => {
+const putSettings = async(req, res) => {
   const {userId} = req.decoded
   const settings = req.body
-  const response = await changeSettings(userId, settings)
+  const response = await editSettings(userId, settings)
   return res.status(response.code).send(response.message)
 }
 
@@ -42,9 +40,9 @@ const checkAuth = async(_req, res) => {
 }
 
 module.exports = {
-  createAccount,
+  postAccount,
   login,
   getSettings,
-  editSettings,
+  putSettings,
   checkAuth
 }
