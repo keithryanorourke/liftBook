@@ -7,6 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Header from './components/Header/Header';
+
 import Private from './components/Private/Private';
 import {LoginPage} from './pages/LoginPage/LoginPage';
 import {SignUpPage} from './pages/SignUpPage/SignUpPage';
@@ -21,15 +22,15 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/signup" element={<SignUpPage />}></Route>
-          <Route exact path="/" element={<Private><HomePage /></Private>}></Route>
-          <Route path="/workouts/:workoutId" element={<Private><WorkoutPage /></Private>}></Route>
-          <Route exact path="/exercises" element={<Private><ExercisesPage /></Private>}></Route>
-          <Route path="/setup" element={<Private><OrientationPage /></Private>}></Route>
-          <Route path="/settings" element={<Private><SettingsPage /></Private>}></Route>
-        </Routes>
+          <Routes>
+            <Route path="/login" element={<main><LoginPage /></main>}></Route>
+            <Route path="/signup" element={<main><SignUpPage /></main>}></Route>
+            <Route exact path="/" element={<Private><HomePage /></Private>}></Route>
+            <Route path="/workouts/:workoutId" element={<Private><WorkoutPage /></Private>}></Route>
+            <Route exact path="/exercises" element={<Private><ExercisesPage /></Private>}></Route>
+            <Route path="/setup" element={<Private><OrientationPage /></Private>}></Route>
+            <Route path="/settings" element={<Private><SettingsPage /></Private>}></Route>
+          </Routes>
       </BrowserRouter>
     </div>
   );
