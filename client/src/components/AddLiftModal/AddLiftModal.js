@@ -16,23 +16,22 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal,
   const [filteredExercises, setFilteredExercises] = useState(exercises)
 
   const toggleMuscle = (muscle) => {
+    let newArrayCopy
     if(toggledMuscles.includes(muscle)) {
-      let newArray = toggledMuscles
-        const indexToRemove = newArray.indexOf(muscle)
-        newArray.splice(indexToRemove, 1)
+      let newArray = toggledMuscles.filter(muscleFromArray => muscleFromArray !== muscle)
         setToggledMuscles(newArray)
         if(!newArray.length) {
           return setFilteredExercises(exercises)
         }
       } else {
-        let newArray = toggledMuscles
-        newArray.push(muscle)
-        setToggledMuscles(newArray)
+        newArrayCopy = [...toggledMuscles]
+        newArrayCopy.push(muscle)
+        setToggledMuscles(newArrayCopy)
       }
       const filterByMuscles = exercises.filter(exercise => {
         const musclesSpaceRemoved = exercise.muscle.replaceAll(' ', '')
         const splitMuscles = musclesSpaceRemoved.split(',')
-        return splitMuscles.some(muscle => toggledMuscles.includes(muscle))
+        return splitMuscles.some(muscle => newArrayCopy.includes(muscle))
       })
     setFilteredExercises(filterByMuscles)
   }
