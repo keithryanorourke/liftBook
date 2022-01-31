@@ -52,9 +52,14 @@ const Private = ({children}) => {
             return null;
         }
         else if (authentication.isAuthenticated) {
-            return <main>
-                <ElementToRender token={authentication.token} /><Footer />
-            </main>
+            return  (
+            <>
+                <main>
+                    <ElementToRender token={authentication.token} />
+                </main>
+                <Footer />
+            </>
+            )
         }
         else {
             return <Navigate to="/login"/>
