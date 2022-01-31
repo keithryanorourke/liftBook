@@ -7,7 +7,7 @@ const postAccount = async(req, res) => {
   if(response.message) {
     return res.status(response.code).send(response.message)
   }
-  return res.status(200).json(response.user)
+  return res.status(201).json(response.user)
 }
 
 const login = async(req, res) => {
