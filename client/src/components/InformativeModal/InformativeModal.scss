@@ -4,7 +4,6 @@
 @use "../../styles/partials/mixins" as *;
 
 .informative {
-  animation: popup cubic-bezier(.12,.98,.35,1.5) 0.2s;
   @include modal;
 
   &__overlay {

@@ -69,13 +69,13 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
               <label className="edit-lift__label">Reps:
                 <input type="number" defaultValue={lift.reps} placeholder="Enter a whole number greater than 0" name="reps" className="edit-lift__input" />
               </label>
-              {settings.trackDifficulty ? 
+              {settings.mode==="advanced" && settings.trackDifficulty ? 
               <label className="edit-lift__label">{lift.metric}:
                 <input type="number" defaultValue={difficulty} step=".5" placeholder="untracked" name="difficulty" className="edit-lift__input" />
               </label>
               : null
             }
-              {settings.trackPercentageOfMax ? 
+              {settings.mode==="advanced" && settings.trackPercentageOfMax ? 
               <label className="edit-lift__label">%of1RM:
                 <input type="number" step=".5" placeholder="untracked" name="percentage" className="edit-lift__input" />
               </label>

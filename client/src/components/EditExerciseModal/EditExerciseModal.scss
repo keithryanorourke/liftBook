@@ -5,12 +5,11 @@
 
 .edit-exercise {
   @include modal;
-  animation: popup 0.2s;
   transition: 0.3s;
 
   &--closing {
     opacity: 0;
-    transform: scale(3);
+    transform: scale(3) translate(-25%, -25%);
   }
 
   &__overlay {

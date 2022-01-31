@@ -9,13 +9,12 @@
 
   &--closing {
     opacity: 0;
-    transform: scale(3);
+    transform: scale(3) translate(-25%, -25%);
   }
 
   &__container {
     @include modal-top-level-container;
     margin: 0;
-    animation: popup 0.2s;
     width: 100%;
   }
 

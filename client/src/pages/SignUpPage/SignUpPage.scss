@@ -9,10 +9,23 @@
 
   &__top-container{
     background-color: $primary3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
   }
   
+  &__back-button {
+    @include icon-button;
+  }
+
   &__title {
     text-align: center
+  }
+
+  &__empty {
+    width: 2.3rem;
+    height: 2.3rem;
   }
   
   &__form {

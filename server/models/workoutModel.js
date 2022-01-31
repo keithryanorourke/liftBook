@@ -67,7 +67,7 @@ const createWorkout = async(userId, newWorkout) => {
       name: (newWorkout.name || "Freestyle Workout"), user_id: userId
     })
     .then(response => {
-      return {code: 201, workout: newWorkout}
+      return {code: 201, workout: response}
     })
     .catch(error => {
       return {code: 400, message: "workout not added."}
