@@ -250,7 +250,7 @@ const WorkoutPage = ({token}) => {
         <div className="workout__scroll-container">
           {lifts.length ?
           <div className="workout__lifts-container">
-            {lifts.map((lift, index) => {
+            {userSettings ? lifts.map((lift, index) => {
               return(
                 <IndividualLift 
                 key={lift.id} 
@@ -263,7 +263,9 @@ const WorkoutPage = ({token}) => {
                 className="workout__lift" 
                 />
               )
-            })}
+            })
+            : <h4>Loading...</h4>
+            }
           </div>
           :
           <div className="workout__null-container">
