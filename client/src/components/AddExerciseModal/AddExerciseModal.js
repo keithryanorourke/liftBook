@@ -9,21 +9,19 @@ const AddExerciseModal = ({close, addExerciseHandler, setAddExerciseModal}) => {
   const [toggledMuscles, setToggledMuscles] = useState([])
 
   // WHY IS THIS NECESSARY??? WHY DOES IT WORK???
-  const [randomBool, setRandomBool] = useState(false)
+  // const [randomBool, setRandomBool] = useState(false)
 
   const toggleMuscle = (muscle) => {
     if(toggledMuscles.includes(muscle)) {
-      let newArray = toggledMuscles
+      let newArray = [...toggledMuscles]
         const indexToRemove = newArray.indexOf(muscle)
         newArray.splice(indexToRemove, 1)
         setToggledMuscles(newArray)
       } else {
-        let newArray = toggledMuscles
+        let newArray = [...toggledMuscles]
         newArray.push(muscle)
         setToggledMuscles(newArray)
       }
-      // WHY DOES THIS WORK??????????
-      return setRandomBool(!randomBool)
   }
 
   const closeModal = (e) => {
@@ -45,7 +43,9 @@ const AddExerciseModal = ({close, addExerciseHandler, setAddExerciseModal}) => {
             <p className="add-exercise__copy">Select all muscles involved in exercise:</p>
             <div className="add-exercise__muscle-container">
             {muscleList.array.map(muscle => {
-              return <button onClick={() => toggleMuscle(muscle)} key={uniqid()} className={"add-exercise__muscle-button " + (toggledMuscles.includes(muscle) ? "add-exercise__muscle-button--toggled" : null)}>{muscle}</button>
+              return (
+                <button onClick={() => toggleMuscle(muscle)} key={muscle} className={"add-exercise__muscle-button " + (toggledMuscles.includes(muscle) ? "add-exercise__muscle-button--toggled" : "")}>{muscle}</button>
+              )
             })}
             </div>
             <form onSubmit={(e) => addExerciseHandler(e, toggledMuscles)} className="add-exercise__form">
