@@ -101,7 +101,7 @@ const WorkoutPage = ({token}) => {
       metric: userSettings.preferredMetric
     }
 
-    if (e.target.weight.value > 0 && e.target.weight.value < 500) {
+    if (e.target.weight.value > 0 && e.target.weight.value < 2000) {
       newLift.weight = parseInt(e.target.weight.value)
     }
 
@@ -156,16 +156,20 @@ const WorkoutPage = ({token}) => {
       id: id
     }
 
-    if (e.target.weight.value > 0 && e.target.weight.value < 500) {
+    if (e.target.weight.value > 0 && e.target.weight.value < 2000) {
       newLift.weight = parseInt(e.target.weight.value)
     }
 
-    if(userSettings.trackDifficulty && e.target.difficulty.value) {
-      newLift.difficulty = parseFloat(e.target.difficulty.value)
+    if(userSettings.trackDifficulty && userSettings.mode==="advanced") {
+      if(e.target.difficulty.value) {
+        newLift.difficulty = parseFloat(e.target.difficulty.value)
+      }
     }
 
-    if(userSettings.trackPercentageOfMax && e.target.percentage.value) {
-      newLift.percentageOfMax = parseFloat(e.target.percentage.value)
+    if(userSettings.trackPercentageOfMax && userSettings.mode==="advanced") {
+      if(e.target.percentage.value) {
+        newLift.percentageOfMax = parseFloat(e.target.percentage.value)
+      }
     }
 
     if(!newLift.reps) {
