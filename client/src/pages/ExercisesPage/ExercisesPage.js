@@ -1,6 +1,6 @@
 import "./ExercisesPage.scss"
 import axios from "axios"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import add from "../../assets/icons/add_black_24dp.svg"
 import AddExerciseModal from "../../components/AddExerciseModal/AddExerciseModal"
 import IndividualExercise from "../../components/IndividualExercise/IndividualExercise"
@@ -16,7 +16,7 @@ const ExercisesPage = ({token}) => {
   const [exercises, setExercises] = useState([])
   const [currentExercise, setCurrentExercise] = useState(false)
 
-  const getUserExercises = () => {
+  const getUserExercises = useCallback(() => {
     axios.get(`http://localhost:8080/exercises/user`, { headers: 
     {
     Authorization: `Bearer: ${token}`
@@ -27,11 +27,11 @@ const ExercisesPage = ({token}) => {
       setExercises(sortedExercises)
     })
     .catch(error => alert(error))
-  }
+  })
 
   useEffect(() => {
     getUserExercises()
-  }, [])
+  }, [getUserExercises])
 
   const formatMusclesIntoString = (musclesToFormat) => {
     return musclesToFormat.map((muscle, index) => {

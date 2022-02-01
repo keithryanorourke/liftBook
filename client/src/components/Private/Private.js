@@ -45,7 +45,7 @@ const Private = ({children}) => {
                     }));
                 });
         }
-    }, [])
+    }, [location.pathname])
     
         const ElementToRender = children.type
         if (authentication.isAuthenticating) {

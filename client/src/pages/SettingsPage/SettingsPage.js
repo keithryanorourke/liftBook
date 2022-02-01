@@ -1,13 +1,13 @@
 import "./SettingsPage.scss"
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import Cookie from "js-cookie"
 import { useNavigate } from "react-router-dom"
 import InformativeModal from "../../components/InformativeModal/InformativeModal"
 import help from "../../assets/icons/help_outline_black_24dp.svg"
 
 const SettingsPage = ({token}) => {
-  const navigate=useNavigate()
+  const navigate = useCallback(() =>useNavigate())
   const [mode, setMode] = useState(null)
   const [trackDifficulty, setTrackDifficulty] = useState(false)
   const [settings, setSettings] = useState(null)
@@ -33,7 +33,7 @@ const SettingsPage = ({token}) => {
       Cookie.remove('token')
       navigate('../login', {replace: true})
     })
-  }, [])
+  }, [navigate, token])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -47,7 +47,7 @@ const SettingsPage = ({token}) => {
       headers: {Authorization: `Bearer: ${token}`}
     })
     .then(response => navigate(-1))
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   const difficultyHandler = (e) => {

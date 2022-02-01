@@ -20,7 +20,7 @@ const OrientationPage = ({token}) => {
       headers: {Authorization: `Bearer: ${token}`}
     })
     .then(response => navigate("../", {replace: true}))
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   const advancedHandler = (e) => {
@@ -35,7 +35,7 @@ const OrientationPage = ({token}) => {
       headers: {Authorization: `Bearer: ${token}`}
     })
     .then(response => navigate("../", {replace: true}))
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   const difficultyHandler = (e) => {

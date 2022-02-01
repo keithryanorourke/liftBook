@@ -1,6 +1,6 @@
 import axios from "axios";
 import "./HomePage.scss"
-import {useState, useEffect} from "react";
+import {useState, useEffect, useCallback} from "react";
 import { useNavigate } from "react-router-dom";
 import uniqid from "uniqid"
 import NewWorkoutModal from "../../components/NewWorkoutModal/NewWorkoutModal";
@@ -28,7 +28,7 @@ const HomePage = ({token}) => {
     }, 300)
   }
 
-  const getWorkouts = () => {
+  const getWorkouts = useCallback(() => {
     axios.get("http://localhost:8080/workouts", { headers: 
       {
       Authorization: `Bearer: ${token}`
@@ -39,11 +39,11 @@ const HomePage = ({token}) => {
       return setUser({workouts: response.data})
     })
     .catch(error => alert(error))
-  }
+  })
 
   useEffect(() => {
     getWorkouts()
-  }, [])
+  }, [getWorkouts])
 
   const newWorkoutHandler = (e) => {
     e.preventDefault()
@@ -57,7 +57,7 @@ const HomePage = ({token}) => {
       } 
     })
     .then(response => navigate(`../workouts/${response.data}`, {replace: true}))
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   const renameWorkoutHandler = (e, workout) => {
@@ -85,7 +85,7 @@ const HomePage = ({token}) => {
       getWorkouts()
       closingAnimationFunction(setDeleteModal)
     })
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   const handleSetDeleteModal = (workout) => {

@@ -50,7 +50,7 @@ const removeWorkout = async(userId, workoutId) => {
       return {code: 200, message: "Workout deleted."}
     })
     .catch(error => {
-      console.log(error, "delete failed")
+      alert(error, "delete failed")
       return {code: 400, message: "delete failed"}
     })
   } catch(error) {

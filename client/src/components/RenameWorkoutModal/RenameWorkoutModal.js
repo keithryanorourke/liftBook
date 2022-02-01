@@ -8,8 +8,6 @@ const RenameWorkoutModal = ({handler, setRenameWorkout, workout, close}) => {
     setRenameWorkout(false)
   }
 
-  console.log(workout)
-
   return (
   <>
   <div className="rename-workout__overlay" onClick={closeModal}></div>

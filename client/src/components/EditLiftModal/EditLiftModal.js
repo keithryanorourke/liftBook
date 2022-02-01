@@ -12,7 +12,7 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
 
   useEffect(() => {
     setExerciseValue(lift.name)
-  }, [])
+  }, [lift.name])
 
   const handleSelect = (e) => {
     e.preventDefault()

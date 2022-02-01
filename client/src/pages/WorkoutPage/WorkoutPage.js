@@ -5,13 +5,13 @@ import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import IndividualLift from "../../components/IndividualLift/IndividualLift"
 import add from "../../assets/icons/add_black_24dp.svg";
 import axios from "axios"
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useCallback} from "react"
 import {useNavigate} from "react-router-dom"
 import {useParams} from "react-router";
 import Cookie from 'js-cookie'
 
 const WorkoutPage = ({token}) => {
-  const navigate = useNavigate()
+  const navigate = useCallback(() => useNavigate())
   const paramaters = useParams();
   const {workoutId} = paramaters
   const [workout, setWorkout] = useState(null)
@@ -65,7 +65,7 @@ const WorkoutPage = ({token}) => {
     }, 300)
   }
 
-  const getLifts = () => {
+  const getLifts = useCallback(() => {
     axios.get(`http://localhost:8080/lifts/${workoutId}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
@@ -74,8 +74,8 @@ const WorkoutPage = ({token}) => {
     .then(response => {
       setLifts(response.data.sort((liftA, liftB) => liftA.id - liftB.id))
     })
-    .catch(error => console.log(error))
-  }
+    .catch(error => alert(error))
+  })
 
   useEffect(() => {
     axios.get(`http://localhost:8080/account/settings`, { headers: 
@@ -117,7 +117,7 @@ const WorkoutPage = ({token}) => {
     .catch(error => alert(`We could not retrieve the list of exercises from our database! Please try reloading the page and if that does not work, please try to logout and log back in.\n ${error}`))
 
     getLifts()
-  }, [])
+  }, [getLifts, navigate, token, workoutId])
 
   const findExerciseByName = (name) => {
     return exercises.find(exercise => exercise.name === name)
@@ -176,7 +176,7 @@ const WorkoutPage = ({token}) => {
       closingAnimationFunction(setAddLiftModal)
     })
     .catch (error => {
-      console.log(error)
+      alert(error)
     })
     }
   }
