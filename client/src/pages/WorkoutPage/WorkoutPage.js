@@ -25,6 +25,8 @@ const WorkoutPage = ({token}) => {
   const [currentLift, setCurrentLift] = useState(null)
   const [setNumber, setSetNumber] = useState(null)
 
+  let liftSeparationCounter = 0;
+
   const closingAnimationFunction = (modalSetter) => {
     setCloseModalAnimation(true)
     setTimeout(() => {
@@ -193,6 +195,8 @@ const WorkoutPage = ({token}) => {
     }
   }
 
+  
+
   const deleteLiftHandler = (id) => {
     axios.delete(`http://localhost:8080/lifts/${id}`, { headers: 
     {
@@ -254,11 +258,40 @@ const WorkoutPage = ({token}) => {
         <div className="workout__scroll-container">
           {lifts.length ?
           <div className="workout__lifts-container">
-            {userSettings ? lifts.map((lift, index) => {
+            {
+            userSettings ? lifts.map((lift, index) => {
+              let liftSeparationModifier = "";
+              
+              if(index > 0) {
+                if(lift.name !== lifts[index-1].name) {
+                  if(liftSeparationCounter < 3) {
+                    liftSeparationCounter++
+                  } else {
+                    liftSeparationCounter = 0
+                  }
+                }
+              }
+
+              switch(liftSeparationCounter) {
+                case 0:
+                  liftSeparationModifier="lift--blue"
+                  break;
+                case 1:
+                  liftSeparationModifier="lift--pink"
+                  break;
+                case 2:
+                  liftSeparationModifier="lift--orange"
+                  break;
+                case 3:
+                  liftSeparationModifier="lift--green"
+                  break;
+              }
+
               return(
                 <IndividualLift 
                 key={lift.id} 
                 setNum={index+1}
+                liftSeparationModifier={liftSeparationModifier}
                 lift={lift}
                 index={index}
                 settings={userSettings}
