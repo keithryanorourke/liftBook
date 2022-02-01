@@ -27,7 +27,7 @@ const ExercisesPage = ({token}) => {
       setExercises(sortedExercises)
     })
     .catch(error => alert(error))
-  })
+  }, [token])
 
   useEffect(() => {
     getUserExercises()

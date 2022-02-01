@@ -11,7 +11,8 @@ import {useParams} from "react-router";
 import Cookie from 'js-cookie'
 
 const WorkoutPage = ({token}) => {
-  const navigate = useCallback(() => useNavigate())
+  const navigateCallback = useNavigate()
+  const navigate = useCallback((path, obj) => navigateCallback(path, obj), [navigateCallback])
   const paramaters = useParams();
   const {workoutId} = paramaters
   const [workout, setWorkout] = useState(null)
@@ -75,7 +76,7 @@ const WorkoutPage = ({token}) => {
       setLifts(response.data.sort((liftA, liftB) => liftA.id - liftB.id))
     })
     .catch(error => alert(error))
-  })
+  }, [token, workoutId])
 
   useEffect(() => {
     axios.get(`http://localhost:8080/account/settings`, { headers: 

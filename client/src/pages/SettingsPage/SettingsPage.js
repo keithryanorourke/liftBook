@@ -7,7 +7,8 @@ import InformativeModal from "../../components/InformativeModal/InformativeModal
 import help from "../../assets/icons/help_outline_black_24dp.svg"
 
 const SettingsPage = ({token}) => {
-  const navigate = useCallback(() =>useNavigate())
+  const navigateCallback = useNavigate()
+  const navigate = useCallback((path, obj) => navigateCallback(path, obj), [navigateCallback])
   const [mode, setMode] = useState(null)
   const [trackDifficulty, setTrackDifficulty] = useState(false)
   const [settings, setSettings] = useState(null)

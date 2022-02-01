@@ -39,7 +39,7 @@ const HomePage = ({token}) => {
       return setUser({workouts: response.data})
     })
     .catch(error => alert(error))
-  })
+  }, [token])
 
   useEffect(() => {
     getWorkouts()
