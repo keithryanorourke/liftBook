@@ -38,6 +38,7 @@ const HomePage = ({token}) => {
       } 
     })
     .then(response => {
+      response.data.sort((workoutA, workoutB) => workoutB.id - workoutA.id)
       return setUser({workouts: response.data})
     })
     .catch(error => alert(error))
