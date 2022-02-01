@@ -46,7 +46,11 @@ const OrientationPage = ({token}) => {
   }
 
   if(advanced) {
-    return(<AdvancedOrientation advancedHandler={advancedHandler} setAdvanced={setAdvanced} difficultyHandler={difficultyHandler} trackDifficulty={trackDifficulty} /> )
+    return(<AdvancedOrientation 
+      advancedHandler={advancedHandler} 
+      setAdvanced={setAdvanced} 
+      difficultyHandler={difficultyHandler} 
+      trackDifficulty={trackDifficulty} /> )
   }
   return (
     <section className="orientation">

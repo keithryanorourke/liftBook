@@ -1,6 +1,6 @@
 import "./NewWorkoutModal.scss"
 import closeIcon from "../../assets/icons/clear_black_24dp.svg"
-import React, {useState} from "react"
+import React from "react"
 
 const NewWorkoutModal = ({handler, setNewWorkout, close}) => {
   const closeModal = (e) => {

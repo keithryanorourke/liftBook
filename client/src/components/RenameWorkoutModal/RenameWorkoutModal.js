@@ -1,6 +1,6 @@
 import "./RenameWorkoutModal.scss"
 import closeIcon from "../../assets/icons/clear_black_24dp.svg"
-import React, {useState} from "react"
+import React from "react"
 
 const RenameWorkoutModal = ({handler, setRenameWorkout, workout, close}) => {
   const closeModal = (e) => {

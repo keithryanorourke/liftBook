@@ -42,62 +42,65 @@ const ExercisesPage = ({token}) => {
     }).join('')
   }
 
+  const validateExerciseForm = (e, muscles, exercise) => {
+    let newExercise = {}
+    if (exercise) {
+      newExercise = {...exercise}
+    }
+
+    newExercise.muscle = formatMusclesIntoString(muscles)
+    newExercise.name = e.target.name.value
+
+    if(!newExercise.muscle.length) {
+      alert("Please select at least one muscle before submitting a new exercise!")
+      return {error: true}
+    }
+    if(!newExercise.name || newExercise.name.length > 25) {
+      alert("Make sure to give your exercise a name less than 25 characters long!")
+      return {error: true}
+    }
+    if(newExercise.name.match(/[^A-Za-z ]/)) {
+      alert("Exercise names may not contain any numbers or special characters!")
+      return {error: true}
+    }
+    return newExercise
+  }
+
   const addHandler = (e, muscles) => {
     e.preventDefault()
-    const formattedMuscles = formatMusclesIntoString(muscles)
-    if(!formattedMuscles.length) {
-      return alert("Please select at least one muscle before submitting a new exercise!")
-    }
-    if(!e.target.name.value || e.target.name.value.length > 25) {
-      return alert("Make sure to give your exercise a name less than 25 characters long!")
-    }
-    if(e.target.name.value.match(/[^A-Za-z ]/)) {
-      return alert("Exercise names may not contain any numbers or special characters!")
-    }
-    const newExercise = {name: e.target.name.value, muscle: formattedMuscles}
-    axios.post(`http://localhost:8080/exercises`, newExercise, { headers: 
-    {
-    Authorization: `Bearer: ${token}`
-    } 
+    const newExercise = validateExerciseForm(e, muscles)
+    if(!newExercise.error) {
+      axios.post(`http://localhost:8080/exercises`, newExercise, { headers: 
+      {
+        Authorization: `Bearer: ${token}`
+      } 
     })
     .then(response => {
       getUserExercises()
       closingAnimationFunction(setAddExerciseModal)
     })
     .catch(error => alert(error + `\nYou may have entered a duplicate exercise name. Try using a different name than ${newExercise.name}!`))
+    }
   }
 
   const editExerciseHandler = (e, exercise, muscles) => {
     e.preventDefault()
-    const newExercise = {
-      ...exercise,
-      name: e.target.name.value,
-      muscle: formatMusclesIntoString(muscles)
-    }
-    if(!newExercise.muscle.length) {
-      return alert("Please select at least one muscle before editing exercise!")
-    }
-    if(!newExercise.name || e.target.name.length > 25) {
-      return alert("Make sure to give your exercise a name less than 25 characters long!")
-    }
-    if(newExercise.name.match(/[^A-Za-z ]/)) {
-      return alert("Exercise names may not contain any numbers or special characters!")
-    }
-    axios.put(`http://localhost:8080/exercises/`, newExercise, { headers: 
-    {
-    Authorization: `Bearer: ${token}`
-    } 
+    const newExercise = validateExerciseForm(e, muscles, exercise)
+    if(!newExercise.error) {
+      axios.put(`http://localhost:8080/exercises/`, newExercise, { headers: 
+      {
+        Authorization: `Bearer: ${token}`
+      } 
     })
     .then(response => {
-      console.log(response)
       getUserExercises()
       closingAnimationFunction(setEditModal)
     })
     .catch(error => alert(error + `\nYou may have entered a duplicate exercise name. Try using a different name than ${newExercise.name}!`))
+    }
   }
 
   const deleteExerciseHandler = (id) => {
-    console.log(id)
     axios.delete(`http://localhost:8080/exercises/${id}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
@@ -147,7 +150,7 @@ const ExercisesPage = ({token}) => {
     setDeleteModal={setDeleteModal}
     close={closeModalAnimation}
     deleteHandler={deleteExerciseHandler}
-    title={currentExercise.name + " from your exercises?"}
+    title={currentExercise.name + " from your exercises"}
     id={currentExercise.id}
     /> 
     : null}

@@ -141,11 +141,10 @@ const SettingsPage = ({token}) => {
           <h2 className="settings__title">Settings</h2>
         </div>
         <form onSubmit={submitHandler} className="settings__form">
-
         <p className="settings__prefer">Mode:</p>
             <div className="settings__wrapper">
               <div className="settings__separator">
-                <input type="radio" defaultChecked id="basic" name="mode" value="basic" onClick={modeHandler} defaultChecked={settings.mode === "basic"} className="settings__option" />
+                <input type="radio" id="basic" name="mode" value="basic" onClick={modeHandler} defaultChecked={settings.mode === "basic"} className="settings__option" />
                 <label htmlFor="basic" className="settings__label">Basic</label>
                 <button onClick={(e) => openModal(e, "basic")} className="settings__help-button">
                   <img src={help} alt="Question mark icon" className="settings__help" />

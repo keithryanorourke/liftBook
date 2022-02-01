@@ -1,15 +1,11 @@
 import "./AddExerciseModal.scss"
 import closeIcon from "../../assets/icons/clear_black_24dp.svg"
 import muscleList from "../../assets/data/muscleList.json"
-import { useState, useEffect } from "react"
-import uniqid from "uniqid"
+import { useState } from "react"
 
 const AddExerciseModal = ({close, addExerciseHandler, setAddExerciseModal}) => {
 
   const [toggledMuscles, setToggledMuscles] = useState([])
-
-  // WHY IS THIS NECESSARY??? WHY DOES IT WORK???
-  // const [randomBool, setRandomBool] = useState(false)
 
   const toggleMuscle = (muscle) => {
     if(toggledMuscles.includes(muscle)) {

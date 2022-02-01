@@ -1,11 +1,12 @@
 import "./LoginPage.scss";
 import axios from "axios";
 import {useState} from "react";
-import {NavLink, Navigate, useNavigate} from "react-router-dom"
+import {NavLink, useNavigate} from "react-router-dom"
 import Cookie from "js-cookie";
 
 
 export const LoginPage = () => {
+  // formFields will be implemented as a manner to render conditional error messages in a future sprint
   const [formFields, setFormFields] = useState({
     username: {},
     password: {},

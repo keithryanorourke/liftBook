@@ -6,7 +6,7 @@ import IndividualLift from "../../components/IndividualLift/IndividualLift"
 import add from "../../assets/icons/add_black_24dp.svg";
 import axios from "axios"
 import React, {useState, useEffect} from "react"
-import {NavLink, Navigate, useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import {useParams} from "react-router";
 import Cookie from 'js-cookie'
 
@@ -27,6 +27,35 @@ const WorkoutPage = ({token}) => {
 
   // This is a variable that needs larger scope. State does not need to know the value of this variable.
   let liftSeparationCounter = 0;
+  const setModifierColor = (lift, index) => {
+    let color  = "";
+    
+    if(index > 0) {
+      if(lift.name !== lifts[index-1].name) {
+        if(liftSeparationCounter < 3) {
+          liftSeparationCounter++
+        } else {
+          liftSeparationCounter = 0
+        }
+      }
+    }
+
+    switch(liftSeparationCounter) {
+      case 0:
+        color="lift--blue"
+        break;
+      case 1:
+        color="lift--pink"
+        break;
+      case 2:
+        color="lift--orange"
+        break;
+      default:
+        color="lift--green"
+        break;
+    }
+    return color
+  }
 
   const closingAnimationFunction = (modalSetter) => {
     setCloseModalAnimation(true)
@@ -77,7 +106,7 @@ const WorkoutPage = ({token}) => {
       navigate("../", {replace: true})
     })
 
-  axios.get(`http://localhost:8080/exercises/`, { headers: 
+    axios.get(`http://localhost:8080/exercises/`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -87,7 +116,7 @@ const WorkoutPage = ({token}) => {
     })
     .catch(error => alert(`We could not retrieve the list of exercises from our database! Please try reloading the page and if that does not work, please try to logout and log back in.\n ${error}`))
 
-  getLifts()
+    getLifts()
   }, [])
 
   const findExerciseByName = (name) => {
@@ -236,38 +265,11 @@ const WorkoutPage = ({token}) => {
           <div className="workout__lifts-container">
             {
             userSettings ? lifts.map((lift, index) => {
-              let liftSeparationModifier = "";
-              
-              if(index > 0) {
-                if(lift.name !== lifts[index-1].name) {
-                  if(liftSeparationCounter < 3) {
-                    liftSeparationCounter++
-                  } else {
-                    liftSeparationCounter = 0
-                  }
-                }
-              }
-
-              switch(liftSeparationCounter) {
-                case 0:
-                  liftSeparationModifier="lift--blue"
-                  break;
-                case 1:
-                  liftSeparationModifier="lift--pink"
-                  break;
-                case 2:
-                  liftSeparationModifier="lift--orange"
-                  break;
-                case 3:
-                  liftSeparationModifier="lift--green"
-                  break;
-              }
-
               return(
                 <IndividualLift 
                 key={lift.id} 
                 setNum={index+1}
-                liftSeparationModifier={liftSeparationModifier}
+                liftSeparationModifier={setModifierColor(lift, index)}
                 lift={lift}
                 index={index}
                 settings={userSettings}

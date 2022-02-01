@@ -6,6 +6,7 @@ import { Navigate, NavLink } from "react-router-dom"
 import back from "../../assets/icons/arrow_back_black_24dp.svg"
 
 export const SignUpPage = () => {
+  // formFields will be implemented as a manner to render conditional error messages in a future sprint
   const [formFields, setFormFields] = useState({
     username: {},
     password: {},

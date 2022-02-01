@@ -8,9 +8,6 @@ import RenameWorkoutModal from "../../components/RenameWorkoutModal/RenameWorkou
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import IndividualWorkout from "../../components/IndividualWorkout/IndividualWorkout";
 import add from "../../assets/icons/add_black_24dp.svg";
-import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
-import edit from "../../assets/icons/edit_black_24dp.svg"
-import listIcon from "../../assets/icons/post_add_black_24dp.svg"
 
 const HomePage = ({token}) => {
   const navigate = useNavigate()
@@ -63,6 +60,21 @@ const HomePage = ({token}) => {
     .catch(error => console.log(error))
   }
 
+  const renameWorkoutHandler = (e, workout) => {
+    e.preventDefault()
+    workout.name = e.target.name.value || "Freestyle Workout"
+    axios.put(`http://localhost:8080/workouts/${workout.id}`, workout, { headers: 
+    {
+    Authorization: `Bearer: ${token}`
+    } 
+    })
+    .then(response => {
+      getWorkouts()
+      closingAnimationFunction(setRenameWorkoutModal)
+    })
+    .catch(error => alert(error))
+  }
+
   const deleteWorkoutHandler = (id) => {
     axios.delete(`http://localhost:8080/workouts/${id}`, { headers: 
     {
@@ -74,22 +86,6 @@ const HomePage = ({token}) => {
       closingAnimationFunction(setDeleteModal)
     })
     .catch(error => console.log(error))
-  }
-
-  const renameWorkoutHandler = (e, workout) => {
-    e.preventDefault()
-    workout.name = e.target.name.value
-    axios.put(`http://localhost:8080/workouts/${workout.id}`, workout, { headers: 
-    {
-    Authorization: `Bearer: ${token}`
-    } 
-    })
-    .then(response => {
-      getWorkouts()
-      closingAnimationFunction(setRenameWorkoutModal)
-    })
-    .catch(error => alert(error))
-
   }
 
   const handleSetDeleteModal = (workout) => {

@@ -16,7 +16,9 @@ const IndividualWorkout = ({workout, index, handleSetDeleteModal, handleSetRenam
       </NavLink>
       <div className="individual-workout__button-container">
         <button onClick={() => handleSetRenameModal(workout)} className="individual-workout__button"><img src={edit} alt="Pencil icon" className="individual-workout__icon" /></button>
-        <NavLink to={`/workouts/${workout.id}`} className="individual-workout__button"><img src={listIcon} alt="Paper document icon" className="individual-workout__icon" /></NavLink>
+        <NavLink to={`/workouts/${workout.id}`} className="individual-workout__button">
+          <img src={listIcon} alt="Paper document icon" className="individual-workout__icon" />
+        </NavLink>
         <button onClick={() => handleSetDeleteModal(workout)} className="individual-workout__button"><img src={deleteIcon} alt="Trash bin icon" className="individual-workout__icon" /></button>
       </div>
     </article>

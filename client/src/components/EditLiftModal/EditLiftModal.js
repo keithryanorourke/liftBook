@@ -1,7 +1,5 @@
-import axios from "axios";
 import "./EditLiftModal.scss"
 import closeIcon from "../../assets/icons/clear_black_24dp.svg"
-import LiftModal from "../AddLiftModal/AddLiftModal";
 import { useEffect, useState } from "react";
 
 const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEditLiftModal}) => {

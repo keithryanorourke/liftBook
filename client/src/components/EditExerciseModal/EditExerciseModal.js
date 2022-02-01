@@ -1,7 +1,7 @@
 import "./EditExerciseModal.scss"
 import closeIcon from "../../assets/icons/clear_black_24dp.svg"
 import muscleList from "../../assets/data/muscleList.json"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import uniqid from "uniqid"
 
 const EditExerciseModal = ({exercise, close, editExerciseHandler, setEditExerciseModal}) => {
@@ -20,23 +20,17 @@ const EditExerciseModal = ({exercise, close, editExerciseHandler, setEditExercis
 
   const [toggledMuscles, setToggledMuscles] = useState(formattedDefault)
 
-  // WHY IS THIS NECESSARY??? WHY DOES IT WORK???
-  const [randomBool, setRandomBool] = useState(false)
-
   const toggleMuscle = (muscle) => {
     if(toggledMuscles.includes(muscle)) {
-      let newArray = toggledMuscles
+      let newArray = [...toggledMuscles]
         const indexToRemove = newArray.indexOf(muscle)
         newArray.splice(indexToRemove, 1)
         setToggledMuscles(newArray)
       } else {
-        let newArray = toggledMuscles
+        let newArray = [...toggledMuscles]
         newArray.push(muscle)
         setToggledMuscles(newArray)
       }
-      console.log(toggledMuscles.includes(muscle))
-      // WHY DOES THIS WORK??????????
-      // setRandomBool(!randomBool)
   }
 
   return (
