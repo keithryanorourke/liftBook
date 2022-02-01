@@ -22,7 +22,7 @@ const IndividualLift = ({lift, settings, index, setNum, setEditLiftModal, setDel
   }
 
   return (
-    <article className={"lift " + (index % 2 === 0 ? "lift--even" : null)}>
+    <article className={"lift " + (index % 2 === 0 ? "lift--even" : "")}>
       <h4 className="lift__title">{lift.name}</h4>
       <div className="lift__container">
         <span className="lift__set-number">{`set ${setNum}`}</span>
