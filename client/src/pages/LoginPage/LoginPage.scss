@@ -6,6 +6,9 @@
 .login {
   animation: popup 0.2s;
   @include top-level-container;
+  width: 100%;
+  max-width: 30rem;
+  align-self: center;
 
   &__top-container {
     background-color: $primary3;
@@ -60,5 +63,10 @@
     width: fit-content;
     padding: 0 1rem;
     margin: 1rem 0 0;
+    transition: 0.1s;
+    &:hover {
+      transform: scale(1.1);
+      color: $textcolor2;
+    }
   }
 }

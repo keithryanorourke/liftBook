@@ -6,6 +6,9 @@
 .signup {
   animation: popup 0.2s;
   @include top-level-container;
+  width: 100%;
+  max-width: 30rem;
+  align-self: center;
 
   &__top-container{
     background-color: $primary3;
