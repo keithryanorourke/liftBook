@@ -50,7 +50,7 @@ const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal,
         <p className="add-lift__subtitle">Filter exercises by muscles:</p>
         <div className="add-lift__muscle-container">
           {muscleList.array.map((muscle, index) => {
-            return <button onClick={() => toggleMuscle(muscle)} key={uniqid()} className={"add-lift__muscle-button " + (toggledMuscles.includes(muscle) ? "add-lift__muscle-button--toggled" : "")}>{muscle}</button>
+            return <button onClick={() => toggleMuscle(muscle)} key={muscle} className={"add-lift__muscle-button " + (toggledMuscles.includes(muscle) ? "add-lift__muscle-button--toggled" : "")}>{muscle}</button>
           })}
         </div>
         <form onSubmit={addLiftHandler} className="add-lift__form">
