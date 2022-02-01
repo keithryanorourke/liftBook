@@ -126,7 +126,7 @@ const HomePage = ({token}) => {
       />
       : null}
       <section className="home">
-        {!newWorkout ? <button onClick={() => setNewWorkout(true)} className="home__new"><img src={add} alt="" className="home__add" /></button> : null}
+        {!newWorkout ? <button onClick={() => setNewWorkout(true)} className="home__new"><img src={add} alt="Plus sign icon" className="home__add" /></button> : null}
         <div className="home__top-container">
           <h2 className="home__title">Workouts</h2>
         </div>

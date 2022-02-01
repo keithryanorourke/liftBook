@@ -9,9 +9,10 @@
   flex-direction: column;
   width: 100%;
   background-color: $primary5;
-  border-top: 2px solid $primary2;
+  border-top: .0625rem solid $primary2;
   flex-grow: 1;
   @include tablet {
+    border: none;
     box-shadow: $darkshadow2;
     width: 50%;
   }
