@@ -1,29 +1,28 @@
 const knex = require('knex')(require('../knexfile').development)
 
 const retrieveAllExercises = async(userId) => {
-  let response
+  let responseObj = {}
   const exerciseList = []
   try {
-    response = await knex('exercises')
+    exerciseList.push(...await knex('exercises')
     .where({user_id: null})
     .then(response => {
-      exerciseList.push(...response)
-      knex('exercises')
-      .where({user_id: userId})
-      .then(response => {
-        if(response.length) {
-          exerciseList.push(...response)
-        }
-      })
-      return {code: 200, exercises: exerciseList}
+      return response
+    }))
+    const pushToList = await knex('exercises')
+    .where({user_id: userId})
+    .then(response => {
+      if(response.length) {
+        return response;
+      }
     })
-    .catch(error => {
-      return {code: 400, message: "Exercise list not retrieved"}
-    })
+    pushToList ? exerciseList.push(...pushToList) : null
+    responseObj.code=200
+    responseObj.exercises = exerciseList
   } catch(error) {
     return {code: 400, message: "Try block failed."}
   }
-  return response
+  return responseObj
 }
 
 const retrieveUserExercises = async(userId) => {

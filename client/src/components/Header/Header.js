@@ -5,7 +5,6 @@ import { NavLink, useLocation } from "react-router-dom";
 const Header = () => {
   const location = useLocation()
 
-  console.log(location)
   if(location.pathname === "/login" || location.pathname === "/signup") {
     return <PublicHeader />
   }

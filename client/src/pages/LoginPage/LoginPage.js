@@ -25,6 +25,9 @@ export const LoginPage = () => {
         setFormFields(prevState => ({...prevState, [key]: {value: "", error: "blank"}}))
       } 
     })
+    if(exit) {
+      return alert("Please enter your username and password in order to login!")
+    }
     if(!exit) {
       axios.post("http://localhost:8080/account/login", submission)
       .then(response => {
@@ -32,10 +35,12 @@ export const LoginPage = () => {
         navigate("../", {replace: true})
       })
       .catch(error => {
-        if(error.status === 404) {
+        if(error.response.status === 404) {
+          alert(`There is no account with the username ${e.target.username.value}. Please make sure you have typed your username correctly.`)
           setFormFields(prevState => ({...prevState, username: {value: submission.username, error: "Username not found!"}}))
           return
         }
+        alert(`The password you have typed is not correct. Please ensure that you have typed your password correctly.`)
         setFormFields(prevState => ({...prevState, password: {value: submission.password, error: "Incorrect password."}}))
       })
     }

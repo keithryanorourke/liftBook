@@ -27,7 +27,11 @@ export const SignUpPage = () => {
         setFormFields(prevState => ({...prevState, [key]: {value: "", error: "blank"}}))
       } 
     })
+    if(exit) {
+      return alert("Please make sure to fill out the Username, Password, and Confirm Password fields before continuing.")
+    }
     if (submission.password !== submission.confirmPassword) {
+      alert("Password and Confirm Password do no match! Please make sure that you have typed the same password into both fields!")
       setFormFields(prevState => ({...prevState, password: {value: submission.password, error: "Passwords do not match!"}, confirmPassword: {value: submission.confirmPassword, error: "Passwords do not match!"}}))
       exit =true;
     }
@@ -39,6 +43,7 @@ export const SignUpPage = () => {
         setRedirect(true)
       })
       .catch(error => {
+        alert(`Username ${submission.username} is already in use. Please select another username.`)
         setFormFields(prevState => ({...prevState, username: {value: submission.username, error: `Username ${submission.username} is already in use.`}}))
       })
     }

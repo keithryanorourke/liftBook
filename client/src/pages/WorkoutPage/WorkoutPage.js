@@ -25,6 +25,9 @@ const WorkoutPage = ({token}) => {
   const [currentLift, setCurrentLift] = useState(null)
   const [setNumber, setSetNumber] = useState(null)
 
+  // This is a variable that needs larger scope. State does not need to know the value of this variable.
+  let liftSeparationCounter = 0;
+
   const closingAnimationFunction = (modalSetter) => {
     setCloseModalAnimation(true)
     setTimeout(() => {
@@ -82,14 +85,16 @@ const WorkoutPage = ({token}) => {
     .then(response => {
       setExercises(response.data)
     })
+    .catch(error => alert(`We could not retrieve the list of exercises from our database! Please try reloading the page and if that does not work, please try to logout and log back in.\n ${error}`))
 
-    getLifts()
+  getLifts()
   }, [])
 
-  const addLiftHandler = (e) => {
-    e.preventDefault()
-    let exit = false;
-    const exercise = exercises.find(exercise => exercise.name === e.target.exercise.value)
+  const findExerciseByName = (name) => {
+    return exercises.find(exercise => exercise.name === name)
+  }
+
+  const validateLiftForm = (e, exercise, id) => {
     const newLift = {
       workout_id: workoutId,
       reps: parseInt(e.target.reps.value),
@@ -98,31 +103,38 @@ const WorkoutPage = ({token}) => {
       measure: e.target.weightMetric.value,
       difficulty: 0,
       percentageOfMax: 0,
-      metric: userSettings.preferredMetric
+      metric: userSettings.preferredMetric,
+      error: false
     }
-
+    if(id) {
+      newLift.id = id
+    }
     if (e.target.weight.value > 0 && e.target.weight.value < 2000) {
       newLift.weight = parseInt(e.target.weight.value)
     }
-
     if(userSettings.trackDifficulty && userSettings.mode==="advanced") {
       if(e.target.difficulty.value) {
         newLift.difficulty = parseFloat(e.target.difficulty.value)
       }
     }
-
     if(userSettings.trackPercentageOfMax && userSettings.mode==="advanced") {
       if(e.target.percentage.value) {
         newLift.percentageOfMax = parseFloat(e.target.percentage.value)
       }
     }
-
-    if(!newLift.reps) {
+    if(!newLift.reps || newLift.reps < 0) {
       alert("Please enter a positive whole number into the reps field!")
-      exit=true;
+      newLift.error = true
     }
+    return newLift
+  }
 
-    if(!exit) {
+  const addLiftHandler = (e) => {
+    e.preventDefault()
+    const exercise = findExerciseByName(e.target.exercise.value)
+    const newLift = validateLiftForm(e, exercise)
+    if(!newLift.error) {
+      delete newLift.error
       axios.post(`http://localhost:8080/lifts`, newLift, { headers: 
       {
         Authorization: `Bearer: ${token}`
@@ -142,42 +154,10 @@ const WorkoutPage = ({token}) => {
 
   const editLiftHandler = (e, id) => {
     e.preventDefault()
-    let exit = false;
-    const exercise = exercises.find(exercise => exercise.name === e.target.exercise.value)
-    const newLift = {
-      workout_id: workoutId,
-      reps: parseInt(e.target.reps.value),
-      exercise_id: exercise.id,
-      weight: 0,
-      measure: e.target.weightMetric.value,
-      difficulty: 0,
-      percentageOfMax: 0,
-      metric: userSettings.preferredMetric,
-      id: id
-    }
-
-    if (e.target.weight.value > 0 && e.target.weight.value < 2000) {
-      newLift.weight = parseInt(e.target.weight.value)
-    }
-
-    if(userSettings.trackDifficulty && userSettings.mode==="advanced") {
-      if(e.target.difficulty.value) {
-        newLift.difficulty = parseFloat(e.target.difficulty.value)
-      }
-    }
-
-    if(userSettings.trackPercentageOfMax && userSettings.mode==="advanced") {
-      if(e.target.percentage.value) {
-        newLift.percentageOfMax = parseFloat(e.target.percentage.value)
-      }
-    }
-
-    if(!newLift.reps) {
-      alert("Please enter a positive whole number into the reps field!")
-      exit=true;
-    }
-
-    if(!exit) {
+    const exercise = findExerciseByName
+    const newLift = validateLiftForm(e, exercise, id)
+    if(!newLift.error) {
+      delete newLift.error
       axios.put(`http://localhost:8080/lifts`, newLift, { headers: 
       {
         Authorization: `Bearer: ${token}`
@@ -247,18 +227,47 @@ const WorkoutPage = ({token}) => {
       />
       : null}
       <section className="workout">
-        {!addLiftModal ? <button onClick={() => setAddLiftModal(true)} className="workout__add-button"><img src={add} alt="" className="workout__add" /></button> : null}
+        {!addLiftModal ? <button onClick={() => setAddLiftModal(true)} className="workout__add-button"><img src={add} alt="Plus sign icon" className="workout__add" /></button> : null}
         <div className="workout__top-container">
           <h2 className="workout__title">{workout ? workout.name : "Loading..."}</h2>
         </div>
         <div className="workout__scroll-container">
           {lifts.length ?
           <div className="workout__lifts-container">
-            {userSettings ? lifts.map((lift, index) => {
+            {
+            userSettings ? lifts.map((lift, index) => {
+              let liftSeparationModifier = "";
+              
+              if(index > 0) {
+                if(lift.name !== lifts[index-1].name) {
+                  if(liftSeparationCounter < 3) {
+                    liftSeparationCounter++
+                  } else {
+                    liftSeparationCounter = 0
+                  }
+                }
+              }
+
+              switch(liftSeparationCounter) {
+                case 0:
+                  liftSeparationModifier="lift--blue"
+                  break;
+                case 1:
+                  liftSeparationModifier="lift--pink"
+                  break;
+                case 2:
+                  liftSeparationModifier="lift--orange"
+                  break;
+                case 3:
+                  liftSeparationModifier="lift--green"
+                  break;
+              }
+
               return(
                 <IndividualLift 
                 key={lift.id} 
                 setNum={index+1}
+                liftSeparationModifier={liftSeparationModifier}
                 lift={lift}
                 index={index}
                 settings={userSettings}
