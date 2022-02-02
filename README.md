@@ -1,4 +1,6 @@
 liftBook is both a personal project of mine and my capstone project for BrainStation's Web Development bootcamp!
+It is a fullstack application using React and SASS on the front end and Express and Knex (communicating with a MySQL database) on the backend.
+The application is a semi-customizable user account based strength tracking app!
 
 To install this repo on your machine, choose a folder where you would like to copy the repo into and run the following command:
 git clone https://github.com/keithryanorourke/liftBook
