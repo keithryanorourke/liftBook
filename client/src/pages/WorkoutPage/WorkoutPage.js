@@ -184,7 +184,7 @@ const WorkoutPage = ({token}) => {
 
   const editLiftHandler = (e, id) => {
     e.preventDefault()
-    const exercise = findExerciseByName
+    const exercise = findExerciseByName(e.target.exercise.value)
     const newLift = validateLiftForm(e, exercise, id)
     if(!newLift.error) {
       delete newLift.error
