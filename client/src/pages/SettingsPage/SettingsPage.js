@@ -5,6 +5,7 @@ import Cookie from "js-cookie"
 import { useNavigate } from "react-router-dom"
 import InformativeModal from "../../components/InformativeModal/InformativeModal"
 import help from "../../assets/icons/help_outline_black_24dp.svg"
+const {REACT_APP_BACKEND_URL} = process.env
 
 const SettingsPage = ({token}) => {
   const navigateCallback = useNavigate()
@@ -19,7 +20,7 @@ const SettingsPage = ({token}) => {
   const [modal, setModal] = useState(false)
 
   useEffect(()=> {
-    axios.get(`http://localhost:8080/account/settings`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/account/settings`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -44,7 +45,7 @@ const SettingsPage = ({token}) => {
       trackPercentageOfMax: e.target.percentage ? e.target.percentage.checked : settings.trackPercentageOfMax,
       preferredMetric: e.target.difficultyMetric ? e.target.difficultyMetric.value : settings.preferredMetric
     }
-    axios.put("http://localhost:8080/account/settings", newSettings, {
+    axios.put(`${REACT_APP_BACKEND_URL}/account/settings`, newSettings, {
       headers: {Authorization: `Bearer: ${token}`}
     })
     .then(response => navigate(-1))

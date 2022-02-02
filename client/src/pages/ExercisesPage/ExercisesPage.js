@@ -6,6 +6,7 @@ import AddExerciseModal from "../../components/AddExerciseModal/AddExerciseModal
 import IndividualExercise from "../../components/IndividualExercise/IndividualExercise"
 import DeleteModal from "../../components/DeleteModal/DeleteModal"
 import EditExerciseModal from "../../components/EditExerciseModal/EditExerciseModal"
+const {REACT_APP_BACKEND_URL} = process.env
 
 const ExercisesPage = ({token}) => {
 
@@ -17,7 +18,7 @@ const ExercisesPage = ({token}) => {
   const [currentExercise, setCurrentExercise] = useState(false)
 
   const getUserExercises = useCallback(() => {
-    axios.get(`http://localhost:8080/exercises/user`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/exercises/user`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -70,7 +71,7 @@ const ExercisesPage = ({token}) => {
     e.preventDefault()
     const newExercise = validateExerciseForm(e, muscles)
     if(!newExercise.error) {
-      axios.post(`http://localhost:8080/exercises`, newExercise, { headers: 
+      axios.post(`${REACT_APP_BACKEND_URL}/exercises`, newExercise, { headers: 
       {
         Authorization: `Bearer: ${token}`
       } 
@@ -87,7 +88,7 @@ const ExercisesPage = ({token}) => {
     e.preventDefault()
     const newExercise = validateExerciseForm(e, muscles, exercise)
     if(!newExercise.error) {
-      axios.put(`http://localhost:8080/exercises/`, newExercise, { headers: 
+      axios.put(`${REACT_APP_BACKEND_URL}/exercises/`, newExercise, { headers: 
       {
         Authorization: `Bearer: ${token}`
       } 
@@ -101,7 +102,7 @@ const ExercisesPage = ({token}) => {
   }
 
   const deleteExerciseHandler = (id) => {
-    axios.delete(`http://localhost:8080/exercises/${id}`, { headers: 
+    axios.delete(`${REACT_APP_BACKEND_URL}/exercises/${id}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 

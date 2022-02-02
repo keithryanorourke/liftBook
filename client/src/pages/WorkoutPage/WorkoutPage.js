@@ -9,6 +9,7 @@ import React, {useState, useEffect, useCallback} from "react"
 import {useNavigate} from "react-router-dom"
 import {useParams} from "react-router";
 import Cookie from 'js-cookie'
+const {REACT_APP_BACKEND_URL} = process.env
 
 const WorkoutPage = ({token}) => {
   const navigateCallback = useNavigate()
@@ -67,7 +68,7 @@ const WorkoutPage = ({token}) => {
   }
 
   const getLifts = useCallback(() => {
-    axios.get(`http://localhost:8080/lifts/${workoutId}`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/lifts/${workoutId}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -79,7 +80,7 @@ const WorkoutPage = ({token}) => {
   }, [token, workoutId])
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/account/settings`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/account/settings`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -93,21 +94,20 @@ const WorkoutPage = ({token}) => {
       navigate('../login', {replace: true})
     })
 
-    axios.get(`http://localhost:8080/workouts/${workoutId}`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/workouts/${workoutId}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
     })
     .then(response => {
       setWorkout(response.data)
-      
     })
     .catch(error => {
       alert(`${error}.\nThe workout you are trying to access is not associated with your account! You will now be redirected to your home page.`)
       navigate("../", {replace: true})
     })
 
-    axios.get(`http://localhost:8080/exercises/`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/exercises/`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -165,7 +165,7 @@ const WorkoutPage = ({token}) => {
     const newLift = validateLiftForm(e, exercise)
     if(!newLift.error) {
       delete newLift.error
-      axios.post(`http://localhost:8080/lifts`, newLift, { headers: 
+      axios.post(`${REACT_APP_BACKEND_URL}/lifts`, newLift, { headers: 
       {
         Authorization: `Bearer: ${token}`
       } 
@@ -188,7 +188,7 @@ const WorkoutPage = ({token}) => {
     const newLift = validateLiftForm(e, exercise, id)
     if(!newLift.error) {
       delete newLift.error
-      axios.put(`http://localhost:8080/lifts`, newLift, { headers: 
+      axios.put(`${REACT_APP_BACKEND_URL}/lifts`, newLift, { headers: 
       {
         Authorization: `Bearer: ${token}`
       } 
@@ -204,7 +204,7 @@ const WorkoutPage = ({token}) => {
   }
 
   const deleteLiftHandler = (id) => {
-    axios.delete(`http://localhost:8080/lifts/${id}`, { headers: 
+    axios.delete(`${REACT_APP_BACKEND_URL}/lifts/${id}`, { headers: 
     {
       Authorization: `Bearer: ${token}`
     } 

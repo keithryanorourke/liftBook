@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Cookie from "js-cookie"
+const {REACT_APP_BACKEND_URL} = process.env
 
 const Private = ({children}) => {
     const location = useLocation()
@@ -23,7 +24,7 @@ const Private = ({children}) => {
                 isAuthenticated: false
             }))
         } else {
-            axios.get(`http://localhost:8080/account/check-auth`, 
+            axios.get(`${REACT_APP_BACKEND_URL}/account/check-auth`, 
                 { headers: {
                     Authorization: `Bearer: ${token}`
                     } 

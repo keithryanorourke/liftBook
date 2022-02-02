@@ -8,6 +8,7 @@ import RenameWorkoutModal from "../../components/RenameWorkoutModal/RenameWorkou
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import IndividualWorkout from "../../components/IndividualWorkout/IndividualWorkout";
 import add from "../../assets/icons/add_black_24dp.svg";
+const {REACT_APP_BACKEND_URL} = process.env
 
 const HomePage = ({token}) => {
   const navigate = useNavigate()
@@ -19,7 +20,7 @@ const HomePage = ({token}) => {
   const [deleteModal, setDeleteModal] = useState(false)
   const [renameWorkoutModal, setRenameWorkoutModal] = useState(false)
   const [closeModalAnimation, setCloseModalAnimation] = useState(false)
-
+  
   const closingAnimationFunction = (modalSetter) => {
     setCloseModalAnimation(true)
     setTimeout(() => {
@@ -29,7 +30,7 @@ const HomePage = ({token}) => {
   }
 
   const getWorkouts = useCallback(() => {
-    axios.get("http://localhost:8080/workouts", { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/workouts`, { headers: 
       {
       Authorization: `Bearer: ${token}`
       } 
@@ -51,7 +52,7 @@ const HomePage = ({token}) => {
       name: e.target.name.value || "Freestyle Workout"
     }
 
-    axios.post("http://localhost:8080/workouts", workout, { headers: 
+    axios.post(`${REACT_APP_BACKEND_URL}/workouts`, workout, { headers: 
       {
       Authorization: `Bearer: ${token}`
       } 
@@ -63,7 +64,7 @@ const HomePage = ({token}) => {
   const renameWorkoutHandler = (e, workout) => {
     e.preventDefault()
     workout.name = e.target.name.value || "Freestyle Workout"
-    axios.put(`http://localhost:8080/workouts/${workout.id}`, workout, { headers: 
+    axios.put(`${REACT_APP_BACKEND_URL}/workouts/${workout.id}`, workout, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -76,7 +77,7 @@ const HomePage = ({token}) => {
   }
 
   const deleteWorkoutHandler = (id) => {
-    axios.delete(`http://localhost:8080/workouts/${id}`, { headers: 
+    axios.delete(`${REACT_APP_BACKEND_URL}/workouts/${id}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 

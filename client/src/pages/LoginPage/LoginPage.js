@@ -3,7 +3,7 @@ import axios from "axios";
 import {useState} from "react";
 import {NavLink, useNavigate} from "react-router-dom"
 import Cookie from "js-cookie";
-
+const {REACT_APP_BACKEND_URL} = process.env
 
 export const LoginPage = () => {
   // formFields will be implemented as a manner to render conditional error messages in a future sprint
@@ -30,7 +30,7 @@ export const LoginPage = () => {
       return alert("Please enter your username and password in order to login!")
     }
     if(!exit) {
-      axios.post("http://localhost:8080/account/login", submission)
+      axios.post(`${REACT_APP_BACKEND_URL}/account/login`, submission)
       .then(response => {
         Cookie.set("token", response.data, {expires: 7})
         navigate("../", {replace: true})
