@@ -1,11 +1,12 @@
 import "./LoginPage.scss";
 import axios from "axios";
 import {useState} from "react";
-import {NavLink, Navigate, useNavigate} from "react-router-dom"
+import {NavLink, useNavigate} from "react-router-dom"
 import Cookie from "js-cookie";
-
+const {REACT_APP_BACKEND_URL} = process.env
 
 export const LoginPage = () => {
+  // formFields will be implemented as a manner to render conditional error messages in a future sprint
   const [formFields, setFormFields] = useState({
     username: {},
     password: {},
@@ -25,17 +26,22 @@ export const LoginPage = () => {
         setFormFields(prevState => ({...prevState, [key]: {value: "", error: "blank"}}))
       } 
     })
+    if(exit) {
+      return alert("Please enter your username and password in order to login!")
+    }
     if(!exit) {
-      axios.post("http://localhost:8080/account/login", submission)
+      axios.post(`${REACT_APP_BACKEND_URL}/account/login`, submission)
       .then(response => {
         Cookie.set("token", response.data, {expires: 7})
         navigate("../", {replace: true})
       })
       .catch(error => {
-        if(error.status === 404) {
+        if(error.response.status === 404) {
+          alert(`There is no account with the username ${e.target.username.value}. Please make sure you have typed your username correctly.`)
           setFormFields(prevState => ({...prevState, username: {value: submission.username, error: "Username not found!"}}))
           return
         }
+        alert(`The password you have typed is not correct. Please ensure that you have typed your password correctly.`)
         setFormFields(prevState => ({...prevState, password: {value: submission.password, error: "Incorrect password."}}))
       })
     }
@@ -45,7 +51,7 @@ export const LoginPage = () => {
   return (
     <section className="login">
       <div className="login__top-container">
-        <h2 className="login__title">Login:</h2>
+        <h2 className="login__title">Login</h2>
       </div>
       <form onSubmit={loginHandler} className="login__form">
         <label className="login__label">Username:

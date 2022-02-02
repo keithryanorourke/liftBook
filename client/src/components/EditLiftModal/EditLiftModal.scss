@@ -9,14 +9,13 @@
 
   &--closing {
     opacity: 0;
-    transform: scale(3);
+    transform: scale(3) translate(-25%, -25%);
   }
 
   &__container {
     @include modal-top-level-container;
     width: 100%;
     margin: 0;
-    animation: popup 0.2s;
   }
 
   &__overlay {
@@ -32,17 +31,24 @@
     align-items: center;
   }
 
+  &__title {
+    text-align: center;
+  }
+
   &__empty {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2.3rem;
+    height: 2.3rem;
   }
 
   &__close {
-    width: 1.5rem;
-    height: 1.5rem;
-    background: none;
-    border: none;
+    @include icon-button
+  }
 
+  &__scroll-container {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    max-height: 60vh;
+    overflow-y: auto;
   }
 
   &__form {
@@ -96,6 +102,7 @@
 
   &__button-container {
     display: flex;
+    flex-direction: row-reverse;
     justify-content: space-between;
   }
 

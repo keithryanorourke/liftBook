@@ -15,7 +15,7 @@ const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => 
     if(muscle === "Triceps" || muscle === "Chest" || muscle === "Shoulders") {
       return "exercise__muscle--push"
     }
-    if(muscle === "Back" || muscle === "Biceps" || muscle === "Abs") {
+    if(muscle === "Back" || muscle === "Biceps") {
       return "exercise__muscle--pull"
     }
     if(muscle === "Quadriceps" || muscle === "Hamstrings" || muscle === "Calves" || muscle === "Glutes") {
@@ -38,8 +38,8 @@ const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => 
         </div>
       </div>
       <div className="exercise__button-container">
-        <button onClick={() => setEditModal(exercise)} className="exercise__button"><img src={edit} alt="" className="exercise__icon" /></button>
-        <button onClick={() => setDeleteModal(exercise)} className="exercise__button"><img src={deleteIcon} alt="" className="exercise__icon" /></button>
+        <button onClick={() => setEditModal(exercise)} className="exercise__button"><img src={edit} alt="Pencil Icon" className="exercise__icon" /></button>
+        <button onClick={() => setDeleteModal(exercise)} className="exercise__button"><img src={deleteIcon} alt="Waste bin Icon" className="exercise__icon" /></button>
       </div>
     </article>
     )

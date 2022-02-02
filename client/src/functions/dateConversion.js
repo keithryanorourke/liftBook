@@ -35,11 +35,11 @@ const convertDate = (date) => {
     case "11":
       month = "NOV"
       break;
-    case "12":
+    default:
       month = "DEC"
       break;
   }
-  return month + " " + splitDate[2].slice(0, 2) +" " + splitDate[0]
+  return month + " " + splitDate[2].slice(0, 2) + " " + splitDate[0]
 }
 
 module.exports=convertDate

@@ -6,13 +6,29 @@
 .signup {
   animation: popup 0.2s;
   @include top-level-container;
+  width: 100%;
+  max-width: 30rem;
+  align-self: center;
 
   &__top-container{
     background-color: $primary3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
   }
   
+  &__back-button {
+    @include icon-button;
+  }
+
   &__title {
     text-align: center
+  }
+
+  &__empty {
+    width: 2.3rem;
+    height: 2.3rem;
   }
   
   &__form {
@@ -42,9 +58,11 @@
 
   &__submit {
     @include generic-button;
-    padding: 0.65rem 1rem;
     margin-top: 0.25rem;
     align-self: flex-end;
     width: 50%;
+    @include tablet {
+      width: 10rem;
+    }
   }
 }

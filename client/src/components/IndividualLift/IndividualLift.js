@@ -2,7 +2,7 @@ import "./IndividualLift.scss"
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
 import edit from "../../assets/icons/edit_black_24dp.svg"
 
-const IndividualLift = ({lift, settings, index, setNum, setEditLiftModal, setDeleteModal}) => {
+const IndividualLift = ({lift, liftSeparationModifier, settings, index, setNum, setEditLiftModal, setDeleteModal}) => {
 
   const showDifficulty = () => {
     if (lift.metric === "RPE") {
@@ -20,9 +20,10 @@ const IndividualLift = ({lift, settings, index, setNum, setEditLiftModal, setDel
     }
     return "untracked"
   }
+  
 
   return (
-    <article className={"lift " + (index % 2 === 0 ? "lift--even" : null)}>
+    <article className={"lift " + liftSeparationModifier}>
       <h4 className="lift__title">{lift.name}</h4>
       <div className="lift__container">
         <span className="lift__set-number">{`set ${setNum}`}</span>

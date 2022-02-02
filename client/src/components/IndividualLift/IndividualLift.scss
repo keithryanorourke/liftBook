@@ -9,9 +9,28 @@
   flex-direction: column;
   width: 100%;
   background-color: $primary5;
+  border-top: .0625rem solid $primary2;
+  flex-grow: 1;
+  @include tablet {
+    border: none;
+    box-shadow: $darkshadow2;
+    width: 50%;
+  }
+  @include desktop {
+    width: 33%;
+  }
   
-  &--even {
-    background-color: $primary4;
+  &--blue {
+    background: $modifierbg1;
+  }
+  &--green {
+    background: $modifierbg4;
+  }
+  &--orange {
+    background: $modifierbg2;
+  }
+  &--pink {
+    background: $modifierbg3;
   }
 
   &__title {
@@ -21,6 +40,9 @@
     margin: 0;
     padding: 0.5rem;
     box-shadow: $darkshadow2;
+    @include tablet {
+      width: 15rem;
+    }
   }
 
   &__container {
@@ -53,6 +75,7 @@
 
   &__specifier {
     box-shadow: $darkshadow1;
+    background-color: $primary5-transparent;
     padding: 0.5rem;
     margin: 0.25rem 0;
   }

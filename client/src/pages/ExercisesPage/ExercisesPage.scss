@@ -6,6 +6,7 @@
 .exercises {
   position: relative;
   @include top-level-container;
+  animation: popup 0.2s;
   overflow: visible;
 
   &__top-container {
@@ -20,14 +21,30 @@
     @include add-button;
   }
 
-  &__bottom-container {
-    box-shadow: $darkshadow1;
+  &__scroll-container {
     border-bottom-left-radius:1rem;
     border-bottom-right-radius:1rem;
-    max-height: 70vh;
-    overflow-y: scroll;
+    overflow: hidden;
+  }
+
+  
+  &__bottom-container {
+    box-shadow: $darkshadow1;
+    max-height: 68vh;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
+    @include tablet {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+  
+  &__default-container {
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__button {

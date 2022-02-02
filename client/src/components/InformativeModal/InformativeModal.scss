@@ -4,12 +4,15 @@
 @use "../../styles/partials/mixins" as *;
 
 .informative {
-  animation: popup cubic-bezier(.12,.98,.35,1.5) 0.2s;
   @include modal;
 
   &__overlay {
     @include modal-overlay;
     background-color: $accent3;
+  }
+
+  &__title {
+    text-align: center;
   }
 
   &__container {
@@ -25,17 +28,15 @@
   }
   
   &__empty {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2.3rem;
+    height: 2.3rem;
   }
 
   &__bottom-container {
-    padding: 0 1.5rem;
+    padding: 0.5rem 1.5rem;
   }
 
   &__back {
-    background: none;
-    border: none;
-    height: 1.5rem;
+    @include icon-button;
   }
 }

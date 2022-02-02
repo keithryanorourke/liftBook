@@ -4,25 +4,28 @@
 @use "../../styles/partials/mixins" as *;
 
 .footer {
-  position: fixed;
+  // position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   bottom: 0;
   left: 0;
-  height: 2rem;
+  height: 2.5rem;
   width: 100%;
-  background: $accent4;
+  background: $accent5;
   z-index: 2;
 
+  &__link {
+    margin: 0 1.5rem 0.75rem;
+  }
+
   &__icon {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.7rem;
+    height: 2.7rem;
     border-radius: 50%;
     box-shadow: $darkshadow1;
+    margin: 0;
     padding: 0.25rem;
-    margin: 0 1.5rem;
-    margin-bottom: 0.75rem;
     background-color: $accent4;
     transition: 0.2s;
 

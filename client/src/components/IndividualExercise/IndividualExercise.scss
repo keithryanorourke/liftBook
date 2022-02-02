@@ -10,9 +10,20 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  width: 100%;
+  border-top: 2px solid $primary2;
+  flex-grow: 1;
+  @include tablet {
+    box-shadow: $darkshadow2;
+    justify-content: space-between;
+    width: 50%;
+  }
+  @include desktop {
+    width: 33%;
+  }
 
   &--even {
-    background: $primary3;
+    background: $primary5;
   }
 
   &__container {
@@ -41,22 +52,24 @@
   }
 
   &__muscle {
+    color: $textcolor2;
     padding: 0.5rem;
     width: 6rem;
     margin-top: 0;
     box-shadow: $lightshadow1;
     border-radius: 1rem;
+    background-color: $accent7;
     
     &--push {
       background-color: $accent3;
     }
 
     &--pull {
-      background-color: $accent5;
-    }
-
-    &--legs {
       background-color: $accent2;
+    }
+    
+    &--legs {
+      background-color: $accent5;
     }
   }
 

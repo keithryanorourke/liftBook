@@ -21,16 +21,12 @@
   }
 
   &__back {
-    height: 1.5rem;
-    background: none;
-    border: none;
-    border-radius: 1rem;
-    padding: 0;
+    @include icon-button;
   }
 
   &__empty {
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 2.3rem;
+    width: 2.3rem;
   }
 
   &__subtitle {

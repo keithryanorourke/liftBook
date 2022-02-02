@@ -1,7 +1,13 @@
 import "./Header.scss"
-import { NavLink } from "react-router-dom";
+import PublicHeader from "../PublicHeader/PublicHeader";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Header = () => {
+  const location = useLocation()
+
+  if(location.pathname === "/login" || location.pathname === "/signup") {
+    return <PublicHeader />
+  }
   return (
     <section className="header">
       <NavLink to="/" className="header__link">

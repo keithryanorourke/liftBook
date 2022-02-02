@@ -26,18 +26,33 @@
     @include add-button;
   }
 
+  &__scroll-container {
+    border-bottom-left-radius:1rem;
+    border-bottom-right-radius:1rem;
+    overflow: hidden;
+  }
+
   &__lifts-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-bottom-left-radius:1rem;
-    border-bottom-right-radius:1rem;
-    max-height: 70vh;
-    overflow-y: scroll;
+    max-height: 68vh;
+    overflow-y: auto;
+    @include tablet {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
   }
 
   &__first-lift {
     @include generic-button;
     margin-bottom: 1rem;
+  }
+
+  &__null-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

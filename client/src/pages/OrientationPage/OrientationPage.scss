@@ -7,6 +7,8 @@
   display: flex;
   flex-direction: column;
   @include page-margins;
+  overflow-y: auto;
+  max-height: 80%;
   text-align: center;
   
   &__container {
@@ -15,6 +17,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    @include tablet {
+      flex-direction: row;
+      justify-content: center;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
   }
   
   
@@ -38,10 +46,17 @@
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
+    max-width: 18.75rem;
     border-radius: 1rem;
     list-style-type: none;
     margin: 0.5rem 0 1rem;
     padding: 1rem 1.5rem;
+
+    @include tablet {
+      width: 18.75rem;
+      margin: 0.5rem 1.5rem 2rem;
+    }
+
     &--basic {
       animation: popup 0.5s;
     }

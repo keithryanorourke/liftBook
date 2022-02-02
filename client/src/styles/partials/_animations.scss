@@ -8,3 +8,14 @@
     transform: translateY(0);
   }
 }
+
+@keyframes modal-popup {
+  0% {
+    opacity:0%;
+    transform: translate(-50%, -35%)
+  }
+  100% {
+    opacity:100%;
+    transform: translate(-50%, -50%);
+  }
+}
