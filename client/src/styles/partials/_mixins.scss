@@ -21,6 +21,16 @@
   }
 }
 
+@mixin page-padding {
+  padding: 0 1rem;
+  @include tablet {
+    padding: 0 5rem;
+  }
+  @include desktop {
+    padding: 0 15%;
+  }
+}
+
 @mixin modal-padding {
   padding: 0 2rem;
   @include tablet {
@@ -68,7 +78,6 @@
   border-radius: 1rem;
   overflow: hidden;
   background-color: $primary4;
-  @include page-margins
 }
 
 @mixin generic-button {

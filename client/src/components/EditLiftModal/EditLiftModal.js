@@ -1,7 +1,5 @@
-import axios from "axios";
 import "./EditLiftModal.scss"
 import closeIcon from "../../assets/icons/clear_black_24dp.svg"
-import LiftModal from "../AddLiftModal/AddLiftModal";
 import { useEffect, useState } from "react";
 
 const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEditLiftModal}) => {
@@ -14,7 +12,7 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
 
   useEffect(() => {
     setExerciseValue(lift.name)
-  }, [])
+  }, [lift.name])
 
   const handleSelect = (e) => {
     e.preventDefault()

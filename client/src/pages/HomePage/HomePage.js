@@ -1,6 +1,6 @@
 import axios from "axios";
 import "./HomePage.scss"
-import {useState, useEffect} from "react";
+import {useState, useEffect, useCallback} from "react";
 import { useNavigate } from "react-router-dom";
 import uniqid from "uniqid"
 import NewWorkoutModal from "../../components/NewWorkoutModal/NewWorkoutModal";
@@ -8,9 +8,7 @@ import RenameWorkoutModal from "../../components/RenameWorkoutModal/RenameWorkou
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import IndividualWorkout from "../../components/IndividualWorkout/IndividualWorkout";
 import add from "../../assets/icons/add_black_24dp.svg";
-import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
-import edit from "../../assets/icons/edit_black_24dp.svg"
-import listIcon from "../../assets/icons/post_add_black_24dp.svg"
+const {REACT_APP_BACKEND_URL} = process.env
 
 const HomePage = ({token}) => {
   const navigate = useNavigate()
@@ -22,7 +20,7 @@ const HomePage = ({token}) => {
   const [deleteModal, setDeleteModal] = useState(false)
   const [renameWorkoutModal, setRenameWorkoutModal] = useState(false)
   const [closeModalAnimation, setCloseModalAnimation] = useState(false)
-
+  
   const closingAnimationFunction = (modalSetter) => {
     setCloseModalAnimation(true)
     setTimeout(() => {
@@ -31,8 +29,8 @@ const HomePage = ({token}) => {
     }, 300)
   }
 
-  const getWorkouts = () => {
-    axios.get("http://localhost:8080/workouts", { headers: 
+  const getWorkouts = useCallback(() => {
+    axios.get(`${REACT_APP_BACKEND_URL}/workouts`, { headers: 
       {
       Authorization: `Bearer: ${token}`
       } 
@@ -42,11 +40,11 @@ const HomePage = ({token}) => {
       return setUser({workouts: response.data})
     })
     .catch(error => alert(error))
-  }
+  }, [token])
 
   useEffect(() => {
     getWorkouts()
-  }, [])
+  }, [getWorkouts])
 
   const newWorkoutHandler = (e) => {
     e.preventDefault()
@@ -54,32 +52,19 @@ const HomePage = ({token}) => {
       name: e.target.name.value || "Freestyle Workout"
     }
 
-    axios.post("http://localhost:8080/workouts", workout, { headers: 
+    axios.post(`${REACT_APP_BACKEND_URL}/workouts`, workout, { headers: 
       {
       Authorization: `Bearer: ${token}`
       } 
     })
     .then(response => navigate(`../workouts/${response.data}`, {replace: true}))
-    .catch(error => console.log(error))
-  }
-
-  const deleteWorkoutHandler = (id) => {
-    axios.delete(`http://localhost:8080/workouts/${id}`, { headers: 
-    {
-    Authorization: `Bearer: ${token}`
-    } 
-    })
-    .then(response => {
-      getWorkouts()
-      closingAnimationFunction(setDeleteModal)
-    })
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   const renameWorkoutHandler = (e, workout) => {
     e.preventDefault()
-    workout.name = e.target.name.value
-    axios.put(`http://localhost:8080/workouts/${workout.id}`, workout, { headers: 
+    workout.name = e.target.name.value || "Freestyle Workout"
+    axios.put(`${REACT_APP_BACKEND_URL}/workouts/${workout.id}`, workout, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -89,7 +74,19 @@ const HomePage = ({token}) => {
       closingAnimationFunction(setRenameWorkoutModal)
     })
     .catch(error => alert(error))
+  }
 
+  const deleteWorkoutHandler = (id) => {
+    axios.delete(`${REACT_APP_BACKEND_URL}/workouts/${id}`, { headers: 
+    {
+    Authorization: `Bearer: ${token}`
+    } 
+    })
+    .then(response => {
+      getWorkouts()
+      closingAnimationFunction(setDeleteModal)
+    })
+    .catch(error => alert(error))
   }
 
   const handleSetDeleteModal = (workout) => {
@@ -126,7 +123,7 @@ const HomePage = ({token}) => {
       />
       : null}
       <section className="home">
-        {!newWorkout ? <button onClick={() => setNewWorkout(true)} className="home__new"><img src={add} alt="" className="home__add" /></button> : null}
+        {!newWorkout ? <button onClick={() => setNewWorkout(true)} className="home__new"><img src={add} alt="Plus sign icon" className="home__add" /></button> : null}
         <div className="home__top-container">
           <h2 className="home__title">Workouts</h2>
         </div>

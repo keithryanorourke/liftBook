@@ -1,5 +1,4 @@
 import "./PublicHeader.scss"
-import { NavLink } from "react-router-dom";
 
 const PublicHeader = () => {
   return (

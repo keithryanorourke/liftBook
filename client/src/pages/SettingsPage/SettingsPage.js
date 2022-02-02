@@ -1,13 +1,15 @@
 import "./SettingsPage.scss"
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import Cookie from "js-cookie"
 import { useNavigate } from "react-router-dom"
 import InformativeModal from "../../components/InformativeModal/InformativeModal"
 import help from "../../assets/icons/help_outline_black_24dp.svg"
+const {REACT_APP_BACKEND_URL} = process.env
 
 const SettingsPage = ({token}) => {
-  const navigate=useNavigate()
+  const navigateCallback = useNavigate()
+  const navigate = useCallback((path, obj) => navigateCallback(path, obj), [navigateCallback])
   const [mode, setMode] = useState(null)
   const [trackDifficulty, setTrackDifficulty] = useState(false)
   const [settings, setSettings] = useState(null)
@@ -18,7 +20,7 @@ const SettingsPage = ({token}) => {
   const [modal, setModal] = useState(false)
 
   useEffect(()=> {
-    axios.get(`http://localhost:8080/account/settings`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/account/settings`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -33,7 +35,7 @@ const SettingsPage = ({token}) => {
       Cookie.remove('token')
       navigate('../login', {replace: true})
     })
-  }, [])
+  }, [navigate, token])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -43,11 +45,11 @@ const SettingsPage = ({token}) => {
       trackPercentageOfMax: e.target.percentage ? e.target.percentage.checked : settings.trackPercentageOfMax,
       preferredMetric: e.target.difficultyMetric ? e.target.difficultyMetric.value : settings.preferredMetric
     }
-    axios.put("http://localhost:8080/account/settings", newSettings, {
+    axios.put(`${REACT_APP_BACKEND_URL}/account/settings`, newSettings, {
       headers: {Authorization: `Bearer: ${token}`}
     })
     .then(response => navigate(-1))
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   const difficultyHandler = (e) => {
@@ -141,11 +143,10 @@ const SettingsPage = ({token}) => {
           <h2 className="settings__title">Settings</h2>
         </div>
         <form onSubmit={submitHandler} className="settings__form">
-
         <p className="settings__prefer">Mode:</p>
             <div className="settings__wrapper">
               <div className="settings__separator">
-                <input type="radio" defaultChecked id="basic" name="mode" value="basic" onClick={modeHandler} defaultChecked={settings.mode === "basic"} className="settings__option" />
+                <input type="radio" id="basic" name="mode" value="basic" onClick={modeHandler} defaultChecked={settings.mode === "basic"} className="settings__option" />
                 <label htmlFor="basic" className="settings__label">Basic</label>
                 <button onClick={(e) => openModal(e, "basic")} className="settings__help-button">
                   <img src={help} alt="Question mark icon" className="settings__help" />

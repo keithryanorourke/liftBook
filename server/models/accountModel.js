@@ -20,7 +20,6 @@ const createAccount = async(newUser) => {
     response = await knex('users')
     .where({username: newUser.username})
     .then(data => {
-      console.log(data.length)
       if (data.length) {
         return  {code: 400, message: "username already exists"}
       }

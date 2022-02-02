@@ -1,9 +1,8 @@
-import axios from "axios";
 import muscleList from "../../assets/data/muscleList.json"
 import "./AddLiftModal.scss"
 import closeIcon from "../../assets/icons/clear_black_24dp.svg"
 import uniqid from "uniqid"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const LiftModal = ({settings, close, exercises, addLiftHandler, setAddLiftModal, previousLift}) => {
 

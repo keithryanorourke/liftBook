@@ -3,6 +3,7 @@ import {useState} from 'react'
 import {useNavigate} from "react-router-dom"
 import "./OrientationPage.scss"
 import AdvancedOrientation from '../../components/AdvancedOrientation/AdvancedOrientation'
+const {REACT_APP_BACKEND_URL} = process.env
 
 const OrientationPage = ({token}) => {
   const [advanced, setAdvanced] = useState(false)
@@ -16,11 +17,11 @@ const OrientationPage = ({token}) => {
       preferredMetric: "RPE",
       trackPercentageOfMax: false
     }
-    axios.put("http://localhost:8080/account/settings", settings, {
+    axios.put(`${REACT_APP_BACKEND_URL}/account/settings`, settings, {
       headers: {Authorization: `Bearer: ${token}`}
     })
     .then(response => navigate("../", {replace: true}))
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   const advancedHandler = (e) => {
@@ -31,11 +32,11 @@ const OrientationPage = ({token}) => {
       trackPercentageOfMax: e.target.percentage.checked,
       preferredMetric: (e.target.difficultyMetric ? e.target.difficultyMetric.value : "RPE")
     }
-    axios.put("http://localhost:8080/account/settings", settings, {
+    axios.put(`${REACT_APP_BACKEND_URL}/account/settings`, settings, {
       headers: {Authorization: `Bearer: ${token}`}
     })
     .then(response => navigate("../", {replace: true}))
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   const difficultyHandler = (e) => {
@@ -46,7 +47,11 @@ const OrientationPage = ({token}) => {
   }
 
   if(advanced) {
-    return(<AdvancedOrientation advancedHandler={advancedHandler} setAdvanced={setAdvanced} difficultyHandler={difficultyHandler} trackDifficulty={trackDifficulty} /> )
+    return(<AdvancedOrientation 
+      advancedHandler={advancedHandler} 
+      setAdvanced={setAdvanced} 
+      difficultyHandler={difficultyHandler} 
+      trackDifficulty={trackDifficulty} /> )
   }
   return (
     <section className="orientation">

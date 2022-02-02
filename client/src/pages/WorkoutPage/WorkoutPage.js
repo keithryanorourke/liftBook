@@ -5,13 +5,15 @@ import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import IndividualLift from "../../components/IndividualLift/IndividualLift"
 import add from "../../assets/icons/add_black_24dp.svg";
 import axios from "axios"
-import React, {useState, useEffect} from "react"
-import {NavLink, Navigate, useNavigate} from "react-router-dom"
+import React, {useState, useEffect, useCallback} from "react"
+import {useNavigate} from "react-router-dom"
 import {useParams} from "react-router";
 import Cookie from 'js-cookie'
+const {REACT_APP_BACKEND_URL} = process.env
 
 const WorkoutPage = ({token}) => {
-  const navigate = useNavigate()
+  const navigateCallback = useNavigate()
+  const navigate = useCallback((path, obj) => navigateCallback(path, obj), [navigateCallback])
   const paramaters = useParams();
   const {workoutId} = paramaters
   const [workout, setWorkout] = useState(null)
@@ -27,6 +29,35 @@ const WorkoutPage = ({token}) => {
 
   // This is a variable that needs larger scope. State does not need to know the value of this variable.
   let liftSeparationCounter = 0;
+  const setModifierColor = (lift, index) => {
+    let color  = "";
+    
+    if(index > 0) {
+      if(lift.name !== lifts[index-1].name) {
+        if(liftSeparationCounter < 3) {
+          liftSeparationCounter++
+        } else {
+          liftSeparationCounter = 0
+        }
+      }
+    }
+
+    switch(liftSeparationCounter) {
+      case 0:
+        color="lift--blue"
+        break;
+      case 1:
+        color="lift--pink"
+        break;
+      case 2:
+        color="lift--orange"
+        break;
+      default:
+        color="lift--green"
+        break;
+    }
+    return color
+  }
 
   const closingAnimationFunction = (modalSetter) => {
     setCloseModalAnimation(true)
@@ -36,8 +67,8 @@ const WorkoutPage = ({token}) => {
     }, 300)
   }
 
-  const getLifts = () => {
-    axios.get(`http://localhost:8080/lifts/${workoutId}`, { headers: 
+  const getLifts = useCallback(() => {
+    axios.get(`${REACT_APP_BACKEND_URL}/lifts/${workoutId}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -45,11 +76,11 @@ const WorkoutPage = ({token}) => {
     .then(response => {
       setLifts(response.data.sort((liftA, liftB) => liftA.id - liftB.id))
     })
-    .catch(error => console.log(error))
-  }
+    .catch(error => alert(error))
+  }, [token, workoutId])
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/account/settings`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/account/settings`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -63,21 +94,20 @@ const WorkoutPage = ({token}) => {
       navigate('../login', {replace: true})
     })
 
-    axios.get(`http://localhost:8080/workouts/${workoutId}`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/workouts/${workoutId}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
     })
     .then(response => {
       setWorkout(response.data)
-      
     })
     .catch(error => {
       alert(`${error}.\nThe workout you are trying to access is not associated with your account! You will now be redirected to your home page.`)
       navigate("../", {replace: true})
     })
 
-  axios.get(`http://localhost:8080/exercises/`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/exercises/`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -87,8 +117,8 @@ const WorkoutPage = ({token}) => {
     })
     .catch(error => alert(`We could not retrieve the list of exercises from our database! Please try reloading the page and if that does not work, please try to logout and log back in.\n ${error}`))
 
-  getLifts()
-  }, [])
+    getLifts()
+  }, [getLifts, navigate, token, workoutId])
 
   const findExerciseByName = (name) => {
     return exercises.find(exercise => exercise.name === name)
@@ -135,7 +165,7 @@ const WorkoutPage = ({token}) => {
     const newLift = validateLiftForm(e, exercise)
     if(!newLift.error) {
       delete newLift.error
-      axios.post(`http://localhost:8080/lifts`, newLift, { headers: 
+      axios.post(`${REACT_APP_BACKEND_URL}/lifts`, newLift, { headers: 
       {
         Authorization: `Bearer: ${token}`
       } 
@@ -147,7 +177,7 @@ const WorkoutPage = ({token}) => {
       closingAnimationFunction(setAddLiftModal)
     })
     .catch (error => {
-      console.log(error)
+      alert(error)
     })
     }
   }
@@ -158,7 +188,7 @@ const WorkoutPage = ({token}) => {
     const newLift = validateLiftForm(e, exercise, id)
     if(!newLift.error) {
       delete newLift.error
-      axios.put(`http://localhost:8080/lifts`, newLift, { headers: 
+      axios.put(`${REACT_APP_BACKEND_URL}/lifts`, newLift, { headers: 
       {
         Authorization: `Bearer: ${token}`
       } 
@@ -174,7 +204,7 @@ const WorkoutPage = ({token}) => {
   }
 
   const deleteLiftHandler = (id) => {
-    axios.delete(`http://localhost:8080/lifts/${id}`, { headers: 
+    axios.delete(`${REACT_APP_BACKEND_URL}/lifts/${id}`, { headers: 
     {
       Authorization: `Bearer: ${token}`
     } 
@@ -236,38 +266,11 @@ const WorkoutPage = ({token}) => {
           <div className="workout__lifts-container">
             {
             userSettings ? lifts.map((lift, index) => {
-              let liftSeparationModifier = "";
-              
-              if(index > 0) {
-                if(lift.name !== lifts[index-1].name) {
-                  if(liftSeparationCounter < 3) {
-                    liftSeparationCounter++
-                  } else {
-                    liftSeparationCounter = 0
-                  }
-                }
-              }
-
-              switch(liftSeparationCounter) {
-                case 0:
-                  liftSeparationModifier="lift--blue"
-                  break;
-                case 1:
-                  liftSeparationModifier="lift--pink"
-                  break;
-                case 2:
-                  liftSeparationModifier="lift--orange"
-                  break;
-                case 3:
-                  liftSeparationModifier="lift--green"
-                  break;
-              }
-
               return(
                 <IndividualLift 
                 key={lift.id} 
                 setNum={index+1}
-                liftSeparationModifier={liftSeparationModifier}
+                liftSeparationModifier={setModifierColor(lift, index)}
                 lift={lift}
                 index={index}
                 settings={userSettings}
