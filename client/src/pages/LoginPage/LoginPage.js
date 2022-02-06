@@ -63,6 +63,7 @@ export const LoginPage = () => {
         <button className="login__submit">Log In</button>
         <NavLink className="login__link" to="/signup">Need an account? Sign up here!</NavLink>
       </form>
+      <p className="login__disclaimer">DISCLAIMER: liftBook uses cookies to keep you logged in! By logging in or creating an account, you are agreeing to allow this website to store cookies in your browser.</p>
     </section>
     )
 }

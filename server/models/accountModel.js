@@ -64,6 +64,7 @@ const authenticateLogin = async(user) => {
     return {code: 200, user: token}
   })
   .catch(err => {
+    console.log(err)
     return {code: 404, message: "Username does not match any existing account!"}
   })
   } catch(error) {
