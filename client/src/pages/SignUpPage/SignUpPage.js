@@ -74,6 +74,7 @@ export const SignUpPage = () => {
           </label>
           <button className="signup__submit" type="submit">Sign Up</button>
         </form>
+        <p className="signup__disclaimer">DISCLAIMER: liftBook uses cookies to keep you logged in! By logging in or creating an account, you are agreeing to allow this website to store cookies in your browser.</p>
     </section>
   )
 }

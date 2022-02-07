@@ -65,4 +65,12 @@
       width: 10rem;
     }
   }
+
+  &__disclaimer {
+    padding: 0 1.5rem 1.5rem;
+    font-size: 0.8rem;
+    @include tablet {
+      font-size: 0.9rem;
+    }
+  }
 }
