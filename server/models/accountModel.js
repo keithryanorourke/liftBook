@@ -1,9 +1,9 @@
-const knex = require('knex')(require('../knexfile').development)
+require('dotenv').config()
+const {KEY, NODE_ENV} = process.env
+const knex = require('knex')(require('../knexfile')[NODE_ENV])
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
-require('dotenv').config()
-const {KEY} = process.env
 
 const createAccount = async(newUser) => {
   // Validate user object

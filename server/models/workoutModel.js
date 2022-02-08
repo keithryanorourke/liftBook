@@ -1,4 +1,6 @@
-const knex = require('knex')(require('../knexfile').development)
+require('dotenv').config()
+const {NODE_ENV} = process.env
+const knex = require('knex')(require('../knexfile')[NODE_ENV])
 
 
 const retrieveUserWorkouts = async(userId) => {
