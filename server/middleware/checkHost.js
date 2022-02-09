@@ -4,7 +4,7 @@ const {NODE_ENV} = process.env
 
 const checkHost = (req, res, next) => {
   console.log(req.hostname, NODE_ENV)
-  const matchHost = NODE_ENV === 'development' ? 'localhost' : 'liftbook'
+  const matchHost = NODE_ENV === 'development' ? 'localhost' : 'liftbook.ca'
   if(req.hostname === matchHost) {
     next()
   } 
