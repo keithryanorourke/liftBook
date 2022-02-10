@@ -1,3 +1,5 @@
+UPDATE: liftBook is now live at liftbook.ca! The app is being hosted on AWS using a single ec2 instance to serve the frontend and the backend, as well as an RDS instance for MySQL!
+
 liftBook is both a personal project of mine and my capstone project for BrainStation's Web Development bootcamp!
 It is a fullstack application using React and SASS on the front end and Express and Knex (communicating with a MySQL database) on the backend.
 The application is a semi-customizable user account based strength tracking app!
