@@ -77,4 +77,13 @@
       font-size: 0.9rem;
     }
   }
+
+  &__about {
+    @include generic-button;
+    width: 50%;
+    margin: 0 auto 1.5rem;
+    @include tablet {
+      width: 10rem;
+    }
+  }
 }

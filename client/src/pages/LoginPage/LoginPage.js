@@ -1,4 +1,5 @@
 import "./LoginPage.scss";
+import InformativeModal from "../../components/InformativeModal/InformativeModal";
 import axios from "axios";
 import {useState} from "react";
 import {NavLink, useNavigate} from "react-router-dom"
@@ -11,6 +12,7 @@ export const LoginPage = () => {
     username: {},
     password: {},
   })
+  const [informativeModal, setInformativeModal] = useState(false)
   const navigate = useNavigate()
 
   const loginHandler = (e) => {
@@ -50,6 +52,14 @@ export const LoginPage = () => {
 
   return (
     <section className="login">
+      {informativeModal ? 
+    <InformativeModal
+      title="About liftBook"
+      copy="Welcome to liftBook! liftBook is a customizable workout tracker, and was made by myself (Keith Ryan O'Rourke) as my capstone project for my bootcamp at BrainStation! You do need to sign up for an account so that your workouts can be saved privately, where only you have access to them. That beings said, absolutely no contact or private information is needed whatsoever, you just need a username and password!"
+      close={() => setInformativeModal(false)}
+    />
+    : null
+    }
       <div className="login__top-container">
         <h2 className="login__title">Login</h2>
       </div>
@@ -64,6 +74,7 @@ export const LoginPage = () => {
         <NavLink className="login__link" to="/signup">Need an account? Sign up here!</NavLink>
       </form>
       <p className="login__disclaimer">DISCLAIMER: liftBook uses cookies to keep you logged in! By logging in or creating an account, you are agreeing to allow this website to store cookies in your browser.</p>
+      <button onClick={() => setInformativeModal(true)} className="login__about">About liftBook</button>
     </section>
     )
 }
