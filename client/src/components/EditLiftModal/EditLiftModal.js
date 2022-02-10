@@ -34,7 +34,7 @@ const EditLiftModal = ({settings, close, lift, exercises, editLiftHandler, setEd
 
   return (
     <>
-      <div className="edit-lift__overlay "></div>
+      <div onClick={() => setEditLiftModal(false)} className="edit-lift__overlay "></div>
       <section className={"edit-lift " + (close ? "edit-lift--closing" : "")}>
         <div className="edit-lift__container">
           <div className="edit-lift__top-container">

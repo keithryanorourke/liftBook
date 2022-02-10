@@ -108,7 +108,7 @@ const SettingsPage = ({token}) => {
     if(subject === "about") {
       setHelpInformation({
         title: "About liftBook",
-        copy: "liftBook is a passion project web app made by Keith Ryan O'Rourke! The concept of the app is to provide people at various stages of fitness with a tool to track their workouts and give THEM the option to choose how much they want to track and how much they want to see in their logs. liftBook is currently in its first stages of development, I hope to implement more advanced tracking features and chart based progress data for users in the future."
+        copy: "liftBook is a passion project made by Keith Ryan O'Rourke! The concept of the app is to provide people at various stages of fitness with a tool to track their workouts and give THEM the option to choose how much they want to track and see in their logs. liftBook's development is currently on hold while I attempt to build a web dev portfolio and learn some new frameworks, but I do hope to expand the tracking functionality and add some new \"progress\" features in the future!"
       })
     }
     setModal(true)
