@@ -8,8 +8,25 @@
   @include top-level-container;
   animation: popup 0.2s;
 
+  &__top-container {
+    background-color: $primary3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+  }
+
+  &__link {
+    @include icon-button;
+  }
+
   &__title {
     text-align: center;
+  }
+
+  &__empty {
+    width: 2rem;
+    height: 2rem;
   }
 
   &__scroll-container {

@@ -2,7 +2,7 @@ import "./SingleExercisePage.scss"
 import back from "../../assets/icons/arrow_back_black_24dp.svg"
 import IndividualLift from "../../components/IndividualLift/IndividualLift"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, NavLink } from "react-router-dom"
 import axios from "axios"
 import setLiftModifierColor from "../../functions/setLiftModifierColor"
 import convertDate from "../../functions/dateConversion"
@@ -28,14 +28,19 @@ const SingleExercisePage = ({token, userSettings}) => {
       Authorization: `Bearer: ${token}`
       } 
     })
-    .then(response => setLifts(response.data))
+    .then(response => {
+      const sortedLifts = response.data.sort((liftA, liftB) => liftB.id - liftA.id)
+      setLifts(sortedLifts)
+    })
     .catch(error=> alert(error))
   }, [])
 
   return (
     <section className="single-exercise">
       <div className="single-exercise__top-container">
+        <NavLink to="/exercises" className="single-exercise__link"><img src={back} alt="Arrow pointing left" className="single-exercise__icon" /></NavLink>
         <h2 className="single-exercise__title">{exercise ? exercise.name : 'Loading...'}</h2>
+        <div className="single-exercise__empty"></div>
       </div>
       <div className="single-exercise__scroll-container">
         <div className="single-exercise__lifts-container">
@@ -55,6 +60,7 @@ const SingleExercisePage = ({token, userSettings}) => {
           })
           : <p>Loading...</p>
         }
+        {!lifts.length ? <p className="single-exercise__copy">It looks like you haven't tracked {exercise.name} yet!</p> : null}
         </div>
       </div>
     </section>
