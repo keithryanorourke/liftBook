@@ -2,6 +2,7 @@ import "./IndividualExercise.scss"
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
 import edit from "../../assets/icons/edit_black_24dp.svg"
 import uniqid from "uniqid"
+import { NavLink } from "react-router-dom"
 
 
 const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => {
@@ -25,7 +26,7 @@ const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => 
 
   return (
     <article className={"exercise " + ((index+1) % 2 === 0 ? "exercise--even" : "")}>
-      <div className="exercise__container">
+      <NavLink to={`/exercise/${exercise.id}`} className="exercise__container">
         <h4 className="exercise__title">{exercise.name}{setEditModal ? null : ' (default)'}</h4>
         <div className="exercise__muscle-container">
           {mappedList.map(muscle => {
@@ -36,9 +37,10 @@ const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => 
               </div>
               )
             }
+            return null
             })}
         </div>
-      </div>
+      </NavLink>
       <div className="exercise__button-container">
         {setEditModal ? <button onClick={() => setEditModal(exercise)} className="exercise__button"><img src={edit} alt="Pencil Icon" className="exercise__icon" /></button> : null}
         {setDeleteModal ? <button onClick={() => setDeleteModal(exercise)} className="exercise__button"><img src={deleteIcon} alt="Waste bin Icon" className="exercise__icon" /></button> : null}

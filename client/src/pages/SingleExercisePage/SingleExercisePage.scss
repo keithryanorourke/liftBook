@@ -1,0 +1,14 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.single-exercise {
+  position: relative;
+  @include top-level-container;
+  animation: popup 0.2s;
+
+  &__title {
+    text-align: center;
+  }
+}
