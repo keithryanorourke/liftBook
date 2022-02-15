@@ -11,4 +11,22 @@
   &__title {
     text-align: center;
   }
+
+  &__scroll-container {
+    border-bottom-left-radius:1rem;
+    border-bottom-right-radius:1rem;
+    overflow: hidden;
+  }
+
+  &__lifts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 68vh;
+    overflow-y: auto;
+    @include tablet {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
 }

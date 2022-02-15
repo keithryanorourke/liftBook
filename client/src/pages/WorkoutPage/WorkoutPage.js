@@ -242,7 +242,7 @@ const WorkoutPage = ({token}) => {
                 <IndividualLift 
                 key={lift.id} 
                 setNum={index+1}
-                liftSeparationModifier={setLiftModifierColor(lift, lifts, index)}
+                liftSeparationModifier={setLiftModifierColor(lift, lifts, index, 'name')}
                 lift={lift}
                 index={index}
                 settings={userSettings}

@@ -63,6 +63,17 @@
     box-shadow: $darkshadow1;
   }
 
+  &__date {
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0.5;
+    background-color: $primary1;
+    padding: 0.25rem 1rem;
+    border-bottom-left-radius: 0.75rem;
+    box-shadow: $darkshadow1;
+  }
+
   &__stat-container {
     min-width: 7.8125rem;
     width: 33%;

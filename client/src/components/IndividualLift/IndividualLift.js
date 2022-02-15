@@ -2,7 +2,7 @@ import "./IndividualLift.scss"
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
 import edit from "../../assets/icons/edit_black_24dp.svg"
 
-const IndividualLift = ({lift, liftSeparationModifier, settings, index, setNum, setEditLiftModal, setDeleteModal}) => {
+const IndividualLift = ({lift, liftSeparationModifier, settings, index, setNum, setEditLiftModal, setDeleteModal, date}) => {
 
   const showDifficulty = () => {
     if (lift.metric === "RPE") {
@@ -24,9 +24,9 @@ const IndividualLift = ({lift, liftSeparationModifier, settings, index, setNum, 
 
   return (
     <article className={"lift " + liftSeparationModifier}>
-      <h4 className="lift__title">{lift.name}</h4>
+      <h4 className="lift__title">{date || lift.name}</h4>
       <div className="lift__container">
-        <span className="lift__set-number">{`set ${setNum}`}</span>
+        {setNum ? <span className="lift__set-number">{`set ${setNum}`}</span> : null}
         <div className="lift__stat-container">
           <span className="lift__specifier">WEIGHT:</span>
           <span className="lift__stat">{lift.weight ? `${lift.weight}${lift.measure}` : 'bodyweight'}</span>

@@ -1,10 +1,10 @@
 let liftSeparationCounter = 0;
 
-const setLiftModifierColor = (lift, lifts, index) => {
+const setLiftModifierColor = (lift, lifts, index, condition) => {
   let color  = "";
   
   if(index > 0) {
-    if(lift.name !== lifts[index-1].name) {
+    if(lift[condition] !== lifts[index-1][condition]) {
       if(liftSeparationCounter < 3) {
         liftSeparationCounter++
       } else {
