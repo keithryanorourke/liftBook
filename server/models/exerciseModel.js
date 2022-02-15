@@ -37,7 +37,25 @@ const retrieveUserExercises = async(userId) => {
     }
       )
     .catch(error => {
-      return {code: 400, error: error}
+      return {code: 400, message: error}
+    })
+  } catch(error) {
+    return {code: 400, message: "Try block failed."}
+  }
+  return response
+}
+
+const retrieveSingleExercise = async(exerciseId) => {
+  let response
+  try {
+    response = await knex('exercises')
+    .where({id: exerciseId})
+    .then(response => {
+      return {code: 200, exercise: response[0]}
+      }
+    )
+    .catch(error => {
+      return {code: 400, message: error}
     })
   } catch(error) {
     return {code: 400, message: "Try block failed."}
@@ -105,6 +123,7 @@ const removeExercise = async(userId, exerciseId) => {
 module.exports = {
   retrieveAllExercises,
   retrieveUserExercises,
+  retrieveSingleExercise,
   createExercise,
   editExercise,
   removeExercise

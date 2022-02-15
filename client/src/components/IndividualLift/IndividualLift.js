@@ -53,8 +53,8 @@ const IndividualLift = ({lift, liftSeparationModifier, settings, index, setNum, 
         null}
       </div>
       <div className="lift__button-container">
-        <button className="lift__button" onClick={() => setEditLiftModal(lift)}><img src={edit} alt="Pencil Icon" className="lift__edit-icon" /></button>
-        <button className="lift__button" onClick={() => setDeleteModal(lift, setNum)}><img src={deleteIcon} alt="Trash bin Icon" className="lift__delete-icon" /></button>
+        {setEditLiftModal ? <button className="lift__button" onClick={() => setEditLiftModal(lift)}><img src={edit} alt="Pencil Icon" className="lift__edit-icon" /></button> : null}
+        {setDeleteModal ? <button className="lift__button" onClick={() => setDeleteModal(lift, setNum)}><img src={deleteIcon} alt="Trash bin Icon" className="lift__delete-icon" /></button> : null}
       </div>
     </article>
     )
