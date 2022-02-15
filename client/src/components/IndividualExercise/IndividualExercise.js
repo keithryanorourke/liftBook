@@ -26,14 +26,16 @@ const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => 
   return (
     <article className={"exercise " + ((index+1) % 2 === 0 ? "exercise--even" : "")}>
       <div className="exercise__container">
-        <h4 className="exercise__title">{exercise.name}</h4>
+        <h4 className="exercise__title">{exercise.name}{setEditModal ? null : ' (default)'}</h4>
         <div className="exercise__muscle-container">
           {mappedList.map(muscle => {
-            return (
-              <div key={uniqid()} className="exercise__muscle-separator">
+            if(muscle) {
+              return (
+                <div key={uniqid()} className="exercise__muscle-separator">
                 <p  className={"exercise__muscle " + exerciseColor(muscle)}>{muscle}</p>
               </div>
               )
+            }
             })}
         </div>
       </div>

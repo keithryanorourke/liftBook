@@ -25,7 +25,7 @@ function App() {
             <Route path="/login" element={<main><LoginPage /></main>}></Route>
             <Route path="/signup" element={<main><SignUpPage /></main>}></Route>
             <Route exact path="/" element={<Private><HomePage /></Private>}></Route>
-            <Route path="/workouts/:workoutId" element={<Private><WorkoutPage /></Private>}></Route>
+            <Route path="/workout/:workoutId" element={<Private><WorkoutPage /></Private>}></Route>
             <Route exact path="/exercises" element={<Private><ExercisesPage /></Private>}></Route>
             <Route path="/setup" element={<Private><OrientationPage /></Private>}></Route>
             <Route path="/settings" element={<Private><SettingsPage /></Private>}></Route>

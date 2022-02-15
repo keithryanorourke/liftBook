@@ -30,7 +30,7 @@ const HomePage = ({token}) => {
   }
 
   const getWorkouts = useCallback(() => {
-    axios.get(`${REACT_APP_BACKEND_URL}/workouts`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/workout`, { headers: 
       {
       Authorization: `Bearer: ${token}`
       } 
@@ -52,19 +52,19 @@ const HomePage = ({token}) => {
       name: e.target.name.value || "Freestyle Workout"
     }
 
-    axios.post(`${REACT_APP_BACKEND_URL}/workouts`, workout, { headers: 
+    axios.post(`${REACT_APP_BACKEND_URL}/workout`, workout, { headers: 
       {
       Authorization: `Bearer: ${token}`
       } 
     })
-    .then(response => navigate(`../workouts/${response.data}`, {replace: true}))
+    .then(response => navigate(`../workout/${response.data}`, {replace: true}))
     .catch(error => alert(error))
   }
 
   const renameWorkoutHandler = (e, workout) => {
     e.preventDefault()
     workout.name = e.target.name.value || "Freestyle Workout"
-    axios.put(`${REACT_APP_BACKEND_URL}/workouts/${workout.id}`, workout, { headers: 
+    axios.put(`${REACT_APP_BACKEND_URL}/workout/${workout.id}`, workout, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -77,7 +77,7 @@ const HomePage = ({token}) => {
   }
 
   const deleteWorkoutHandler = (id) => {
-    axios.delete(`${REACT_APP_BACKEND_URL}/workouts/${id}`, { headers: 
+    axios.delete(`${REACT_APP_BACKEND_URL}/workout/${id}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 

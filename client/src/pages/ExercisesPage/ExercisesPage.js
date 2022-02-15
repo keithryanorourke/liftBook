@@ -18,7 +18,7 @@ const ExercisesPage = ({token}) => {
   const [currentExercise, setCurrentExercise] = useState(false)
 
   const getUserExercises = useCallback(() => {
-    axios.get(`${REACT_APP_BACKEND_URL}/exercises/user`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/exercises/`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -168,8 +168,8 @@ const ExercisesPage = ({token}) => {
           key={exercise.id}
           exercise={exercise}
           index={index}
-          setDeleteModal={handleSetDeleteModal}
-          setEditModal={handleSetEditModal}
+          setDeleteModal={exercise.user_id ? handleSetDeleteModal : null}
+          setEditModal={exercise.user_id ? handleSetEditModal : null}
           />
         })}
         </div>

@@ -94,7 +94,7 @@ const WorkoutPage = ({token}) => {
       navigate('../login', {replace: true})
     })
 
-    axios.get(`${REACT_APP_BACKEND_URL}/workouts/${workoutId}`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/workout/${workoutId}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
