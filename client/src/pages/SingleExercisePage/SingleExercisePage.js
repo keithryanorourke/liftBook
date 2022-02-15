@@ -33,7 +33,10 @@ const SingleExercisePage = ({token, userSettings}) => {
   return (
     <section className="single-exercise">
       <div className="single-exercise__top-container">
-        <h2 className="single-exercise__title">{exerciseId}</h2>
+        <h2 className="single-exercise__title">{exercise ? exercise.name : 'Loading...'}</h2>
+      </div>
+      <div className="single-exercise__scroll-container">
+        
       </div>
     </section>
   )
