@@ -1,6 +1,6 @@
 const liftModel = require('../models/liftModel')
 
-const {createLift, editLift, removeLift, retrieveWorkoutLifts} = liftModel
+const {createLift, editLift, removeLift, retrieveWorkoutLifts, retrieveLiftsByExercise} = liftModel
 
 const postLift = async(req, res) => {
   const response = await createLift(req.decoded.userId, req.body)
@@ -20,6 +20,14 @@ const getWorkoutLifts = async(req, res) => {
   return res.status(response.code).json(response.lifts)
 }
 
+const getExerciseLifts = async(req, res) => {
+  const response = await retrieveLiftsByExercise(req.decoded.userId, req.params.exerciseId)
+  if (response.message) {
+    return res.status(response.code).send(response.message)
+  }
+  return res.status(response.code).json(response.lifts)
+}
+
 const deleteLift = async(req, res) => {
   const response = await removeLift(req.decoded.userId, req.params.liftId)
   return res.status(response.code).send(response.message)
@@ -29,5 +37,6 @@ module.exports = {
   postLift,
   putLift,
   getWorkoutLifts,
+  getExerciseLifts,
   deleteLift
 }

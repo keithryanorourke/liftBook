@@ -64,6 +64,27 @@ const retrieveWorkoutLifts = async(userId, workoutId) => {
   return response
 }
 
+const retrieveLiftsByExercise = async(userId, exerciseId) => {
+  let response
+  try {
+    response = await knex.from('exercises')
+    .select(['lifts.id', 'lifts.weight', 'lifts.measure', 'lifts.reps', 
+    'lifts.difficulty', 'lifts.metric', 'lifts.percentageOfMax', 
+    'lifts.user_id', 'exercises.name', 'exercises.muscle'])
+    .innerJoin('lifts', 'exercises.id', 'lifts.exercise_id')
+    .where({'lifts.user_id': userId, exercise_id: exerciseId})
+    .then(response => {
+      return {code: 200, lifts: response}
+    })
+    .catch(error => {
+      return {code: 400, message: `List of lifts could not be retrieved. ${error}`}
+    })
+  } catch(error) {
+    return {code:400, message: "Try block failed."}
+  }
+  return response
+}
+
 const removeLift = async(userId, liftId) => {
   let response
   try {
@@ -86,5 +107,6 @@ module.exports = {
   createLift,
   editLift,
   retrieveWorkoutLifts,
+  retrieveLiftsByExercise,
   removeLift
 }
