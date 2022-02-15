@@ -70,8 +70,9 @@ const retrieveLiftsByExercise = async(userId, exerciseId) => {
     response = await knex.from('exercises')
     .select(['lifts.id', 'lifts.weight', 'lifts.measure', 'lifts.reps', 
     'lifts.difficulty', 'lifts.metric', 'lifts.percentageOfMax', 
-    'lifts.user_id', 'exercises.name', 'exercises.muscle'])
+    'lifts.user_id', 'exercises.name', 'exercises.muscle', 'workouts.timestamp'])
     .innerJoin('lifts', 'exercises.id', 'lifts.exercise_id')
+    .innerJoin('workouts', 'workouts.id', 'lifts.workout_id')
     .where({'lifts.user_id': userId, exercise_id: exerciseId})
     .then(response => {
       return {code: 200, lifts: response}
