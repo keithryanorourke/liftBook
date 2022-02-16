@@ -144,26 +144,29 @@ const SettingsPage = ({token}) => {
         </div>
         <div className="settings__bottom-container">
           <form onSubmit={submitHandler} className="settings__form">
-          <p className="settings__prefer">Mode:</p>
-              <div className="settings__wrapper">
-                <div className="settings__separator">
-                  <input type="radio" id="basic" name="mode" value="basic" onClick={modeHandler} defaultChecked={settings.mode === "basic"} className="settings__option" />
-                  <label htmlFor="basic" className="settings__label">Basic</label>
-                  <button onClick={(e) => openModal(e, "basic")} className="settings__help-button">
-                    <img src={help} alt="Question mark icon" className="settings__help" />
-                  </button>
-                </div>
-                <div className="settings__separator">
-                  <input type="radio" id="advanced" name="mode" value="advanced" onClick={modeHandler} defaultChecked={settings.mode === "advanced"} className="settings__option" />
-                  <label htmlFor="advanced" className="settings__label">Advanced</label>
-                  <button onClick={(e) => openModal(e, "advanced")} className="settings__help-button">
-                    <img src={help} alt="Question mark icon" className="settings__help" />
-                  </button>
-                </div>
-              </div> 
+          <div className="settings__mode-container">
+            <p className="settings__prefer">Mode:</p>
+            <div className="settings__wrapper">
+              <div className="settings__separator">
+                <input type="radio" id="basic" name="mode" value="basic" onClick={modeHandler} defaultChecked={settings.mode === "basic"} className="settings__option" />
+                <label htmlFor="basic" className="settings__label">Basic</label>
+                <button onClick={(e) => openModal(e, "basic")} className="settings__help-button">
+                  <img src={help} alt="Question mark icon" className="settings__help" />
+                </button>
+              </div>
+              <div className="settings__separator">
+                <input type="radio" id="advanced" name="mode" value="advanced" onClick={modeHandler} defaultChecked={settings.mode === "advanced"} className="settings__option" />
+                <label htmlFor="advanced" className="settings__label">Advanced</label>
+                <button onClick={(e) => openModal(e, "advanced")} className="settings__help-button">
+                  <img src={help} alt="Question mark icon" className="settings__help" />
+                </button>
+              </div>
+            </div> 
+          </div>
               {mode === "advanced" ? 
               <div className="settings__advanced-container">
-              <p className="settings__prompt">Please select which advanced metrics you would like to track:</p>
+              <div className="settings__enabled-container">
+              <p className="settings__prompt">Select enabled metrics:</p>
               <div className="settings__wrapper">
                 <div className="settings__separator">
                   <input type="checkbox" id="difficulty" defaultChecked={settings.trackDifficulty} name="difficulty" onClick={difficultyHandler} value="difficulty" className="settings__option" />
@@ -179,6 +182,7 @@ const SettingsPage = ({token}) => {
                     <img src={help} alt="Question mark icon" className="settings__help" />
                   </button>
                 </div>
+              </div>
               </div>
               {trackDifficulty ? 
               <div className="settings__preferance-container">
@@ -203,6 +207,7 @@ const SettingsPage = ({token}) => {
               : null}
               </div>
               : null}
+              <div className="settings__push-save"></div>
               <button className="settings__button settings__button--submit">Save</button>
             </form>
             <div className="settings__extra-buttons">
