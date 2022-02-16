@@ -61,8 +61,12 @@ const SingleExercisePage = ({token, userSettings}) => {
           })
           : <p>Loading...</p>
         }
-        {!lifts.length ? <p className="single-exercise__copy">It looks like you haven't tracked {exercise.name} yet!</p> : null}
         </div>
+        {!lifts.length ? 
+        <div className="single-exercise__untracked">
+          <p className="single-exercise__copy">It looks like you haven't tracked {exercise.name} yet! You can track any exercise inside a workout and then see all the previous times you've tracked that exercise here!</p>
+        </div>
+        : null}
       </div>
     </section>
   )
