@@ -30,12 +30,24 @@
     width: 2.3rem;
     height: 2.3rem;
   }
+
+  &__bottom-container {
+    @include rotated-phone {
+      max-height: 50vh;
+      overflow-y: auto;
+    }
+  }
   
   &__form {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    @include rotated-phone {
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
   }
 
   &__label {
@@ -43,6 +55,9 @@
     flex-direction: column;
     width: 100%;
     margin-bottom: 1rem;
+    @include rotated-phone {
+      width: 45%;
+    }
   }
 
   &__field {
@@ -63,6 +78,11 @@
     width: 50%;
     @include tablet {
       width: 10rem;
+    }
+    @include rotated-phone {
+      margin-top: 0;
+      align-self: center;
+      width: 45%;
     }
   }
 
