@@ -36,12 +36,23 @@
   &__title {
     background-color: $accent5;
     width: 9rem;
+    font-weight: 600;
     text-align: center;
     margin: 0;
     padding: 0.5rem;
     box-shadow: $darkshadow2;
     @include tablet {
       width: 15rem;
+    }
+  }
+
+  &__placeholder {
+    display: none;
+    @include tablet {
+      padding: 0.5rem;
+      display: block;
+      height: 2.15rem;
+      width: 100%;
     }
   }
 
@@ -64,14 +75,13 @@
   }
 
   &__date {
-    position: absolute;
-    right: 0;
-    top: 0;
-    opacity: 0.5;
-    background-color: $primary1;
-    padding: 0.25rem 1rem;
-    border-bottom-left-radius: 0.75rem;
-    box-shadow: $darkshadow1;
+    background-color: $accent5;
+    width: 100%;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    padding: 0.5rem;
+    box-shadow: $darkshadow2;
   }
 
   &__stat-container {

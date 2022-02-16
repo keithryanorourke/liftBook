@@ -2,7 +2,7 @@ import "./IndividualLift.scss"
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
 import edit from "../../assets/icons/edit_black_24dp.svg"
 
-const IndividualLift = ({lift, liftSeparationModifier, settings, index, setNum, setEditLiftModal, setDeleteModal, date}) => {
+const IndividualLift = ({lift, liftSeparationModifier, settings, index, setNum, setEditLiftModal, setDeleteModal, date, showDate}) => {
 
   const showDifficulty = () => {
     if (lift.metric === "RPE") {
@@ -23,8 +23,8 @@ const IndividualLift = ({lift, liftSeparationModifier, settings, index, setNum, 
   
 
   return (
-    <article className={"lift " + liftSeparationModifier}>
-      <h4 className="lift__title">{date || lift.name}</h4>
+    <article className={"lift " + liftSeparationModifier + (date ? " lift--by-exercise" : "")}>
+      {showDate || !date ? <p className={`lift__${date?'date':'title'}`}>{date || lift.name}</p> : <div className="lift__placeholder"></div>}
       <div className="lift__container">
         {setNum ? <span className="lift__set-number">{`set ${setNum}`}</span> : null}
         <div className="lift__stat-container">
@@ -52,10 +52,12 @@ const IndividualLift = ({lift, liftSeparationModifier, settings, index, setNum, 
         :
         null}
       </div>
-      <div className="lift__button-container">
-        {setEditLiftModal ? <button className="lift__button" onClick={() => setEditLiftModal(lift)}><img src={edit} alt="Pencil Icon" className="lift__edit-icon" /></button> : null}
-        {setDeleteModal ? <button className="lift__button" onClick={() => setDeleteModal(lift, setNum)}><img src={deleteIcon} alt="Trash bin Icon" className="lift__delete-icon" /></button> : null}
+      {date? <div className="lift__placeholder"></div> : null}
+      {setEditLiftModal && setDeleteModal ? <div className="lift__button-container">
+        <button className="lift__button" onClick={() => setEditLiftModal(lift)}><img src={edit} alt="Pencil Icon" className="lift__edit-icon" /></button>
+        <button className="lift__button" onClick={() => setDeleteModal(lift, setNum)}><img src={deleteIcon} alt="Trash bin Icon" className="lift__delete-icon" /></button>
       </div>
+      : null}
     </article>
     )
 }

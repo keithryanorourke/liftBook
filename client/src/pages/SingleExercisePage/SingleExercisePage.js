@@ -45,7 +45,7 @@ const SingleExercisePage = ({token, userSettings}) => {
       <div className="single-exercise__scroll-container">
         <div className="single-exercise__lifts-container">
         {userSettings ? lifts.map((lift, index) => {
-          const date=convertDate(lift.timestamp)
+          const showDate = (index === 0 ? true :  lift.timestamp !== lifts[index-1].timestamp ? true : false)
           return(
             <IndividualLift 
             key={lift.id} 
@@ -53,7 +53,8 @@ const SingleExercisePage = ({token, userSettings}) => {
             lift={lift}
             index={index}
             settings={userSettings}
-            date={date}
+            date={convertDate(lift.timestamp)}
+            showDate={showDate}
             className="single-exercise__lift" 
             />
             )
