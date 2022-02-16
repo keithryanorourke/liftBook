@@ -35,20 +35,50 @@
     font-size: 1.25rem;
   }
 
+  &__bottom-container {
+    @include rotated-phone {
+      max-height: 45vh;
+      overflow-y: auto;
+    }
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
     padding: 1rem 1.5rem 0.5rem;
+    @include rotated-phone {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  }
+
+  &__mode-container {
+    @include rotated-phone {
+      width: 33%;
+    }
   }
 
   &__advanced-container {
     animation: popup cubic-bezier(.12,.98,.35,1.5) 0.2s;
+    @include rotated-phone {
+      display: flex;
+      justify-content: space-between;
+      width: 66%;
+    }
+  }
+
+  &__prompt {
+    text-align: left;
   }
 
   &__wrapper {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
+    @include rotated-phone {
+      flex-direction: column;
+    }
   }
 
   &__separator {
@@ -56,6 +86,9 @@
     margin: 0.375rem 0 0.5rem;
     display: flex;
     align-items: center;
+    @include rotated-phone {
+      width: 25%;
+    }
   }
 
   &__option {
@@ -96,9 +129,15 @@
     animation: popup cubic-bezier(.12,.98,.35,1.5) 0.4s ;
   }
 
+  &__push-save {
+    @include rotated-phone {
+      width: 5rem;
+      height: 1rem;
+    }
+  }
+
   &__button {
     @include generic-button;
-
     &--submit {
       align-self: flex-end;
       min-width: 7.75rem;

@@ -45,6 +45,9 @@
     align-items: center;
     max-height: 68vh;
     overflow-y: auto;
+    @include rotated-phone {
+      max-height: 45vh;
+    }
     @include tablet {
       flex-direction: row;
       flex-wrap: wrap;

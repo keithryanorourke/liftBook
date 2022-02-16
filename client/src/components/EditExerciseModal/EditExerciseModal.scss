@@ -43,6 +43,10 @@
 
   &__bottom-container {
     padding: 1rem 1.5rem;
+    @include rotated-phone {
+      max-height: 60vh;
+      overflow-y: auto;
+    }
   }
 
   &__muscle-container {
