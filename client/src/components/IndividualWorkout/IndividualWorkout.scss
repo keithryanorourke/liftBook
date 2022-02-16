@@ -15,7 +15,7 @@
   border-top: 2px solid $primary2;
   border-left: 1px solid $primary2;
   border-right: 1px solid $primary2;
-  @media (orientation: landscape) {
+  @include rotated-phone {
     box-shadow: $darkshadow2;
     width: 50%;
   }

@@ -36,7 +36,7 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    @media (orientation: landscape) {
+    @include rotated-phone {
       max-height: 45vh;
       flex-direction: row;
       flex-wrap: wrap;

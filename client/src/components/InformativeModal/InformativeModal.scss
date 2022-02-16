@@ -5,7 +5,7 @@
 
 .informative {
   @include modal;
-  @media (orientation: landscape) {
+  @include rotated-phone {
     width: 125%;
   }
 
@@ -37,7 +37,7 @@
 
   &__bottom-container {
     padding: 0.5rem 1.5rem;
-    @media (orientation: landscape) {
+    @include rotated-phone {
       max-height: 50vh;
       overflow-y: auto;
     }

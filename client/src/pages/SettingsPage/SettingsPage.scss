@@ -36,7 +36,7 @@
   }
 
   &__bottom-container {
-    @media (orientation: landscape) {
+    @include rotated-phone {
       max-height: 45vh;
       overflow-y: auto;
     }
