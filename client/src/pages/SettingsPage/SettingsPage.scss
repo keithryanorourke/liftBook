@@ -35,6 +35,13 @@
     font-size: 1.25rem;
   }
 
+  &__bottom-container {
+    @media (orientation: landscape) {
+      max-height: 45vh;
+      overflow-y: auto;
+    }
+  }
+
   &__form {
     display: flex;
     flex-direction: column;

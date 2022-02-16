@@ -49,6 +49,9 @@
   transform: translate(-50%, -50%);
   z-index: 3;
   animation: modal-popup 0.2s;
+  @media (orientation: landscape) {
+    width: 125%;
+  }
   @include modal-padding;
 }
 

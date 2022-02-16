@@ -142,71 +142,73 @@ const SettingsPage = ({token}) => {
         <div className="settings__top-container">
           <h2 className="settings__title">Settings</h2>
         </div>
-        <form onSubmit={submitHandler} className="settings__form">
-        <p className="settings__prefer">Mode:</p>
-            <div className="settings__wrapper">
-              <div className="settings__separator">
-                <input type="radio" id="basic" name="mode" value="basic" onClick={modeHandler} defaultChecked={settings.mode === "basic"} className="settings__option" />
-                <label htmlFor="basic" className="settings__label">Basic</label>
-                <button onClick={(e) => openModal(e, "basic")} className="settings__help-button">
-                  <img src={help} alt="Question mark icon" className="settings__help" />
-                </button>
+        <div className="settings__bottom-container">
+          <form onSubmit={submitHandler} className="settings__form">
+          <p className="settings__prefer">Mode:</p>
+              <div className="settings__wrapper">
+                <div className="settings__separator">
+                  <input type="radio" id="basic" name="mode" value="basic" onClick={modeHandler} defaultChecked={settings.mode === "basic"} className="settings__option" />
+                  <label htmlFor="basic" className="settings__label">Basic</label>
+                  <button onClick={(e) => openModal(e, "basic")} className="settings__help-button">
+                    <img src={help} alt="Question mark icon" className="settings__help" />
+                  </button>
+                </div>
+                <div className="settings__separator">
+                  <input type="radio" id="advanced" name="mode" value="advanced" onClick={modeHandler} defaultChecked={settings.mode === "advanced"} className="settings__option" />
+                  <label htmlFor="advanced" className="settings__label">Advanced</label>
+                  <button onClick={(e) => openModal(e, "advanced")} className="settings__help-button">
+                    <img src={help} alt="Question mark icon" className="settings__help" />
+                  </button>
+                </div>
+              </div> 
+              {mode === "advanced" ? 
+              <div className="settings__advanced-container">
+              <p className="settings__prompt">Please select which advanced metrics you would like to track:</p>
+              <div className="settings__wrapper">
+                <div className="settings__separator">
+                  <input type="checkbox" id="difficulty" defaultChecked={settings.trackDifficulty} name="difficulty" onClick={difficultyHandler} value="difficulty" className="settings__option" />
+                  <label htmlFor="difficulty" className="settings__label">Difficulty</label>
+                  <button onClick={(e) => openModal(e, "Difficulty")} className="settings__help-button">
+                    <img src={help} alt="Question mark icon" className="settings__help" />
+                  </button>
+                </div>
+                <div className="settings__separator">
+                  <input type="checkbox" id="percentage" defaultChecked={settings.trackPercentageOfMax} name="percentage" value="percentage" className="settings__option" />
+                  <label htmlFor="difficulty" className="settings__label">%of1RM</label>
+                  <button onClick={(e) => openModal(e, "PercentageOfMax")} className="settings__help-button">
+                    <img src={help} alt="Question mark icon" className="settings__help" />
+                  </button>
+                </div>
               </div>
-              <div className="settings__separator">
-                <input type="radio" id="advanced" name="mode" value="advanced" onClick={modeHandler} defaultChecked={settings.mode === "advanced"} className="settings__option" />
-                <label htmlFor="advanced" className="settings__label">Advanced</label>
-                <button onClick={(e) => openModal(e, "advanced")} className="settings__help-button">
-                  <img src={help} alt="Question mark icon" className="settings__help" />
-                </button>
+              {trackDifficulty ? 
+              <div className="settings__preferance-container">
+              <p className="settings__prefer">Preferred difficulty metric:</p>
+              <div className="settings__wrapper">
+                <div className="settings__separator">
+                  <input type="radio" defaultChecked={settings.preferredMetric === "RPE"} id="rpe" name="difficultyMetric" value="RPE" className="settings__option" />
+                  <label htmlFor="rpe" className="settings__label">RPE</label>
+                  <button onClick={(e) => openModal(e, "RPE")} className="settings__help-button">
+                    <img src={help} alt="Question mark icon" className="settings__help" />
+                  </button>
+                </div>
+                <div className="settings__separator">
+                  <input type="radio" defaultChecked={settings.preferredMetric === "RIR"} id="rir" name="difficultyMetric" value="RIR" className="settings__option" />
+                  <label htmlFor="rir" className="settings__label">RIR</label>
+                  <button onClick={(e) => openModal(e, "RIR")} className="settings__help-button">
+                    <img src={help} alt="Question mark icon" className="settings__help" />
+                  </button>
+                </div>
+              </div> 
               </div>
-            </div> 
-            {mode === "advanced" ? 
-            <div className="settings__advanced-container">
-            <p className="settings__prompt">Please select which advanced metrics you would like to track:</p>
-            <div className="settings__wrapper">
-              <div className="settings__separator">
-                <input type="checkbox" id="difficulty" defaultChecked={settings.trackDifficulty} name="difficulty" onClick={difficultyHandler} value="difficulty" className="settings__option" />
-                <label htmlFor="difficulty" className="settings__label">Difficulty</label>
-                <button onClick={(e) => openModal(e, "Difficulty")} className="settings__help-button">
-                  <img src={help} alt="Question mark icon" className="settings__help" />
-                </button>
+              : null}
               </div>
-              <div className="settings__separator">
-                <input type="checkbox" id="percentage" defaultChecked={settings.trackPercentageOfMax} name="percentage" value="percentage" className="settings__option" />
-                <label htmlFor="difficulty" className="settings__label">%of1RM</label>
-                <button onClick={(e) => openModal(e, "PercentageOfMax")} className="settings__help-button">
-                  <img src={help} alt="Question mark icon" className="settings__help" />
-                </button>
-              </div>
+              : null}
+              <button className="settings__button settings__button--submit">Save</button>
+            </form>
+            <div className="settings__extra-buttons">
+              <button onClick={logoutHandler} className="settings__button">Logout</button>
+              <button onClick={(e) => openModal(e, "about")} className="settings__button">About</button>
             </div>
-            {trackDifficulty ? 
-            <div className="settings__preferance-container">
-            <p className="settings__prefer">Preferred difficulty metric:</p>
-            <div className="settings__wrapper">
-              <div className="settings__separator">
-                <input type="radio" defaultChecked={settings.preferredMetric === "RPE"} id="rpe" name="difficultyMetric" value="RPE" className="settings__option" />
-                <label htmlFor="rpe" className="settings__label">RPE</label>
-                <button onClick={(e) => openModal(e, "RPE")} className="settings__help-button">
-                  <img src={help} alt="Question mark icon" className="settings__help" />
-                </button>
-              </div>
-              <div className="settings__separator">
-                <input type="radio" defaultChecked={settings.preferredMetric === "RIR"} id="rir" name="difficultyMetric" value="RIR" className="settings__option" />
-                <label htmlFor="rir" className="settings__label">RIR</label>
-                <button onClick={(e) => openModal(e, "RIR")} className="settings__help-button">
-                  <img src={help} alt="Question mark icon" className="settings__help" />
-                </button>
-              </div>
-            </div> 
-            </div>
-            : null}
-            </div>
-            : null}
-            <button className="settings__button settings__button--submit">Save</button>
-          </form>
-          <div className="settings__extra-buttons">
-            <button onClick={logoutHandler} className="settings__button">Logout</button>
-            <button onClick={(e) => openModal(e, "about")} className="settings__button">About</button>
           </div>
       </section>
     </>

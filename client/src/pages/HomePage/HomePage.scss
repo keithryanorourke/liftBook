@@ -36,6 +36,11 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    @media (orientation: landscape) {
+      max-height: 45vh;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
     @include tablet {
       flex-direction: row;
       flex-wrap: wrap;

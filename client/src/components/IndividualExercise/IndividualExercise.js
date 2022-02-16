@@ -41,10 +41,10 @@ const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => 
             })}
         </div>
       </NavLink>
-      <div className="exercise__button-container">
-        {setEditModal ? <button onClick={() => setEditModal(exercise)} className="exercise__button"><img src={edit} alt="Pencil Icon" className="exercise__icon" /></button> : null}
-        {setDeleteModal ? <button onClick={() => setDeleteModal(exercise)} className="exercise__button"><img src={deleteIcon} alt="Waste bin Icon" className="exercise__icon" /></button> : null}
-      </div>
+      {setEditModal && setDeleteModal ? <div className="exercise__button-container">
+        <button onClick={() => setEditModal(exercise)} className="exercise__button"><img src={edit} alt="Pencil Icon" className="exercise__icon" /></button>
+        <button onClick={() => setDeleteModal(exercise)} className="exercise__button"><img src={deleteIcon} alt="Waste bin Icon" className="exercise__icon" /></button>
+      </div> : null}
     </article>
     )
 }

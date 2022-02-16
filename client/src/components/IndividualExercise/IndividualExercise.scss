@@ -21,6 +21,11 @@
   @include desktop {
     width: 33%;
   }
+  @media (orientation: landscape) {
+    width: 100%;
+    box-shadow: none;
+    flex-direction: row;
+  }
 
   &--even {
     background: $primary5;
@@ -40,6 +45,7 @@
     &:hover {
       transform: scale(1.05);
     }
+    
   }
 
   &__title {
@@ -91,6 +97,14 @@
     justify-content: flex-end;
     width: 100%;
     padding-top: 0.5rem;
+    @media (orientation: landscape) {
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      width: 10%;
+      align-items: flex-end;
+      padding-top: 0;
+    }
   }
 
   &__button {
