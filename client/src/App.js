@@ -15,6 +15,7 @@ import OrientationPage from "./pages/OrientationPage/OrientationPage"
 import WorkoutPage from './pages/WorkoutPage/WorkoutPage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import ExercisesPage from './pages/ExercisesPage/ExercisesPage';
+import SingleExercisePage from './pages/SingleExercisePage/SingleExercisePage';
 
 function App() {
   return (
@@ -25,8 +26,9 @@ function App() {
             <Route path="/login" element={<main><LoginPage /></main>}></Route>
             <Route path="/signup" element={<main><SignUpPage /></main>}></Route>
             <Route exact path="/" element={<Private><HomePage /></Private>}></Route>
-            <Route path="/workouts/:workoutId" element={<Private><WorkoutPage /></Private>}></Route>
+            <Route path="/workout/:workoutId" element={<Private><WorkoutPage /></Private>}></Route>
             <Route exact path="/exercises" element={<Private><ExercisesPage /></Private>}></Route>
+            <Route exact path="/exercise/:exerciseId" element={<Private><SingleExercisePage /></Private>}></Route>
             <Route path="/setup" element={<Private><OrientationPage /></Private>}></Route>
             <Route path="/settings" element={<Private><SettingsPage /></Private>}></Route>
           </Routes>

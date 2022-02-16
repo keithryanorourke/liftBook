@@ -9,6 +9,7 @@ import React, {useState, useEffect, useCallback} from "react"
 import {useNavigate} from "react-router-dom"
 import {useParams} from "react-router";
 import Cookie from 'js-cookie'
+import setLiftModifierColor from "../../functions/setLiftModifierColor";
 const {REACT_APP_BACKEND_URL} = process.env
 
 const WorkoutPage = ({token}) => {
@@ -29,35 +30,6 @@ const WorkoutPage = ({token}) => {
 
   // This is a variable that needs larger scope. State does not need to know the value of this variable.
   let liftSeparationCounter = 0;
-  const setModifierColor = (lift, index) => {
-    let color  = "";
-    
-    if(index > 0) {
-      if(lift.name !== lifts[index-1].name) {
-        if(liftSeparationCounter < 3) {
-          liftSeparationCounter++
-        } else {
-          liftSeparationCounter = 0
-        }
-      }
-    }
-
-    switch(liftSeparationCounter) {
-      case 0:
-        color="lift--blue"
-        break;
-      case 1:
-        color="lift--pink"
-        break;
-      case 2:
-        color="lift--orange"
-        break;
-      default:
-        color="lift--green"
-        break;
-    }
-    return color
-  }
 
   const closingAnimationFunction = (modalSetter) => {
     setCloseModalAnimation(true)
@@ -94,7 +66,7 @@ const WorkoutPage = ({token}) => {
       navigate('../login', {replace: true})
     })
 
-    axios.get(`${REACT_APP_BACKEND_URL}/workouts/${workoutId}`, { headers: 
+    axios.get(`${REACT_APP_BACKEND_URL}/workout/${workoutId}`, { headers: 
     {
     Authorization: `Bearer: ${token}`
     } 
@@ -270,7 +242,7 @@ const WorkoutPage = ({token}) => {
                 <IndividualLift 
                 key={lift.id} 
                 setNum={index+1}
-                liftSeparationModifier={setModifierColor(lift, index)}
+                liftSeparationModifier={setLiftModifierColor(lift, lifts, index, 'name')}
                 lift={lift}
                 index={index}
                 settings={userSettings}
@@ -280,7 +252,7 @@ const WorkoutPage = ({token}) => {
                 />
               )
             })
-            : <h4>Loading...</h4>
+            : <p>Loading...</p>
             }
           </div>
           :

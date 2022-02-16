@@ -1,17 +1,19 @@
 import Footer from '../Footer/Footer';
 import React, {useEffect, useState} from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookie from "js-cookie"
 const {REACT_APP_BACKEND_URL} = process.env
 
 const Private = ({children}) => {
+    const navigate = useNavigate()
     const location = useLocation()
     const [authentication, setAuthentication] = useState({
         isAuthenticating: true,
         isAuthenticated: false,
         token: null,
     })
+    const [userSettings, setUserSettings] = useState(null)
     
     useEffect(() => {
         const token = Cookie.get("token")
@@ -30,6 +32,19 @@ const Private = ({children}) => {
                     } 
                 })
                 .then((response) => {
+                    axios.get(`${REACT_APP_BACKEND_URL}/account/settings`, { headers: 
+                        {
+                        Authorization: `Bearer: ${token}`
+                        } 
+                    })
+                    .then(response => {
+                        setUserSettings(response.data)
+                    })
+                    .catch(error =>{
+                        alert(`${error}.\nUser settings not retrieved! You will now be logged out.`)
+                        Cookie.remove('token')
+                        navigate('../login', {replace: true})
+                    })
                     return setAuthentication(_prevState => ({
                         isAuthenticating: false,
                         isAuthenticated: true,
@@ -56,7 +71,7 @@ const Private = ({children}) => {
             return  (
             <>
                 <main>
-                    <ElementToRender token={authentication.token} />
+                    <ElementToRender token={authentication.token} userSettings={userSettings}/>
                 </main>
                 <Footer />
             </>
