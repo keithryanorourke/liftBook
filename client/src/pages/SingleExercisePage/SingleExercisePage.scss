@@ -3,22 +3,34 @@
 @use "../../styles/partials/animations" as *;
 @use "../../styles/partials/mixins" as *;
 
-.exercises {
+.single-exercise {
   position: relative;
   @include top-level-container;
   animation: popup 0.2s;
-  overflow: visible;
 
   &__top-container {
-    display: flex;
-    justify-content: center;
     background-color: $primary3;
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
   }
 
-  &__add-button {
-    @include add-button;
+  &__link {
+    @include icon-button;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__copy {
+    text-align: center;
+  }
+
+  &__empty {
+    width: 2rem;
+    height: 2rem;
   }
 
   &__scroll-container {
@@ -27,34 +39,22 @@
     overflow: hidden;
   }
 
-  
-  &__bottom-container {
-    box-shadow: $darkshadow1;
-    max-height: 68vh;
-    overflow-y: auto;
+  &__lifts-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    max-height: 68vh;
+    overflow-y: auto;
     @include rotated-phone {
       max-height: 45vh;
-      flex-direction: row;
-      flex-wrap: wrap;
     }
     @include tablet {
       flex-direction: row;
       flex-wrap: wrap;
     }
   }
-  
-  &__default-container {
-    padding: 1rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 
-  &__button {
-    @include generic-button;
-    margin-top: 0.5rem;
-    width: fit-content;
+  &__untracked {
+    padding: 1rem;
   }
 }

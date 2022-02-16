@@ -5,6 +5,9 @@
 
 .informative {
   @include modal;
+  @include rotated-phone {
+    width: 125%;
+  }
 
   &__overlay {
     @include modal-overlay;
@@ -34,6 +37,10 @@
 
   &__bottom-container {
     padding: 0.5rem 1.5rem;
+    @include rotated-phone {
+      max-height: 50vh;
+      overflow-y: auto;
+    }
   }
 
   &__back {

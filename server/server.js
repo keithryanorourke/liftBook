@@ -14,7 +14,7 @@ app.use(checkHost)
 
 app.use('/account', accountRoutes)
 app.use('/lifts', liftRoutes)
-app.use("/workouts", workoutRoutes)
+app.use("/workout", workoutRoutes)
 app.use('/exercises', exerciseRoutes)
 
 require('dotenv').config()

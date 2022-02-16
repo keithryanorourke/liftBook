@@ -10,13 +10,13 @@ const IndividualWorkout = ({workout, index, handleSetDeleteModal, handleSetRenam
     <article key={workout.id} 
     className={"individual-workout " + (index % 2 === 0 ? "individual-workout--even " : "")}
     >
-      <NavLink to={`/workouts/${workout.id}`} className="individual-workout__open-workout">
+      <NavLink to={`/workout/${workout.id}`} className="individual-workout__open-workout">
         <span className="individual-workout__name">{workout.name}</span>
         <span className="individual-workout__date">{convertDate(workout.timestamp)}</span>
       </NavLink>
       <div className="individual-workout__button-container">
         <button onClick={() => handleSetRenameModal(workout)} className="individual-workout__button"><img src={edit} alt="Pencil icon" className="individual-workout__icon" /></button>
-        <NavLink to={`/workouts/${workout.id}`} className="individual-workout__button">
+        <NavLink to={`/workout/${workout.id}`} className="individual-workout__button">
           <img src={listIcon} alt="Paper document icon" className="individual-workout__icon" />
         </NavLink>
         <button onClick={() => handleSetDeleteModal(workout)} className="individual-workout__button"><img src={deleteIcon} alt="Trash bin icon" className="individual-workout__icon" /></button>

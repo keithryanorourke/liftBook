@@ -62,19 +62,21 @@ export const SignUpPage = () => {
           <h2 className="signup__title">Create Account:</h2>
           <div className="signup__empty"></div>
         </div>
-        <form onSubmit={loginHandler} className="signup__form">
-          <label className="signup__label">Username:
-            <input type="text" name="username" className="signup__field" />
-          </label>
-          <label className="signup__label">Password:
-            <input type="password" name="password" className="signup__field" />
-          </label>
-          <label className="signup__label">Confirm Password:
-            <input type="password" name="confirmPassword" className="signup__field" />
-          </label>
-          <button className="signup__submit" type="submit">Sign Up</button>
-        </form>
-        <p className="signup__disclaimer">DISCLAIMER: liftBook uses cookies to keep you logged in! By logging in or creating an account, you are agreeing to allow this website to store cookies in your browser.</p>
+        <div className="signup__bottom-container">
+          <form onSubmit={loginHandler} className="signup__form">
+            <label className="signup__label">Username:
+              <input type="text" name="username" className="signup__field" />
+            </label>
+            <label className="signup__label">Password:
+              <input type="password" name="password" className="signup__field" />
+            </label>
+            <label className="signup__label">Confirm Password:
+              <input type="password" name="confirmPassword" className="signup__field" />
+            </label>
+            <button className="signup__submit" type="submit">Sign Up</button>
+          </form>
+          <p className="signup__disclaimer">DISCLAIMER: liftBook uses cookies to keep you logged in! By logging in or creating an account, you are agreeing to allow this website to store cookies in your browser.</p>
+        </div>
     </section>
   )
 }

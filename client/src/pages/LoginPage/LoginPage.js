@@ -63,18 +63,20 @@ export const LoginPage = () => {
       <div className="login__top-container">
         <h2 className="login__title">Login</h2>
       </div>
-      <form onSubmit={loginHandler} className="login__form">
-        <label className="login__label">Username:
-          <input type="text" name="username" className="login__field" />
-        </label>
-        <label className="login__label">Password:
-          <input type="password" name="password" className="login__field" />
-        </label>
-        <button className="login__submit">Log In</button>
+      <div className="login__bottom-container">
+        <form onSubmit={loginHandler} className="login__form">
+          <label className="login__label">Username:
+            <input type="text" name="username" className="login__field" />
+          </label>
+          <label className="login__label">Password:
+            <input type="password" name="password" className="login__field" />
+          </label>
+          <button className="login__submit">Log In</button>
+        </form>
         <NavLink className="login__link" to="/signup">Need an account? Sign up here!</NavLink>
-      </form>
-      <p className="login__disclaimer">DISCLAIMER: liftBook uses cookies to keep you logged in! By logging in or creating an account, you are agreeing to allow this website to store cookies in your browser.</p>
-      <button onClick={() => setInformativeModal(true)} className="login__about">About liftBook</button>
+        <p className="login__disclaimer">DISCLAIMER: liftBook uses cookies to keep you logged in! By logging in or creating an account, you are agreeing to allow this website to store cookies in your browser.</p>
+        <button onClick={() => setInformativeModal(true)} className="login__about">About liftBook</button>
+      </div>
     </section>
     )
 }

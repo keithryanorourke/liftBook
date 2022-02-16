@@ -1,7 +1,7 @@
 const exerciseModel = require('../models/exerciseModel')
 const knex = require('knex')(require('../knexfile').development)
 
-const {retrieveAllExercises, retrieveUserExercises, createExercise, editExercise, removeExercise} = exerciseModel
+const {retrieveAllExercises, retrieveUserExercises, retrieveSingleExercise, createExercise, editExercise, removeExercise} = exerciseModel
 
 const getAllExercises = async(req, res) => {
   const response = await retrieveAllExercises(req.decoded.userId)
@@ -17,6 +17,14 @@ const getUserExercises = async(req, res) => {
     return res.status(response.code).send(response.message)
   }
   return res.status(response.code).json(response.exercises)
+}
+
+const getSingleExercise = async(req, res) => {
+  const response = await retrieveSingleExercise(req.params.exerciseId)
+  if (response.message) {
+    return res.status(response.code).send(response.message)
+  }
+  return res.status(response.code).json(response.exercise)
 }
 
 const postExercise = async(req, res) => {
@@ -44,6 +52,7 @@ const deleteExercise = async(req, res) => {
 module.exports = {
   getAllExercises,
   getUserExercises,
+  getSingleExercise,
   postExercise,
   putExercise,
   deleteExercise
