@@ -1,30 +1,31 @@
-const express = require('express')
-const router = express.Router()
-const knex = require('knex')(require('../knexfile').development)
-const workoutController = require('../controllers/workoutController')
-const authorize = require ("../middleware/authorize").authorize;
+const express = require("express");
+const router = express.Router();
+const knex = require("knex")(require("../knexfile").development);
+const workoutController = require("../controllers/workoutController");
+const authorize = require("../middleware/authorize").authorize;
 
 const {
-  getUserWorkouts,
-  getSpecificWorkout,
-  deleteWorkout,
-  postWorkout,
-  putWorkout
-} = workoutController
+	getUserWorkouts,
+	getSpecificWorkout,
+	deleteWorkout,
+	postWorkout,
+	putWorkout,
+} = workoutController;
 
-// Get all workouts for specific user
-router.get("/", authorize, getUserWorkouts)
+router
+	.route("/")
+	// Get all workouts for specific user
+	.get(authorize, getUserWorkouts)
+	// Create new workout
+	.post(authorize, postWorkout);
 
-// Get specific workout from user account
-router.get("/:workoutId", authorize, getSpecificWorkout)
+router
+	.route("/:workoutId")
+	// Get specific workout from user account
+	.get(authorize, getSpecificWorkout)
+	// Rename workout
+	.put(authorize, putWorkout)
+	// Delete specific workout
+	.delete(authorize, deleteWorkout);
 
-// Delete specific workout
-router.delete("/:workoutId", authorize, deleteWorkout)
-
-// Create new workout
-router.post("/", authorize, postWorkout)
-
-// Rename workout
-router.put("/:workoutId", authorize, putWorkout)
-
-module.exports=router
+module.exports = router;

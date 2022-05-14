@@ -1,25 +1,23 @@
-const express = require('express')
-const router = express.Router()
-const authorize = require ("../middleware/authorize").authorize;
-const accountController = require('../controllers/accountController')
+const express = require("express");
+const router = express.Router();
+const authorize = require("../middleware/authorize").authorize;
+const accountController = require("../controllers/accountController");
 
-const {postAccount,
-  login,
-  getSettings,
-  putSettings,
-  checkAuth} = accountController
+const { postAccount, login, getSettings, putSettings, checkAuth } =
+	accountController;
 
-require('dotenv').config()
-const {KEY} = process.env
+require("dotenv").config();
+const { KEY } = process.env;
 
-router.post('/signup', postAccount)
+router.post("/signup", postAccount);
 
-router.post('/login', login)
+router.post("/login", login);
 
-router.get("/settings", authorize, getSettings)
+router
+	.route("/settings")
+	.get(authorize, getSettings)
+	.put(authorize, putSettings);
 
-router.put('/settings', authorize, putSettings)
+router.get("/check-auth", authorize, checkAuth);
 
-router.get("/check-auth", authorize, checkAuth)
-
-module.exports=router
+module.exports = router;
