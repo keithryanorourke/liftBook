@@ -1,9 +1,8 @@
 require('dotenv').config()
 const {NODE_ENV} = process.env
 
-
 const checkHost = (req, res, next) => {
-  const matchHost = NODE_ENV === 'development' ? 'localhost' : 'liftbook.ca'
+  const matchHost = 'localhost'
   if(req.hostname === matchHost) {
     next()
   } 
