@@ -15,7 +15,6 @@ NodeJS, Express, MySQL
 ### Deployment
 ![Logo](https://skillicons.dev/icons?i=aws,nginx,linux)
 AWS (EC2, RDS, Route 53), Nginx, Linux (Ubuntu)
-liftBook is live at [liftbook.ca](https://liftbook.ca)!
 
 ## Run Locally
 
