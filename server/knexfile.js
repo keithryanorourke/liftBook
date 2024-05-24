@@ -1,6 +1,6 @@
 // Update with your config settings.
 require('dotenv').config({path:"./.env"})
-const {KNEX_USER, KNEX_PASSWORD, KNEX_URL} = process.env
+const {KNEX_USER, KNEX_PASSWORD, KNEX_URL, KNEX_DB_NAME} = process.env
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
@@ -22,7 +22,7 @@ module.exports = {
       host: KNEX_URL,
       user: KNEX_USER,
       password: KNEX_PASSWORD,
-      database: 'liftbookdb',
+      database: KNEX_DB_NAME,
       charset: 'utf8',
     },
   }
