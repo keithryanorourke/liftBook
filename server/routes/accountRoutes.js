@@ -18,6 +18,4 @@ router
 	.get(authorize, getSettings)
 	.put(authorize, putSettings);
 
-router.get("/check-auth", authorize, checkAuth);
-
 module.exports = router;

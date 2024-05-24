@@ -97,14 +97,9 @@ const putSettings = async (req, res) => {
 		});
 };
 
-const checkAuth = async (_req, res) => {
-	return res.status(200).send("Valid JWT!");
-};
-
 module.exports = {
 	postAccount,
 	login,
 	getSettings,
 	putSettings,
-	checkAuth,
 };
