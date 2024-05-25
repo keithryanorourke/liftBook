@@ -1,39 +1,32 @@
 import "./SingleExercisePage.scss"
 import back from "../../assets/icons/arrow_back_black_24dp.svg"
 import IndividualLift from "../../components/IndividualLift/IndividualLift"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams, NavLink } from "react-router-dom"
-import axios from "axios"
 import setLiftModifierColor from "../../functions/setLiftModifierColor"
 import convertDate from "../../functions/dateConversion"
-const {REACT_APP_BACKEND_URL} = process.env
+import { UserSettingsContext } from "../../contexts/UserSettingsContext"
+import useConfiguredAxios from "../../hooks/useConfiguredAxios"
 
-
-const SingleExercisePage = ({token, userSettings}) => {
+const SingleExercisePage = () => {
   const params = useParams()
   const {exerciseId} = params
   const [exercise, setExercise] = useState({})
   const [lifts, setLifts] = useState([])
+  const userSettings = useContext(UserSettingsContext)
+  const axios = useConfiguredAxios()
 
   useEffect(() => {
-    axios.get(`${REACT_APP_BACKEND_URL}/exercises/single/${exerciseId}`, { headers: 
-      {
-      Authorization: `Bearer: ${token}`
-      } 
-    })
+    axios.get(`/exercises/single/${exerciseId}`)
     .then(response => setExercise(response.data))
     .catch(error=> alert(error))
-    axios.get(`${REACT_APP_BACKEND_URL}/lifts/byExercise/${exerciseId}`, { headers: 
-      {
-      Authorization: `Bearer: ${token}`
-      } 
-    })
+    axios.get(`/lifts/byExercise/${exerciseId}`)
     .then(response => {
       const sortedLifts = response.data.sort((liftA, liftB) => liftB.id - liftA.id)
       setLifts(sortedLifts)
     })
     .catch(error=> alert(error))
-  }, [])
+  }, [axios, exerciseId])
 
   return (
     <section className="single-exercise">

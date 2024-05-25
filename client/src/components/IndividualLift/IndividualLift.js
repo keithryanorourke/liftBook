@@ -1,8 +1,11 @@
 import "./IndividualLift.scss"
 import deleteIcon from "../../assets/icons/delete_black_24dp.svg"
 import edit from "../../assets/icons/edit_black_24dp.svg"
+import { useContext } from "react"
+import { UserSettingsContext } from "../../contexts/UserSettingsContext"
 
-const IndividualLift = ({lift, liftSeparationModifier, settings, index, setNum, setEditLiftModal, setDeleteModal, date, showDate}) => {
+const IndividualLift = ({lift, liftSeparationModifier, index, setNum, setEditLiftModal, setDeleteModal, date, showDate}) => {
+  const settings = useContext(UserSettingsContext);
 
   const showDifficulty = () => {
     if (lift.metric === "RPE") {
@@ -21,7 +24,6 @@ const IndividualLift = ({lift, liftSeparationModifier, settings, index, setNum, 
     return "untracked"
   }
   
-
   return (
     <article className={"lift " + liftSeparationModifier + (date ? " lift--by-exercise" : "")}>
       {showDate || !date ? <p className={`lift__${date?'date':'title'}`}>{date || lift.name}</p> : <div className="lift__placeholder"></div>}

@@ -1,4 +1,3 @@
-const express = require("express")
 const jwt = require('jsonwebtoken')
 
 require('dotenv').config()
@@ -10,9 +9,12 @@ const authorize = (req, res, next) => {
   if (token) {
     jwt.verify(token, KEY, (err, decoded) => {
       if(err) {
-        return res.status(400).send("invalid JWT")
+        return res.status(401).send("Invalid token")
       }
       else {
+        if(new Date(decoded.expiration) < Date.now()) {
+          return res.status(401).send("Token expired")
+        }
         req.decoded = decoded
         next()
       }

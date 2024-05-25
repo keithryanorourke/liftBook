@@ -8,9 +8,11 @@ import RenameWorkoutModal from "../../components/RenameWorkoutModal/RenameWorkou
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import IndividualWorkout from "../../components/IndividualWorkout/IndividualWorkout";
 import add from "../../assets/icons/add_black_24dp.svg";
+import { useReadLocalStorage } from "usehooks-ts";
+import useConfiguredAxios from "../../hooks/useConfiguredAxios";
 const {REACT_APP_BACKEND_URL} = process.env
 
-const HomePage = ({token}) => {
+const HomePage = () => {
   const navigate = useNavigate()
   const [user, setUser] = useState({
     workouts: null
@@ -20,6 +22,7 @@ const HomePage = ({token}) => {
   const [deleteModal, setDeleteModal] = useState(false)
   const [renameWorkoutModal, setRenameWorkoutModal] = useState(false)
   const [closeModalAnimation, setCloseModalAnimation] = useState(false)
+  const axios = useConfiguredAxios();
   
   const closingAnimationFunction = (modalSetter) => {
     setCloseModalAnimation(true)
@@ -30,17 +33,13 @@ const HomePage = ({token}) => {
   }
 
   const getWorkouts = useCallback(() => {
-    axios.get(`${REACT_APP_BACKEND_URL}/workout`, { headers: 
-      {
-      Authorization: `Bearer: ${token}`
-      } 
-    })
+    axios.get(`/workout`)
     .then(response => {
       response.data.sort((workoutA, workoutB) => workoutB.id - workoutA.id)
       return setUser({workouts: response.data})
     })
     .catch(error => alert(error))
-  }, [token])
+  }, [axios])
 
   useEffect(() => {
     getWorkouts()
@@ -52,11 +51,7 @@ const HomePage = ({token}) => {
       name: e.target.name.value || "Freestyle Workout"
     }
 
-    axios.post(`${REACT_APP_BACKEND_URL}/workout`, workout, { headers: 
-      {
-      Authorization: `Bearer: ${token}`
-      } 
-    })
+    axios.post(`/workout`, workout)
     .then(response => navigate(`../workout/${response.data}`, {replace: true}))
     .catch(error => alert(error))
   }
@@ -64,11 +59,7 @@ const HomePage = ({token}) => {
   const renameWorkoutHandler = (e, workout) => {
     e.preventDefault()
     workout.name = e.target.name.value || "Freestyle Workout"
-    axios.put(`${REACT_APP_BACKEND_URL}/workout/${workout.id}`, workout, { headers: 
-    {
-    Authorization: `Bearer: ${token}`
-    } 
-    })
+    axios.put(`/workout/${workout.id}`, workout)
     .then(response => {
       getWorkouts()
       closingAnimationFunction(setRenameWorkoutModal)
@@ -77,11 +68,7 @@ const HomePage = ({token}) => {
   }
 
   const deleteWorkoutHandler = (id) => {
-    axios.delete(`${REACT_APP_BACKEND_URL}/workout/${id}`, { headers: 
-    {
-    Authorization: `Bearer: ${token}`
-    } 
-    })
+    axios.delete(`/workout/${id}`)
     .then(response => {
       getWorkouts()
       closingAnimationFunction(setDeleteModal)
