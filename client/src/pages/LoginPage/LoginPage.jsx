@@ -1,9 +1,9 @@
 import "./LoginPage.scss";
 import InformativeModal from "../../components/InformativeModal/InformativeModal";
-import axios from "axios";
 import {useState} from "react";
 import {NavLink, useNavigate} from "react-router-dom"
-import Cookie from "js-cookie";
+import { useLocalStorage } from "usehooks-ts";
+import useConfiguredAxios from "../../hooks/useConfiguredAxios";
 const {REACT_APP_BACKEND_URL} = process.env
 
 export const LoginPage = () => {
@@ -14,6 +14,8 @@ export const LoginPage = () => {
   })
   const [informativeModal, setInformativeModal] = useState(false)
   const navigate = useNavigate()
+  const [, setToken] = useLocalStorage("token", null)
+  const axios = useConfiguredAxios();
 
   const loginHandler = (e) => {
     e.preventDefault();
@@ -32,9 +34,9 @@ export const LoginPage = () => {
       return alert("Please enter your username and password in order to login!")
     }
     if(!exit) {
-      axios.post(`${REACT_APP_BACKEND_URL}/account/login`, submission)
+      axios.post(`/account/login`, submission)
       .then(response => {
-        Cookie.set("token", response.data, {expires: 7})
+        setToken(response.data)
         navigate("../", {replace: true})
       })
       .catch(error => {

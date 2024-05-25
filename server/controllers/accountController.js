@@ -1,8 +1,8 @@
 require("dotenv").config();
 const { KEY, NODE_ENV } = process.env;
 const knex = require("knex")(require("../knexfile")[NODE_ENV]);
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const createJwt = require('../utils').createJwt;
 
 const postAccount = (req, res) => {
 	const newUser = req.body;
@@ -35,7 +35,7 @@ const postAccount = (req, res) => {
 		.insert(userToAdd)
 		.then((data) => {
 			delete userToAdd.password;
-			const token = jwt.sign({ userId: data[0] }, KEY);
+			const token = createJwt(data[0].id, KEY);
 			return res.status(200).json(token);
 		})
 		.catch((err) => {
@@ -51,10 +51,11 @@ const login = async (req, res) => {
 			if (!bcrypt.compareSync(user.password, data[0].password)) {
 				return res.status(400).send("Incorrect password");
 			}
-			const token = jwt.sign({ userId: data[0].id }, KEY);
+			const token = createJwt(data[0].id, KEY);
 			return res.status(200).json(token);
 		})
 		.catch((err) => {
+			console.log(err);
 			return res
 				.status(404)
 				.send(`Username does not match any existing account! ${err}`);
@@ -97,14 +98,9 @@ const putSettings = async (req, res) => {
 		});
 };
 
-const checkAuth = async (_req, res) => {
-	return res.status(200).send("Valid JWT!");
-};
-
 module.exports = {
 	postAccount,
 	login,
 	getSettings,
 	putSettings,
-	checkAuth,
 };
