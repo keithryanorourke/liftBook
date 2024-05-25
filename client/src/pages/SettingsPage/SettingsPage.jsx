@@ -1,13 +1,12 @@
 import "./SettingsPage.scss"
-import axios from "axios"
-import { useEffect, useState, useCallback } from "react"
-import Cookie from "js-cookie"
+import { useEffect, useState, useCallback, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import InformativeModal from "../../components/InformativeModal/InformativeModal"
 import help from "../../assets/icons/help_outline_black_24dp.svg"
-const {REACT_APP_BACKEND_URL} = process.env
+import useConfiguredAxios from "../../hooks/useConfiguredAxios"
+import { UserSettingsSetterContext } from "../../contexts/UserSettingsSetterContext"
 
-const SettingsPage = ({token}) => {
+const SettingsPage = () => {
   const navigateCallback = useNavigate()
   const navigate = useCallback((path, obj) => navigateCallback(path, obj), [navigateCallback])
   const [mode, setMode] = useState(null)
@@ -18,13 +17,11 @@ const SettingsPage = ({token}) => {
     copy: false
   })
   const [modal, setModal] = useState(false)
+  const axios = useConfiguredAxios();
+  const setUserSettings = useContext(UserSettingsSetterContext);
 
   useEffect(()=> {
-    axios.get(`${REACT_APP_BACKEND_URL}/account/settings`, { headers: 
-    {
-    Authorization: `Bearer: ${token}`
-    } 
-    })
+    axios.get(`/account/settings`)
     .then(response => {
       setSettings(response.data)
       setMode(response.data.mode)
@@ -32,12 +29,11 @@ const SettingsPage = ({token}) => {
     })
     .catch(error =>{
       alert(`${error}.\nUser settings not retrieved! You will now be logged out.`)
-      Cookie.remove('token')
       navigate('../login', {replace: true})
     })
-  }, [navigate, token])
+  }, [navigate, axios])
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault()
     const newSettings = {
       mode: e.target.mode.value,
@@ -45,11 +41,13 @@ const SettingsPage = ({token}) => {
       trackPercentageOfMax: e.target.percentage ? e.target.percentage.checked : settings.trackPercentageOfMax,
       preferredMetric: e.target.difficultyMetric ? e.target.difficultyMetric.value : settings.preferredMetric
     }
-    axios.put(`${REACT_APP_BACKEND_URL}/account/settings`, newSettings, {
-      headers: {Authorization: `Bearer: ${token}`}
-    })
-    .then(response => navigate(-1))
-    .catch(error => alert(error))
+    try {
+      await axios.put(`/account/settings`, newSettings)
+      setUserSettings(newSettings);
+      navigate(-1)
+    } catch (err) {
+      alert(err);
+    }
   }
 
   const difficultyHandler = (e) => {
@@ -115,7 +113,6 @@ const SettingsPage = ({token}) => {
   }
 
   const logoutHandler = () => {
-    Cookie.remove('token')
     navigate('../login', {replace: true})
   }
   

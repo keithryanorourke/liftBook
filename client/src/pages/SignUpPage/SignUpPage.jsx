@@ -1,10 +1,9 @@
 import "./SignUpPage.scss"
-import axios from "axios"
 import {useState} from "react"
-import Cookie from "js-cookie"
 import { Navigate, NavLink } from "react-router-dom"
 import back from "../../assets/icons/arrow_back_black_24dp.svg"
-const {REACT_APP_BACKEND_URL} = process.env
+import { useLocalStorage } from "usehooks-ts"
+import useConfiguredAxios from "../../hooks/useConfiguredAxios"
 
 export const SignUpPage = () => {
   // formFields will be implemented as a manner to render conditional error messages in a future sprint
@@ -14,6 +13,8 @@ export const SignUpPage = () => {
     confirmPassword: {}
   })
   const [redirect, setRedirect] = useState(false)
+  const [, setToken] = useLocalStorage("token", null)
+  const axios = useConfiguredAxios();
 
   const loginHandler = (e) => {
     e.preventDefault();
@@ -39,9 +40,9 @@ export const SignUpPage = () => {
     }
     if (!exit) {
       delete submission.confirmPassword
-      axios.post(`${REACT_APP_BACKEND_URL}/account/signup`, submission)
+      axios.post(`/account/signup`, submission)
       .then(response => {
-        Cookie.set("token", response.data, {expires: 7})
+        setToken(response.data);
         setRedirect(true)
       })
       .catch(error => {
