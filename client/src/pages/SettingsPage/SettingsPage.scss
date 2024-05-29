@@ -12,7 +12,7 @@
   
   &__top-container {
     padding: 0 1.5rem;
-    background-color: $primary3;
+    background-color: $bg3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -95,34 +95,15 @@
     transition: 0.5s;
     margin: 0;
     margin-right: 0.5rem;
-    filter:hue-rotate(100deg) brightness(0.5) drop-shadow(-0.5px 3px 8px $primary1);
+    filter:hue-rotate(100deg) brightness(0.5) drop-shadow(-0.5px 3px 8px $bg1);
     transform: scale(1.375);
     &:checked {
-      filter:hue-rotate(100deg) brightness(1) drop-shadow(-0.5px 3px 8px $primary1);
+      filter:hue-rotate(100deg) brightness(1) drop-shadow(-0.5px 3px 8px $bg1);
     }
   }
 
   &__label {
     line-height: 100%;
-  }
-
-  &__help-button {
-    opacity: 0.7;
-    background: none;
-    border: none;
-    padding: 0;
-    margin-left: 0.5rem;
-    height: 1.2rem;
-    cursor: pointer;
-    transition: 0.2s;
-    &:hover {
-      opacity: 1;
-      transform: scale(1.25) translateY(-0.1rem);
-    }
-  }
-
-  &__help {
-    width: 1.2rem;
   }
 
   &__preferance-container {
@@ -141,9 +122,9 @@
     &--submit {
       align-self: flex-end;
       min-width: 7.75rem;
-      border: 0.25rem solid $accent6;
+      border: 0.25rem solid $accent3;
       background: none;
-      color: $accent6;
+      color: $accent3;
       box-shadow: $lightshadow1;
     }
   }

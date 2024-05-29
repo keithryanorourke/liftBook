@@ -4,8 +4,8 @@ import edit from "../../assets/icons/edit_black_24dp.svg"
 import uniqid from "uniqid"
 import { NavLink } from "react-router-dom"
 
-
-const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => {
+// TODO: Refactor to always accept onClick functions and base their rendering on whether exercise is default or not internally as opposed to externally.
+const IndividualExercise = ({exercise, index, onClickEdit, onClickDelete}) => {
   
   const muscleList=exercise.muscle.split(",")
   const mappedList = muscleList.map((exercise, index) => {
@@ -27,7 +27,7 @@ const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => 
   return (
     <article className={"exercise " + ((index+1) % 2 === 0 ? "exercise--even" : "")}>
       <NavLink to={`/exercise/${exercise.id}`} className="exercise__container">
-        <h4 className="exercise__title">{exercise.name}{setEditModal ? null : ' (default)'}</h4>
+        <h4 className="exercise__title">{exercise.name}{onClickEdit ? null : ' (default)'}</h4>
         <div className="exercise__muscle-container">
           {mappedList.map(muscle => {
             if(muscle) {
@@ -41,9 +41,9 @@ const IndividualExercise = ({exercise, index, setEditModal, setDeleteModal}) => 
             })}
         </div>
       </NavLink>
-      {setEditModal && setDeleteModal ? <div className="exercise__button-container">
-        <button onClick={() => setEditModal(exercise)} className="exercise__button"><img src={edit} alt="Pencil Icon" className="exercise__icon" /></button>
-        <button onClick={() => setDeleteModal(exercise)} className="exercise__button"><img src={deleteIcon} alt="Waste bin Icon" className="exercise__icon" /></button>
+      {onClickEdit && onClickDelete ? <div className="exercise__button-container">
+        <button onClick={() => onClickEdit(exercise)} className="exercise__button"><img src={edit} alt="Pencil Icon" className="exercise__icon" /></button>
+        <button onClick={() => onClickDelete(exercise)} className="exercise__button"><img src={deleteIcon} alt="Waste bin Icon" className="exercise__icon" /></button>
       </div> : null}
     </article>
     )

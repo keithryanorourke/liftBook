@@ -4,7 +4,7 @@ import edit from "../../assets/icons/edit_black_24dp.svg"
 import { useContext } from "react"
 import { UserSettingsContext } from "../../contexts/UserSettingsContext"
 
-const IndividualLift = ({lift, liftSeparationModifier, index, setNum, setEditLiftModal, setDeleteModal, date, showDate}) => {
+const IndividualLift = ({lift, liftSeparationModifier, setNum, onClickEdit, onClickDelete, date, showDate}) => {
   const settings = useContext(UserSettingsContext);
 
   const showDifficulty = () => {
@@ -55,9 +55,9 @@ const IndividualLift = ({lift, liftSeparationModifier, index, setNum, setEditLif
         null}
       </div>
       {date? <div className="lift__placeholder"></div> : null}
-      {setEditLiftModal && setDeleteModal ? <div className="lift__button-container">
-        <button className="lift__button" onClick={() => setEditLiftModal(lift)}><img src={edit} alt="Pencil Icon" className="lift__edit-icon" /></button>
-        <button className="lift__button" onClick={() => setDeleteModal(lift, setNum)}><img src={deleteIcon} alt="Trash bin Icon" className="lift__delete-icon" /></button>
+      {onClickEdit && onClickDelete ? <div className="lift__button-container">
+        <button className="lift__button" onClick={() => onClickEdit(lift)}><img src={edit} alt="Pencil Icon" className="lift__edit-icon" /></button>
+        <button className="lift__button" onClick={() => onClickDelete(lift, setNum)}><img src={deleteIcon} alt="Trash bin Icon" className="lift__delete-icon" /></button>
       </div>
       : null}
     </article>

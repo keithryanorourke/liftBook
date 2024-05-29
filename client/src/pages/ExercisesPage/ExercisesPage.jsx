@@ -1,18 +1,101 @@
 import "./ExercisesPage.scss"
 import { useState, useEffect, useCallback } from "react"
 import add from "../../assets/icons/add_black_24dp.svg"
-import AddExerciseModal from "../../components/AddExerciseModal/AddExerciseModal"
 import IndividualExercise from "../../components/IndividualExercise/IndividualExercise"
-import DeleteModal from "../../components/DeleteModal/DeleteModal"
-import EditExerciseModal from "../../components/EditExerciseModal/EditExerciseModal"
 import useConfiguredAxios from "../../hooks/useConfiguredAxios"
-const { REACT_APP_BACKEND_URL } = process.env
+import Dialog from "../../components/Dialog/Dialog"
+import BubbleSelect from "../../components/BubbleSelect/BubbleSelect"
+import muscleList from "../../assets/data/muscleList.json"
+import DeleteDialog from "../../components/DeleteDialog/DeleteDialog"
+
+const AddExerciseDialog = ({ visible, onClose, onSubmit }) => {
+  const [selectedMuscles, setSelectedMuscles] = useState([]);
+
+  const toggleMuscle = (muscle) => {
+    if (selectedMuscles.includes(muscle)) {
+      let newArray = [...selectedMuscles]
+      const indexToRemove = newArray.indexOf(muscle)
+      newArray.splice(indexToRemove, 1)
+      setSelectedMuscles(newArray)
+    } else {
+      let newArray = [...selectedMuscles]
+      newArray.push(muscle)
+      setSelectedMuscles(newArray)
+    }
+  }
+
+  return (
+    <Dialog
+      visible={visible}
+      onClose={onClose}
+      title="New Exercise"
+      color="primary"
+    >
+      <p className="add-exercise__copy">Select all muscles involved in exercise:</p>
+      <BubbleSelect
+        options={muscleList.array}
+        onChange={toggleMuscle}
+        selectedOptions={selectedMuscles}
+      />
+      <form onSubmit={(e) => onSubmit(e, selectedMuscles)} className="add-exercise__form">
+        <label htmlFor="" className="add-exercise__label">Exercise Name:
+          <input type="text" placeholder="Exercise name is required" className="add-exercise__name" name="name" />
+        </label>
+        <div className="add-exercise__button-container">
+          <button className="add-exercise__button add-exercise__button--submit">Submit</button>
+          <button onClick={onClose} className="add-exercise__button">Cancel</button>
+        </div>
+      </form>
+    </Dialog>
+  )
+}
+
+const EditExerciseDialog = ({ visible, onClose, onSubmit, exercise }) => {
+  const [selectedMuscles, setSelectedMuscles] = useState(exercise.muscle);
+
+  const toggleMuscle = (muscle) => {
+    if (selectedMuscles.includes(muscle)) {
+      let newArray = [...selectedMuscles]
+      const indexToRemove = newArray.indexOf(muscle)
+      newArray.splice(indexToRemove, 1)
+      setSelectedMuscles(newArray)
+    } else {
+      let newArray = [...selectedMuscles]
+      newArray.push(muscle)
+      setSelectedMuscles(newArray)
+    }
+  }
+
+  return (
+    <Dialog
+      visible={visible}
+      onClose={onClose}
+      title={`Edit ${exercise.name}`}
+      color="primary"
+    >
+      <p className="edit-exercise__copy">Select all muscles involved in exercise:</p>
+      <BubbleSelect
+        options={muscleList.array}
+        onChange={toggleMuscle}
+        selectedOptions={selectedMuscles}
+      />
+      <form onSubmit={(e) => onSubmit(e, exercise, selectedMuscles)} className="edit-exercise__form">
+        <label htmlFor="" className="edit-exercise__label">Exercise Name:
+          <input type="text" defaultValue={exercise.name} placeholder="Exercise name is required" className="edit-exercise__name" name="name" />
+        </label>
+        <div className="edit-exercise__button-container">
+          <button className="edit-exercise__button edit-exercise__button--submit">Submit</button>
+          <button onClick={onClose} className="edit-exercise__button">Cancel</button>
+        </div>
+      </form>
+    </Dialog >
+  )
+}
 
 const ExercisesPage = () => {
-  const [addExerciseModal, setAddExerciseModal] = useState(false)
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [editModal, setEditModal] = useState(false)
-  const [closeModalAnimation, setCloseModalAnimation] = useState(false)
+  const [showAdd, setShowAdd] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
+  const [showEdit, setShowEdit] = useState(false)
   const [exercises, setExercises] = useState([])
   const [currentExercise, setCurrentExercise] = useState(false)
   const axios = useConfiguredAxios()
@@ -65,84 +148,82 @@ const ExercisesPage = () => {
     return newExercise
   }
 
-  const addHandler = (e, muscles) => {
+  const onAddExercise = (e, muscles) => {
     e.preventDefault()
     const newExercise = validateExerciseForm(e, muscles)
     if (!newExercise.error) {
       axios.post(`/exercises`, newExercise)
         .then(response => {
           getUserExercises()
-          closingAnimationFunction(setAddExerciseModal)
+          setShowAdd(false);
         })
         .catch(error => alert(error + `\nYou may have entered a duplicate exercise name. Try using a different name than ${newExercise.name}!`))
     }
   }
 
-  const editExerciseHandler = (e, exercise, muscles) => {
+  const onEditExercise = (e, exercise, muscles) => {
     e.preventDefault()
     const newExercise = validateExerciseForm(e, muscles, exercise)
     if (!newExercise.error) {
       axios.put(`/exercises`, newExercise)
         .then(response => {
           getUserExercises()
-          closingAnimationFunction(setEditModal)
+          onCloseEdit()
         })
         .catch(error => alert(error + `\nYou may have entered a duplicate exercise name. Try using a different name than ${newExercise.name}!`))
     }
   }
 
-  const deleteExerciseHandler = (id) => {
+  const onDeleteExercise = (id) => {
     axios.delete(`/exercises/${id}`)
       .then(response => {
         getUserExercises()
-        closingAnimationFunction(setDeleteModal)
+        onCloseDelete()
       })
       .catch(error => alert(error))
   }
 
-  const handleSetDeleteModal = (exercise) => {
+  const onClickDelete = (exercise) => {
     setCurrentExercise(exercise)
-    setDeleteModal(true)
+    setShowDelete(true)
   }
 
-  const handleSetEditModal = (exercise) => {
+  const onClickEdit = (exercise) => {
     setCurrentExercise(exercise)
-    setEditModal(true)
+    setShowEdit(true)
   }
 
-  const closingAnimationFunction = (modalSetter) => {
-    setCloseModalAnimation(true)
-    setTimeout(() => {
-      modalSetter(false)
-      setCloseModalAnimation(false)
-    }, 300)
+  const onCloseDelete = () => {
+    setShowDelete(false);
+    setCurrentExercise(false);
+  }
+
+  const onCloseEdit = () => {
+    setShowEdit(false);
+    setCurrentExercise(false);
   }
 
   return (
     <>
-      {addExerciseModal ? <AddExerciseModal
-        setAddExerciseModal={setAddExerciseModal}
-        addExerciseHandler={addHandler}
-        close={closeModalAnimation}
+      <AddExerciseDialog
+        visible={showAdd}
+        onClose={() => setShowAdd(false)}
+        onSubmit={onAddExercise}
       />
-        : null}
-      {editModal ? <EditExerciseModal
-        setEditExerciseModal={setEditModal}
-        editExerciseHandler={editExerciseHandler}
-        close={closeModalAnimation}
+      <EditExerciseDialog
+        visible={showEdit}
+        onClose={onCloseEdit}
+        onSubmit={onEditExercise}
         exercise={currentExercise}
       />
-        : null}
-      {deleteModal ? <DeleteModal
-        setDeleteModal={setDeleteModal}
-        close={closeModalAnimation}
-        deleteHandler={deleteExerciseHandler}
-        title={currentExercise.name + " from your exercises"}
-        id={currentExercise.id}
+      <DeleteDialog
+        visible={showDelete}
+        onDelete={() => onDeleteExercise(currentExercise?.id)}
+        onClose={onCloseDelete}
+        itemName={currentExercise?.name}
       />
-        : null}
       <section className="exercises">
-        <button onClick={() => setAddExerciseModal(true)} className="exercises__add-button"><img src={add} alt="Plus sign icon" className="exercises__add" /></button>
+        <button onClick={() => setShowAdd(true)} className="exercises__add-button"><img src={add} alt="Plus sign icon" className="exercises__add" /></button>
         <div className="exercises__top-container">
           <h2 className="exercises__title">Exercises</h2>
         </div>
@@ -151,11 +232,11 @@ const ExercisesPage = () => {
             <div className="exercises__bottom-container">
               {exercises.map((exercise, index) => {
                 return <IndividualExercise
-                  key={exercise.id}
+                  key={'exercise-' + exercise.id}
                   exercise={exercise}
                   index={index}
-                  setDeleteModal={exercise.user_id ? handleSetDeleteModal : null}
-                  setEditModal={exercise.user_id ? handleSetEditModal : null}
+                  onClickDelete={exercise.user_id ? onClickDelete : null}
+                  onClickEdit={exercise.user_id ? onClickEdit : null}
                 />
               })}
             </div>
@@ -163,7 +244,7 @@ const ExercisesPage = () => {
             <div className="exercises__bottom-container">
               <div className="exercises__default-container">
                 <p className="exercises__copy">Not finding the exercise you want in our list? You can add any exercise you want to our database! Each exercise you add is only accessible to you, so it's like you're getting your own personalized exercise database!</p>
-                <button onClick={() => setAddExerciseModal(true)} className="exercises__button">Add first exercise!</button>
+                <button onClick={() => setShowAdd(true)} className="exercises__button">Add first exercise!</button>
               </div>
             </div>
           }

@@ -10,7 +10,7 @@ const OrientationPage = () => {
   const navigate = useNavigate()
   const axios = useConfiguredAxios
 
-  const basicHandler = () => {
+  const onClickBasic = () => {
     const settings = {
       mode: "basic",
       trackDifficulty: false,
@@ -22,7 +22,7 @@ const OrientationPage = () => {
     .catch(error => alert(error))
   }
 
-  const advancedHandler = (e) => {
+  const onSubmitAdvanced = (e) => {
     e.preventDefault()
     const settings = {
       mode: "advanced",
@@ -44,7 +44,7 @@ const OrientationPage = () => {
 
   if(advanced) {
     return(<AdvancedOrientation 
-      advancedHandler={advancedHandler} 
+      onSubmit={onSubmitAdvanced} 
       setAdvanced={setAdvanced} 
       difficultyHandler={difficultyHandler} 
       trackDifficulty={trackDifficulty} /> )
@@ -57,7 +57,7 @@ const OrientationPage = () => {
       <p className="orientation__copy">Before you get started, please select a tracking mode:</p>
       <div className="orientation__container">
         <div className='orientation__mode orientation__mode--basic'>
-          <button onClick={basicHandler} className="orientation__button">Basic</button>
+          <button onClick={onClickBasic} className="orientation__button">Basic</button>
           <li className="orientation__mode-copy">Just track weights and reps!</li>
         </div>
         <div className="orientation__mode orientation__mode--advanced">

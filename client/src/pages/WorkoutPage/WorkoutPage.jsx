@@ -1,17 +1,111 @@
 import "./WorkoutPage.scss"
-import EditLiftModal from "../../components/EditLiftModal/EditLiftModal";
-import AddLiftModal from "../../components/AddLiftModal/AddLiftModal"
-import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import IndividualLift from "../../components/IndividualLift/IndividualLift"
 import add from "../../assets/icons/add_black_24dp.svg";
 import React, { useState, useEffect, useCallback, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router";
 import setLiftModifierColor from "../../functions/setLiftModifierColor";
-import { useReadLocalStorage } from "usehooks-ts";
 import { UserSettingsContext } from "../../contexts/UserSettingsContext";
 import useConfiguredAxios from "../../hooks/useConfiguredAxios";
-const { REACT_APP_BACKEND_URL } = process.env
+import Dialog from "../../components/Dialog/Dialog";
+import DeleteDialog from "../../components/DeleteDialog/DeleteDialog";
+import BubbleSelect from "../../components/BubbleSelect/BubbleSelect";
+import muscleList from "../../assets/data/muscleList.json"
+
+const LiftForm = ({ onSubmit, onCancel, exercises, lift }) => {
+  const settings = useContext(UserSettingsContext);
+  const previousLift = JSON.parse(sessionStorage.getItem('previousLift'));
+  const getDefaultValue = (key, fallback = "") => {
+    if (lift) {
+      return lift[key] || fallback;
+    } else if (previousLift) {
+      return previousLift[key] || fallback;
+    }
+    return fallback
+  }
+
+  return (
+    <form onSubmit={onSubmit} className="add-lift__form">
+      <label htmlFor="" className="add-lift__label">Exercise:
+        <select name="exercise" defaultValue={getDefaultValue("name", "Squat")} id="" className="add-lift__exercise-dropdown">
+          {exercises?.map(exercise => {
+            return <option key={'exercise-' + exercise.id} value={exercise.name} className="add-lift__exercise-option">{exercise.name}</option>
+          })}
+        </select>
+      </label>
+      <label className="add-lift__label">Weight:
+        <input type="number" step=".01" name="weight" defaultValue={getDefaultValue("weight")} placeholder="Leave blank for bodyweight" className="add-lift__input" />
+      </label>
+      <div className="add-lift__radio-container">
+        <div className="add-lift__separator">
+          <input type="radio" id="lbs" defaultChecked={previousLift ? (previousLift.measure === "lbs") : true} value="lbs" name="weightMetric" className="add-lift__radio" />
+          <label htmlFor="lbs" className="add-lift__label add-lift__label--radio">lbs</label>
+        </div>
+        <div className="add-lift__separator">
+          <input type="radio" id="kg" defaultChecked={previousLift ? (previousLift.measure === "kg") : false} value="kg" name="weightMetric" className="add-lift__radio" />
+          <label htmlFor="kg" className="add-lift__label add-lift__label--radio">kg</label>
+        </div>
+      </div>
+      <label className="add-lift__label">Reps:
+        <input type="number" defaultValue={getDefaultValue("reps")} placeholder="Enter a whole number greater than 0" name="reps" className="add-lift__input" />
+      </label>
+      {settings?.trackDifficulty && settings?.mode === "advanced" ?
+        <label className="add-lift__label">{settings?.preferredMetric} (optional):
+          <input type="number" step=".5" defaultValue={getDefaultValue("difficulty")} placeholder={settings?.preferredMetric === "RPE" ? "Number between 1.0-10.0" : "Any non negative number"} name="difficulty" className="add-lift__input" />
+        </label>
+        : null
+      }
+      {settings?.trackPercentageOfMax && settings?.mode === "advanced" ?
+        <label className="add-lift__label">%of1RM (optional):
+          <input type="number" defaultValue={getDefaultValue("percentageOfMax")} name="percentage" step=".5" placeholder="Any number between 1.0 and 100.0" className="add-lift__input" />
+        </label>
+        : null
+      }
+      <div className="add-lift__button-container">
+        <button className="add-lift__button add-lift__button--submit">Save</button>
+        <button onClick={onCancel} className="add-lift__button">Cancel</button>
+      </div>
+    </form>
+  )
+}
+
+const AddLiftDialog = ({ visible, onClose, onSubmit, exercises }) => {
+  const [selectedMuscles, setSelectedMuscles] = useState([])
+  const filteredExercises = selectedMuscles.length ? exercises.filter(exercise => selectedMuscles.some(muscle => exercise.muscle.includes(muscle))) : exercises;
+
+  const toggleMuscle = (muscle) => {
+    let newArrayCopy
+    if (selectedMuscles.includes(muscle)) {
+      let newArray = selectedMuscles.filter(muscleFromArray => muscleFromArray !== muscle)
+      setSelectedMuscles(newArray)
+    } else {
+      newArrayCopy = [...selectedMuscles]
+      newArrayCopy.push(muscle)
+      setSelectedMuscles(newArrayCopy)
+    }
+  }
+
+  return (
+    <Dialog
+      title="Add Lift"
+      visible={visible}
+      onClose={onClose}
+      color="primary"
+    >
+      <p className="add-lift__subtitle">Filter exercises by muscles:</p>
+      <BubbleSelect
+        options={muscleList.array}
+        onChange={toggleMuscle}
+        selectedOptions={selectedMuscles}
+      />
+      <LiftForm
+        exercises={filteredExercises}
+        onCancel={onClose}
+        onSubmit={onSubmit}
+      />
+    </Dialog>
+  )
+}
 
 const WorkoutPage = () => {
   const navigateCallback = useNavigate()
@@ -21,23 +115,13 @@ const WorkoutPage = () => {
   const [workout, setWorkout] = useState(null)
   const [exercises, setExercises] = useState(null)
   const [lifts, setLifts] = useState([])
-  const [addLiftModal, setAddLiftModal] = useState(false)
-  const [editLiftModal, setEditLiftModal] = useState(false)
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [closeModalAnimation, setCloseModalAnimation] = useState(false)
+  const [showAdd, setShowAdd] = useState(false)
+  const [showEdit, setShowEdit] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
   const [currentLift, setCurrentLift] = useState(null)
   const [setNumber, setSetNumber] = useState(null)
-  const token = useReadLocalStorage("token")
   const userSettings = useContext(UserSettingsContext);
   const axios = useConfiguredAxios();
-
-  const closingAnimationFunction = (modalSetter) => {
-    setCloseModalAnimation(true)
-    setTimeout(() => {
-      modalSetter(false)
-      setCloseModalAnimation(false)
-    }, 300)
-  }
 
   const getLifts = useCallback(() => {
     axios.get(`/lifts/${workoutId}`)
@@ -105,7 +189,7 @@ const WorkoutPage = () => {
     return newLift
   }
 
-  const addLiftHandler = (e) => {
+  const onAddLift = (e) => {
     e.preventDefault()
     const exercise = findExerciseByName(e.target.exercise.value)
     const newLift = validateLiftForm(e, exercise)
@@ -116,7 +200,7 @@ const WorkoutPage = () => {
           newLift.name = exercise.name
           sessionStorage.setItem('previousLift', JSON.stringify(newLift))
           getLifts()
-          closingAnimationFunction(setAddLiftModal)
+          setShowAdd(false);
         })
         .catch(error => {
           alert(error)
@@ -124,7 +208,7 @@ const WorkoutPage = () => {
     }
   }
 
-  const editLiftHandler = (e, id) => {
+  const onEditLift = (e, id) => {
     e.preventDefault()
     const exercise = findExerciseByName(e.target.exercise.value)
     const newLift = validateLiftForm(e, exercise, id)
@@ -133,7 +217,7 @@ const WorkoutPage = () => {
       axios.put(`/lifts`, newLift)
         .then(response => {
           getLifts()
-          closingAnimationFunction(setEditLiftModal)
+          onCloseEdit()
         })
         .catch(error => {
           alert(error)
@@ -141,57 +225,65 @@ const WorkoutPage = () => {
     }
   }
 
-  const deleteLiftHandler = (id) => {
+  const onDeleteLift = (id) => {
     axios.delete(`/lifts/${id}`)
       .then(response => {
         getLifts()
-        closingAnimationFunction(setDeleteModal)
+        onCloseDelete()
       })
       .catch(error => alert(error))
   }
 
-  const handleSetEditLiftModal = (lift) => {
+  const onClickEdit = (lift) => {
     setCurrentLift(lift)
-    setEditLiftModal(true)
+    setShowEdit(true)
   }
 
-  const handleSetDeleteModal = (lift, setNum) => {
+  const onClickDelete = (lift, setNum) => {
     setSetNumber(setNum)
     setCurrentLift(lift)
-    setDeleteModal(true)
+    setShowDelete(true)
+  }
+
+  const onCloseDelete = () => {
+    setShowDelete(false);
+    setCurrentLift(null);
+  }
+
+  const onCloseEdit = () => {
+    setShowEdit(false);
+    setCurrentLift(false);
   }
 
   return (
     <>
-      {addLiftModal ? <AddLiftModal
-        settings={userSettings}
+      <AddLiftDialog
+        visible={showAdd}
+        onClose={() => setShowAdd(false)}
+        onSubmit={onAddLift}
         exercises={exercises}
-        addLiftHandler={addLiftHandler}
-        setAddLiftModal={setAddLiftModal}
-        close={closeModalAnimation}
-        previousLift={JSON.parse(sessionStorage.getItem('previousLift'))}
       />
-        : null}
-      {editLiftModal ? <EditLiftModal
-        settings={userSettings}
-        lift={currentLift}
-        exercises={exercises}
-        editLiftHandler={editLiftHandler}
-        setEditLiftModal={setEditLiftModal}
-        close={closeModalAnimation}
-      />
-        : null}
-      {deleteModal ?
-        <DeleteModal
-          setDeleteModal={setDeleteModal}
-          close={closeModalAnimation}
-          deleteHandler={deleteLiftHandler}
-          title={currentLift.name + ` (set # ${setNumber}) from ${workout.name}`}
-          id={currentLift.id}
+      <Dialog
+        title={`Edit ${currentLift?.name}`}
+        visible={showEdit}
+        onClose={onCloseEdit}
+        color="primary"
+      >
+        <LiftForm
+          exercises={exercises}
+          onCancel={onCloseEdit}
+          onSubmit={(e) => onEditLift(e, currentLift?.id)}
+          lift={currentLift}
         />
-        : null}
+      </Dialog>
+      <DeleteDialog
+        onClose={onCloseDelete}
+        visible={showDelete}
+        itemName={currentLift?.name + ` (set # ${setNumber}) from ${workout?.name}`}
+        onDelete={() => onDeleteLift(currentLift?.id)}
+      />
       <section className="workout">
-        {!addLiftModal ? <button onClick={() => setAddLiftModal(true)} className="workout__add-button"><img src={add} alt="Plus sign icon" className="workout__add" /></button> : null}
+        {!showAdd ? <button onClick={() => setShowAdd(true)} className="workout__add-button"><img src={add} alt="Plus sign icon" className="workout__add" /></button> : null}
         <div className="workout__top-container">
           <h2 className="workout__title">{workout ? workout.name : "Loading..."}</h2>
         </div>
@@ -208,8 +300,8 @@ const WorkoutPage = () => {
                       lift={lift}
                       index={index}
                       settings={userSettings}
-                      setEditLiftModal={handleSetEditLiftModal}
-                      setDeleteModal={handleSetDeleteModal}
+                      onClickEdit={onClickEdit}
+                      onClickDelete={onClickDelete}
                       className="workout__lift"
                     />
                   )
@@ -220,7 +312,7 @@ const WorkoutPage = () => {
             :
             <div className="workout__null-container">
               <p className="workout__no-lifts">No lifts tracked yet!</p>
-              <button onClick={() => setAddLiftModal(true)} className="workout__first-lift">Track first lift!</button>
+              <button onClick={() => setShowAdd(true)} className="workout__first-lift">Track first lift!</button>
             </div>
           }
         </div>

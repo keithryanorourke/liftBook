@@ -1,9 +1,9 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/global" as *;
-@use "../../styles/partials/animations" as *;
 @use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/animations" as *;
 
-.rename-workout {
+.delete-modal {
   @include modal;
   transition: 0.3s;
 
@@ -11,24 +11,18 @@
     transform: translate(-50%, -150vh);
   }
 
-  &__container {
-    @include modal-top-level-container;
-    margin: 0;
-    width: 100%;
-  }
-
-  &__title {
-    text-align: center;
-  }
-
   &__overlay {
     @include modal-overlay;
-    background-color: $accent1;
+    background-color: $danger;
+  }
+
+  &__container {
+    @include modal-top-level-container;
   }
 
   &__top-container {
     padding: 0 1.5rem;
-    background-color: $primary3;
+    background-color: $bg3;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -39,38 +33,34 @@
     height: 2.3rem;
   }
 
+  &__title {
+    text-align: center;
+  }
+
   &__close {
     @include icon-button;
   }
 
-  &__form {
-    padding: 1rem 1.5rem 1.5rem;
+  &__bottom-container {
+    padding: 1rem 1.5rem;
     display: flex;
     flex-direction: column;
-  }
-
-  &__name {
-    @include generic-button;
-    border-radius: 1rem;
-    &::placeholder {
-      color: $placeholdertext;
-    }
-    width: 100%;
+    align-items: center;
   }
 
   &__button-container {
+    width: 100%;
     display: flex;
-    flex-direction: row-reverse;
     justify-content: space-between;
   }
 
   &__button {
     @include generic-button;
 
-    &--submit {
-      color: $accent1;
+    &--delete {
+      border: 0.25rem solid $danger;
       background: none;
-      border: 0.25rem solid $accent1;
+      color: $danger;
       box-shadow: $lightshadow1;
     }
   }
