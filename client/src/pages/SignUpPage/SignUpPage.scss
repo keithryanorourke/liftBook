@@ -11,7 +11,7 @@
   align-self: center;
 
   &__top-container{
-    background-color: $primary3;
+    background-color: $bg3;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,7 +65,7 @@
     outline: none;
     border: none;
     color: $globaltextcolor;
-    background-color: $primary2;
+    background-color: $bg2;
     padding: 0.65rem 1rem;
     margin-top: 0.25rem;
     border-radius: 1rem;

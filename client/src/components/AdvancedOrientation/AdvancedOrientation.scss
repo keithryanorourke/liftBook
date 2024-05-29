@@ -14,7 +14,7 @@
   
   &__top-container {
     padding: 0 1.5rem;
-    background-color: $primary3;
+    background-color: $bg3;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -57,10 +57,10 @@
     transition: 0.5s;
     margin: 0;
     margin-right: 0.5rem;
-    filter:hue-rotate(100deg) brightness(0.5) drop-shadow(-0.5px 3px 8px $primary1);
+    filter:hue-rotate(100deg) brightness(0.5) drop-shadow(-0.5px 3px 8px $bg1);
     transform: scale(1.375);
     &:checked {
-      filter:hue-rotate(100deg) brightness(1) drop-shadow(-0.5px 3px 8px $primary1);
+      filter:hue-rotate(100deg) brightness(1) drop-shadow(-0.5px 3px 8px $bg1);
     }
   }
 

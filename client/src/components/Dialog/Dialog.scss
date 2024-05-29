@@ -1,0 +1,88 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.screen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.2s;
+    
+    &--default {
+        background-color: #090909;
+    }
+
+    &--primary {
+        background-color: $primary;
+    }
+
+    &--secondary {
+        background-color: $secondary;
+    }
+
+    &--danger {
+        background-color: $danger;
+    }
+
+    &--visible {
+        opacity: 0.3;
+        z-index: 2;
+        transform: translateY(0);
+    }
+}
+
+.dialog {
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    padding: 0 2rem;
+    animation: modal-popup 0.2s;
+
+    @include tablet {
+        max-width: 700px;
+        padding: 0 4rem;
+    }
+
+    @include desktop {
+        padding: 0;
+    }
+    
+    &__wrapper {
+        border-radius: 1rem;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__top-container {
+        padding: 0 1.5rem;
+        background-color: $bg3;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &::before {
+            content: "";
+            width: 2.3rem;
+            height: 2.3rem;
+        }
+
+    }
+
+    &__close-button {
+        @include icon-button;
+    }
+
+    &__content-container {
+        background-color: $bg4;
+        padding: 1rem 1.5rem;
+    }
+}

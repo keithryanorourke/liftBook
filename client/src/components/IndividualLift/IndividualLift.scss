@@ -8,8 +8,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: $primary5;
-  border-top: .0625rem solid $primary2;
+  background-color: $bg5;
+  border-top: .0625rem solid $bg2;
   flex-grow: 1;
   @include tablet {
     border: none;
@@ -34,7 +34,7 @@
   }
 
   &__title {
-    background-color: $accent5;
+    background-color: $accent2;
     width: 9rem;
     font-weight: 600;
     text-align: center;
@@ -68,14 +68,14 @@
     left: 0;
     bottom: 0;
     opacity: 0.5;
-    background-color: $primary1;
+    background-color: $bg1;
     padding: 0.25rem 1rem;
     border-top-right-radius: 0.75rem;
     box-shadow: $darkshadow1;
   }
 
   &__date {
-    background-color: $accent5;
+    background-color: $accent2;
     width: 100%;
     font-weight: 600;
     text-align: center;
@@ -96,7 +96,7 @@
 
   &__specifier {
     box-shadow: $darkshadow1;
-    background-color: $primary5-transparent;
+    background-color: $bg5-transparent;
     padding: 0.5rem;
     margin: 0.25rem 0;
   }

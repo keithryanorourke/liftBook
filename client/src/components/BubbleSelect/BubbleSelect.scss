@@ -1,0 +1,26 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.bubble-select {
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    &__button {
+        color: $globaltextcolor;
+        background-color: $bg1;
+        border: none;
+        padding: 0.25rem 0.5rem;
+        box-shadow: $darkshadow1;
+        border-radius: 1rem;
+        margin-top: 0.25rem;
+        cursor: pointer;
+
+        &--toggled {
+            background-color: $accent2;
+        }
+    }
+}
