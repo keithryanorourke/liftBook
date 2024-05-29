@@ -22,7 +22,7 @@ const OrientationPage = () => {
     .catch(error => alert(error))
   }
 
-  const onClickAdvanced = (e) => {
+  const onSubmitAdvanced = (e) => {
     e.preventDefault()
     const settings = {
       mode: "advanced",
@@ -44,7 +44,7 @@ const OrientationPage = () => {
 
   if(advanced) {
     return(<AdvancedOrientation 
-      onClickAdvanced={onClickAdvanced} 
+      onSubmit={onSubmitAdvanced} 
       setAdvanced={setAdvanced} 
       difficultyHandler={difficultyHandler} 
       trackDifficulty={trackDifficulty} /> )

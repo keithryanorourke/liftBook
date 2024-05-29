@@ -1,15 +1,10 @@
 import "./AdvancedOrientation.scss"
 import back from "../../assets/icons/arrow_back_black_24dp.svg"
-import help from "../../assets/icons/help_outline_black_24dp.svg"
 import React, { useState } from "react"
 import AboutDialog from "../AboutDialog/AboutDialog"
 import InfoButton from "../InfoButton/InfoButton"
 
-const AdvancedOrientation = ({ advancedHandler, difficultyHandler, setAdvanced, trackDifficulty }) => {
-  const [helpInformation, setHelpInformation] = useState({
-    title: false,
-    copy: false
-  })
+const AdvancedOrientation = ({ onSubmit, difficultyHandler, setAdvanced, trackDifficulty }) => {
   const [showAbout, setShowAbout] = useState(false)
 
   return (
@@ -25,7 +20,7 @@ const AdvancedOrientation = ({ advancedHandler, difficultyHandler, setAdvanced, 
             <h2 className="advanced__subtitle">Advanced Mode</h2>
             <div className="advanced__empty"></div>
           </div>
-          <form onSubmit={advancedHandler} className="advanced__form">
+          <form onSubmit={onSubmit} className="advanced__form">
             <p className="advanced__prompt">Please select which advanced metrics you would like to track:</p>
             <div className="advanced__wrapper">
               <div className="advanced__separator">
