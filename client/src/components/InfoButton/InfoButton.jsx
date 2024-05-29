@@ -5,7 +5,6 @@ import "./InfoButton.scss"
 
 const InfoButton = ({ title, info }) => {
     const [visible, setVisible] = useState();
-    console.log(visible);
     const handleClick = (e) => {
         e.preventDefault();
         setVisible(true);
