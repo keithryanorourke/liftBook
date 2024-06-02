@@ -1,15 +1,28 @@
 import React from "react";
 import "./BubbleSelect.scss"
+import FormError from "../FormError/FormError";
+import FieldSet from "../FieldSet/FieldSet";
 
-const BubbleSelect = ({ options, selectedOptions, onChange }) => {
+const BubbleSelect = ({ options, selectedOptions, label, onChange, error }) => {
+    const handleChange = (value) => {
+        onChange(value);
+    }
 
     return (
         <div className="bubble-select">
-            {options.map(option => {
-                return (
-                    <button onClick={() => onChange(option)} key={'bubble-select-' + option} className={"bubble-select__button " + (selectedOptions.includes(option) ? "bubble-select__button--toggled" : "")}>{option}</button>
-                )
-            })}
+            <FieldSet label={label}>
+                <div className="bubble-select__options">
+                    {options.map(option => {
+                        return (
+                            <label key={`bubble-select-${option}`} htmlFor={`bubble-select-${option}`} className={"bubble-select__button " + (selectedOptions.includes(option) ? "bubble-select__button--toggled" : "")}>
+                                <input type="checkbox" id={`bubble-select-${option}`} name={option} checked={selectedOptions.includes(option)} onChange={() => onChange(option)} value={option} />
+                                {option}
+                            </label>
+                        )
+                    })}
+                </div>
+            </FieldSet>
+            <FormError error={error} />
         </div>
     )
 }

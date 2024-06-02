@@ -28,54 +28,6 @@
     }
   }
 
-  &__form {
-    width: 100%;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: $bg4;
-    @include rotated-phone {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-  }
-
-  &__label {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 1rem;
-    @include rotated-phone {
-      width: 45%;
-    }
-  }
-
-  &__field {
-    box-shadow: $darkshadow1;
-    outline: none;
-    border: none;
-    color: $globaltextcolor;
-    background-color: $bg2;
-    padding: 0.65rem 1rem;
-    margin-top: 0.25rem;
-    border-radius: 1rem;
-  }
-
-  &__submit {
-    @include generic-button;
-    margin-top: 0.25rem;
-    width: 50%;
-    align-self: flex-end;
-    @include tablet {
-      width: 10rem;
-    }
-    @include rotated-phone {
-      width: 100%;
-    }
-  }
-
   &__link {
     text-decoration: none;
     border-radius: 1rem;

@@ -71,13 +71,6 @@
     padding: 0.5rem 0;
   }
 
-  &__button {
-    @include generic-button;
-    min-width: 50%;
-    padding: 0.65rem 1rem;
-    margin: 0.5rem 0;
-  }
-
   &__disclaimer {
     text-align: center;
     font-size: 0.8rem;

@@ -37,18 +37,6 @@
       overflow-y: auto;
     }
   }
-  
-  &__form {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    @include rotated-phone {
-      flex-direction: row;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-  }
 
   &__label {
     display: flex;
@@ -56,32 +44,6 @@
     width: 100%;
     margin-bottom: 1rem;
     @include rotated-phone {
-      width: 45%;
-    }
-  }
-
-  &__field {
-    box-shadow: $darkshadow1;
-    outline: none;
-    border: none;
-    color: $globaltextcolor;
-    background-color: $bg2;
-    padding: 0.65rem 1rem;
-    margin-top: 0.25rem;
-    border-radius: 1rem;
-  }
-
-  &__submit {
-    @include generic-button;
-    margin-top: 0.25rem;
-    align-self: flex-end;
-    width: 50%;
-    @include tablet {
-      width: 10rem;
-    }
-    @include rotated-phone {
-      margin-top: 0;
-      align-self: center;
       width: 45%;
     }
   }

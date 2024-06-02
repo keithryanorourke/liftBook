@@ -1,0 +1,17 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.form {
+
+    &__buttons-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+
+        &:has(:only-child) {
+            justify-content: flex-end;
+        }
+    }
+}

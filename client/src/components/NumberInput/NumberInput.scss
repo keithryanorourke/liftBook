@@ -1,0 +1,31 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.number-input {
+    margin-top: 0.25rem;
+    width: 100%;
+    color: $globaltextcolor;
+    border: none;
+    background-color: $bg2;
+    padding: 0.65rem 1rem;
+    border-radius: 1rem;
+    outline: none;
+    transition: 0.1s;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    &:focus {
+        border: $globaltextcolor 1px solid;
+    }
+
+    &__label {
+        margin-top: 1rem;
+        display: block;
+    }
+}

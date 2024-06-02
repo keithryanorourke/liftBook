@@ -170,3 +170,15 @@
       transform: scale(1.15) translateY(-0.1rem)
     }
 }
+
+@mixin checkStyleInput {
+  cursor: pointer;
+    transition: 0.5s;
+    margin: 0;
+    margin-right: 0.5rem;
+    filter:hue-rotate(100deg) brightness(0.5) drop-shadow(-0.5px 1px 4px $bg1);
+    transform: scale(1.375);
+    &:checked {
+      filter:hue-rotate(100deg) brightness(1) drop-shadow(-0.5px 1px 4px $bg1);
+    }
+}

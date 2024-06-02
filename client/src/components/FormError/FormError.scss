@@ -1,0 +1,10 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.form-error {
+    padding: 0.5rem 1rem;
+    color: $error;
+    font-size: 0.9rem;
+}
