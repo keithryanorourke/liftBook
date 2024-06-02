@@ -42,17 +42,6 @@
     }
   }
 
-  &__form {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 1.5rem 0.5rem;
-    @include rotated-phone {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-  }
-
   &__mode-container {
     @include rotated-phone {
       width: 33%;
@@ -91,21 +80,6 @@
     }
   }
 
-  &__option {
-    transition: 0.5s;
-    margin: 0;
-    margin-right: 0.5rem;
-    filter:hue-rotate(100deg) brightness(0.5) drop-shadow(-0.5px 3px 8px $bg1);
-    transform: scale(1.375);
-    &:checked {
-      filter:hue-rotate(100deg) brightness(1) drop-shadow(-0.5px 3px 8px $bg1);
-    }
-  }
-
-  &__label {
-    line-height: 100%;
-  }
-
   &__preferance-container {
     animation: popup cubic-bezier(.12,.98,.35,1.5) 0.4s ;
   }
@@ -114,18 +88,6 @@
     @include rotated-phone {
       width: 5rem;
       height: 1rem;
-    }
-  }
-
-  &__button {
-    @include generic-button;
-    &--submit {
-      align-self: flex-end;
-      min-width: 7.75rem;
-      border: 0.25rem solid $accent3;
-      background: none;
-      color: $accent3;
-      box-shadow: $lightshadow1;
     }
   }
 

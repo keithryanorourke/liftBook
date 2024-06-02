@@ -4,10 +4,17 @@
 @use "../../styles/partials/mixins" as *;
 
 .bubble-select {
-    padding: 0 1rem;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    &__fieldset {
+        border: none;
+        padding: 0;
+    } 
+
+    &__options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        padding-top: 0.25rem;
+    }
 
     &__button {
         color: $globaltextcolor;
@@ -21,6 +28,17 @@
 
         &--toggled {
             background-color: $accent2;
+        }
+
+        &:focus-within {
+            outline: 1px solid white;
+        }
+
+        input[type=checkbox] {
+            // visibility: hidden;
+            width: 0;
+            height: 0;
+            margin: 0;
         }
     }
 }

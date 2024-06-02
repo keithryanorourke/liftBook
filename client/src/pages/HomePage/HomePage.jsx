@@ -6,16 +6,48 @@ import add from "../../assets/icons/add_black_24dp.svg";
 import useConfiguredAxios from "../../hooks/useConfiguredAxios";
 import Dialog from "../../components/Dialog/Dialog";
 import DeleteDialog from "../../components/DeleteDialog/DeleteDialog";
+import TextInput from "../../components/TextInput/TextInput";
+import Form from "../../components/Form/Form";
+import Button from "../../components/Button/Button";
+
+const WorkoutForm = ({ onSubmit, error, workout, onCancel }) => {
+  const [name, setName] = useState(workout?.name || "");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(name, workout);
+  }
+
+  return (
+    <Form
+      onSubmit={handleSubmit}
+      error={error}
+      buttons={<>
+        <Button type="button" onClick={onCancel}>Cancel</Button>
+        <Button theme="outlined" color="primary">Save</Button>
+      </>}
+    >
+      <TextInput
+        label="Workout Name"
+        name="name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Leave blank for freestyle workout!"
+      />
+    </Form>
+  )
+}
 
 const HomePage = () => {
   const navigate = useNavigate()
   const [user, setUser] = useState({
     workouts: null
   })
-  const [showNewWorkout, setShowNewWorkout] = useState(false)
+  const [showNewWorkout, setShowAdd] = useState(false)
   const [currentWorkout, setCurrentWorkout] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showDeleteModal, setShowDelete] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
+  const [formError, setFormError] = useState(null);
   const axios = useConfiguredAxios();
 
   const getWorkouts = useCallback(() => {
@@ -31,26 +63,27 @@ const HomePage = () => {
     getWorkouts()
   }, [getWorkouts])
 
-  const addWorkoutHandler = (e) => {
-    e.preventDefault()
+  const onAddWorkout = (name) => {
     const workout = {
-      name: e.target.name.value || "Freestyle Workout"
+      name: name || "Freestyle Workout"
     }
 
     axios.post(`/workout`, workout)
       .then(response => navigate(`../workout/${response.data}`, { replace: true }))
-      .catch(error => alert(error))
+      .catch(error => setFormError("Server error encountered"))
   }
 
-  const onRenameWorkout = (e, workout) => {
-    e.preventDefault()
-    workout.name = e.target.name.value || "Freestyle Workout"
-    axios.put(`/workout/${workout.id}`, workout)
+  const onEditWorkout = (name, workout) => {
+    const newWorkout = {
+      ...workout,
+      name: name || "Freestyle Workout"
+    }
+    axios.put(`/workout/${workout.id}`, newWorkout)
       .then(response => {
         getWorkouts()
         onCloseEdit()
       })
-      .catch(error => alert(error))
+      .catch(error => setFormError("Server error encountered"))
   }
 
   const onDeleteWorkout = (id) => {
@@ -59,12 +92,12 @@ const HomePage = () => {
         getWorkouts()
         onCloseDelete()
       })
-      .catch(error => alert(error))
+      .catch(error => setFormError("Server error encountered"))
   }
 
   const onClickDelete = (workout) => {
     setCurrentWorkout(workout)
-    setShowDeleteModal(true)
+    setShowDelete(true)
   }
 
   const onClickEdit = (workout) => {
@@ -72,14 +105,24 @@ const HomePage = () => {
     setShowEdit(true)
   }
 
-  const onCloseDelete = () => {
-    setShowDeleteModal(false);
+  const onClose = () => {
     setCurrentWorkout(null);
+    setFormError(null);
+  }
+
+  const onCloseAdd = () => {
+    setShowAdd(false);
+    onClose();
+  }
+
+  const onCloseDelete = () => {
+    setShowDelete(false);
+    onClose();
   }
 
   const onCloseEdit = () => {
     setShowEdit(false);
-    setCurrentWorkout(null);
+    onClose();
   }
 
   return (
@@ -87,18 +130,27 @@ const HomePage = () => {
       <Dialog
         title="New Workout"
         visible={showNewWorkout}
-        onClose={() => setShowNewWorkout(false)}
+        onClose={() => setShowAdd(false)}
         color="primary"
       >
-        <form onSubmit={addWorkoutHandler} className="new-workout__form">
-          <label htmlFor="" className="new-workout__label">Workout Name:
-            <input name="name" type="text" placeholder="Leave blank for freestyle workout!" className="new-workout__name" />
-          </label>
-          <div className="new-workout__button-container">
-            <button type="submit" className="new-workout__button new-workout__button--submit">Start!</button>
-            <button onClick={() => setShowNewWorkout(false)} className="new-workout__button new-workout__button--cancel">Cancel</button>
-          </div>
-        </form>
+        <WorkoutForm
+          onSubmit={onAddWorkout}
+          onCancel={onCloseAdd}
+          error={formError}
+        />
+      </Dialog>
+      <Dialog
+        visible={showEdit}
+        onClose={() => setShowEdit(false)}
+        title={currentWorkout?.name}
+        color="primary"
+      >
+        <WorkoutForm
+          onSubmit={(name) => onEditWorkout(name, currentWorkout)}
+          onCancel={onCloseEdit}
+          error={formError}
+          workout={currentWorkout}
+        />
       </Dialog>
       <DeleteDialog
         visible={showDeleteModal}
@@ -106,24 +158,8 @@ const HomePage = () => {
         itemName={currentWorkout?.name}
         onDelete={() => onDeleteWorkout(currentWorkout?.id)}
       />
-      <Dialog
-        visible={showEdit}
-        onClose={() => setShowEdit(false)}
-        title={currentWorkout?.name}
-        color="primary"
-      >
-        <form onSubmit={(e) => onRenameWorkout(e, currentWorkout)} className="rename-workout__form">
-          <label htmlFor="" className="rename-workout__label">Workout Name:
-            <input name="name" type="text" defaultValue={currentWorkout?.name} placeholder="Leave blank for freestyle workout!" className="new-workout__name" />
-          </label>
-          <div className="rename-workout__button-container">
-            <button type="submit" className="rename-workout__button rename-workout__button--submit">Save</button>
-            <button onClick={() => setShowEdit(false)} className="rename-workout__button rename-workout__button--cancel">Cancel</button>
-          </div>
-        </form>
-      </Dialog>
       <section className="home">
-        {!showNewWorkout ? <button onClick={() => setShowNewWorkout(true)} className="home__new"><img src={add} alt="Plus sign icon" className="home__add" /></button> : null}
+        {!showNewWorkout ? <button onClick={() => setShowAdd(true)} className="home__new"><img src={add} alt="Plus sign icon" className="home__add" /></button> : null}
         <div className="home__top-container">
           <h2 className="home__title">Workouts</h2>
         </div>
@@ -142,7 +178,7 @@ const HomePage = () => {
             }) :
               <div className="home__null-container">
                 <h3 className="home__null">You're all set up!</h3>
-                <button onClick={() => setShowNewWorkout(true)} className="home__get-started">Track your first workout!</button>
+                <button onClick={() => setShowAdd(true)} className="home__get-started">Track your first workout!</button>
               </div>
             }
           </div>
