@@ -11,8 +11,8 @@ import PasswordInput from "../../components/PasswordInput/PasswordInput";
 
 export const LoginPage = () => {
   const [showAbout, setShowAbout] = useState(false)
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [formError, setFormError] = useState(null);
@@ -61,39 +61,40 @@ export const LoginPage = () => {
   }
 
   return (
-    <section className="login">
+    <section className="page">
       <AboutDialog
         visible={showAbout}
         onClose={() => setShowAbout(false)}
       />
-      <div className="login__top-container">
-        <h2 className="login__title">Login</h2>
-      </div>
-      <div className="login__bottom-container">
-        <Form
-          onSubmit={loginHandler}
-          className="login__form"
-          error={formError}
-          buttons={<Button>Log In</Button>}
-        >
-          <TextInput
-            label="Username"
-            name="username"
-            value={username}
-            onChange={onChangeUsername}
-            error={usernameError}
-          />
-          <PasswordInput
-            label="Password"
-            name="password"
-            value={password}
-            onChange={onChangePassword}
-            error={passwordError}
-          />
-        </Form>
-        <NavLink className="login__link" to="/signup">Need an account? Sign up here!</NavLink>
-        <p className="login__disclaimer">DISCLAIMER: liftBook uses cookies to keep you logged in! By logging in or creating an account, you are agreeing to allow this website to store cookies in your browser.</p>
-        <button onClick={() => setShowAbout(true)} className="login__about">About liftBook</button>
+      <header className="page__header">
+        <h2>Login</h2>
+      </header>
+      <div className="page__content">
+        <div className="login__flex-wrapper">
+          <Form
+            onSubmit={loginHandler}
+            className="login__form"
+            error={formError}
+            buttons={<Button>Log In</Button>}
+          >
+            <TextInput
+              label="Username"
+              name="username"
+              value={username}
+              onChange={onChangeUsername}
+              error={usernameError}
+            />
+            <PasswordInput
+              label="Password"
+              name="password"
+              value={password}
+              onChange={onChangePassword}
+              error={passwordError}
+            />
+          </Form>
+          <NavLink className="login__link" to="/signup">Need an account? Sign up here!</NavLink>
+          <Button type="button" onClick={() => setShowAbout(true)}>About liftBook</Button>
+        </div>
       </div>
     </section>
   )

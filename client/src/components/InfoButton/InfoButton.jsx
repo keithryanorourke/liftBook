@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Dialog from "../Dialog/Dialog"
-import help from "../../assets/icons/help_outline_black_24dp.svg"
 import "./InfoButton.scss"
+import { HelpOutline } from "@mui/icons-material"
 
 const InfoButton = ({ title, info }) => {
     const [visible, setVisible] = useState();
@@ -13,7 +13,7 @@ const InfoButton = ({ title, info }) => {
     return (
         <>
             <button className="info-button" onClick={handleClick}>
-                <img src={help} alt="Question mark icon" className="settings__help" />
+                <HelpOutline sx={{ color: "white" }} />
             </button>
             <Dialog
                 visible={visible}

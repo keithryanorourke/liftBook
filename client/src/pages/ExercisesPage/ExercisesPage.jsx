@@ -1,6 +1,5 @@
 import "./ExercisesPage.scss"
 import { useState, useEffect, useCallback } from "react"
-import add from "../../assets/icons/add_black_24dp.svg"
 import IndividualExercise from "../../components/IndividualExercise/IndividualExercise"
 import useConfiguredAxios from "../../hooks/useConfiguredAxios"
 import Dialog from "../../components/Dialog/Dialog"
@@ -10,6 +9,7 @@ import DeleteDialog from "../../components/DeleteDialog/DeleteDialog"
 import TextInput from "../../components/TextInput/TextInput"
 import Button from "../../components/Button/Button"
 import Form from "../../components/Form/Form"
+import { Add } from "@mui/icons-material";
 
 const ExerciseForm = ({ onSubmit, error, exercise, onCancel }) => {
   const [selectedMuscles, setSelectedMuscles] = useState(exercise?.muscle?.split(", ") || []);
@@ -185,7 +185,7 @@ const ExercisesPage = () => {
   }
 
   return (
-    <section className="exercises">
+    <section className="page">
       <Dialog
         visible={showAdd}
         onClose={onCloseAdd}
@@ -216,14 +216,15 @@ const ExercisesPage = () => {
         onDelete={() => onDeleteExercise(currentExercise?.id)}
         onClose={onCloseDelete}
         itemName={currentExercise?.name}
+        error={formError}
       />
-      <button onClick={() => setShowAdd(true)} className="exercises__add-button"><img src={add} alt="Plus sign icon" className="exercises__add" /></button>
-      <div className="exercises__top-container">
-        <h2 className="exercises__title">Exercises</h2>
-      </div>
-      <div className="exercises__scroll-container">
+      <button onClick={() => setShowAdd(true)} className="add-button"><Add sx={{ color: "white" }} /></button>
+      <header className="page__header">
+        <h2>Exercises</h2>
+      </header>
+      <div className="page__scroll-wrapper">
         {exercises.length ?
-          <div className="exercises__bottom-container">
+          <div className="page__content page__content--no-pad page__flex">
             {exercises.map((exercise, index) => {
               return <IndividualExercise
                 key={'exercise-' + exercise.id}
@@ -235,11 +236,9 @@ const ExercisesPage = () => {
             })}
           </div>
           :
-          <div className="exercises__bottom-container">
-            <div className="exercises__default-container">
-              <p className="exercises__copy">Not finding the exercise you want in our list? You can add any exercise you want to our database! Each exercise you add is only accessible to you, so it's like you're getting your own personalized exercise database!</p>
-              <Button onClick={() => setShowAdd(true)} type="button">Add first exercise!</Button>
-            </div>
+          <div className="page__content">
+            <p>Not finding the exercise you want in our list? You can add any exercise you want to our database! Each exercise you add is only accessible to you, so it's like you're getting your own personalized exercise database!</p>
+            <Button onClick={() => setShowAdd(true)} type="button">Add first exercise!</Button>
           </div>
         }
       </div>

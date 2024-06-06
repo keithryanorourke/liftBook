@@ -1,7 +1,8 @@
 import "./Dialog.scss";
-import closeIcon from "../../assets/icons/clear_black_24dp.svg"
 import { useOnClickOutside } from "usehooks-ts";
 import { useRef } from "react";
+import { Close } from "@mui/icons-material";
+import ScreenOverlay from "../ScreenOverlay/ScreenOverlay";
 
 const Dialog = ({ visible, onClose, title, children, color = "default" }) => {
     const ref = useRef(null);
@@ -9,15 +10,15 @@ const Dialog = ({ visible, onClose, title, children, color = "default" }) => {
 
     return (
         <>
-            <div className={"screen-overlay screen-overlay--" + color + (visible ? " screen-overlay--visible" : "")} />
+            <ScreenOverlay color={color} visible={visible} />
             {visible && <div className="dialog">
                 <div ref={ref} className="dialog__wrapper">
-                    <div className="dialog__top-container">
+                    <header className="dialog__header">
                         <h3>{title}</h3>
-                        <button className="dialog__close-button" onClick={onClose}>
-                            <img src={closeIcon} alt="X shaped icon" className="dialog__close-cion" />
+                        <button className="icon-button" onClick={onClose}>
+                            <Close sx={{ color: "white" }} />
                         </button>
-                    </div>
+                    </header>
                     <div className="dialog__content-container">
                         {children}
                     </div>

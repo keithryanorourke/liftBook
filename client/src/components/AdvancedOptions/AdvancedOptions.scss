@@ -1,0 +1,41 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.advanced {
+  &__container {
+    animation: popup cubic-bezier(.12, .98, .35, 1.5) 0.2s;
+
+    @include rotated-phone {
+      display: flex;
+      justify-content: space-between;
+      width: 66%;
+    }
+  }
+
+  &__flex-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0.5rem 0 1rem;
+
+    @include rotated-phone {
+      flex-direction: column;
+    }
+  }
+
+  &__flex-item {
+    min-width: 50%;
+    display: flex;
+    align-items: center;
+
+    @include rotated-phone {
+      width: 25%;
+    }
+  }
+
+  &__preferance-container {
+    animation: popup cubic-bezier(.12, .98, .35, 1.5) 0.4s;
+  }
+}

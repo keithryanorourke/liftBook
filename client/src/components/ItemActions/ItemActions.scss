@@ -1,0 +1,19 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.item-actions {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding-top: 0.5rem;
+    @include rotated-phone {
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      width: 10%;
+      align-items: flex-end;
+      padding-top: 0;
+    }
+}

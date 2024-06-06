@@ -1,6 +1,5 @@
 import "./WorkoutPage.scss"
 import IndividualLift from "../../components/IndividualLift/IndividualLift"
-import add from "../../assets/icons/add_black_24dp.svg";
 import React, { useState, useEffect, useCallback, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router";
@@ -17,6 +16,7 @@ import FieldSet from "../../components/FieldSet/FieldSet";
 import RadioButton from "../../components/RadioButton/RadioButton";
 import Select from "../../components/Select/Select";
 import Button from "../../components/Button/Button";
+import { Add } from "@mui/icons-material";
 
 const LiftForm = ({ onSubmit, onCancel, exercises, lift, error }) => {
   const settings = useContext(UserSettingsContext);
@@ -107,20 +107,22 @@ const LiftForm = ({ onSubmit, onCancel, exercises, lift, error }) => {
       <FieldSet
         label="Unit:"
       >
-        <RadioButton
-          name="measuremenet"
-          label="lbs"
-          value="lbs"
-          checked={measure === "lbs"}
-          onChange={(e) => setMeasure(e.target.value)}
-        />
-        <RadioButton
-          name="measuremenet"
-          label="kg"
-          value="kg"
-          checked={measure === "kg"}
-          onChange={(e) => setMeasure(e.target.value)}
-        />
+        <div className="basic-flex">
+          <RadioButton
+            name="measuremenet"
+            label="lbs"
+            value="lbs"
+            checked={measure === "lbs"}
+            onChange={(e) => setMeasure(e.target.value)}
+          />
+          <RadioButton
+            name="measuremenet"
+            label="kg"
+            value="kg"
+            checked={measure === "kg"}
+            onChange={(e) => setMeasure(e.target.value)}
+          />
+        </div>
       </FieldSet>
       <NumberInput
         value={reps}
@@ -179,12 +181,14 @@ const LiftDialog = ({ visible, onClose, onSubmit, exercises, lift, title, error 
       onClose={onClose}
       color="primary"
     >
-      <BubbleSelect
-        options={muscleList.array}
-        onChange={toggleMuscle}
-        selectedOptions={selectedMuscles}
-        label="Filter exercises by muscles:"
-      />
+      <div className="workout__wrapper">
+        <BubbleSelect
+          options={muscleList.array}
+          onChange={toggleMuscle}
+          selectedOptions={selectedMuscles}
+          label="Filter exercises by muscles:"
+        />
+      </div>
       <LiftForm
         exercises={filteredExercises}
         onCancel={onClose}
@@ -349,15 +353,16 @@ const WorkoutPage = () => {
         visible={showDelete}
         itemName={currentLift?.name + ` (set # ${setNumber}) from ${workout?.name}`}
         onDelete={() => onDeleteLift(currentLift?.id)}
+        error={formError}
       />
-      <section className="workout">
-        {!showAdd ? <button onClick={() => setShowAdd(true)} className="workout__add-button"><img src={add} alt="Plus sign icon" className="workout__add" /></button> : null}
-        <div className="workout__top-container">
+      <section className="page">
+        {!showAdd && <button onClick={() => setShowAdd(true)} className="add-button"><Add sx={{ color: "white" }} /></button>}
+        <header className="page__header">
           <h2 className="workout__title">{workout ? workout.name : "Loading..."}</h2>
-        </div>
-        <div className="workout__scroll-container">
-          {lifts.length ?
-            <div className="workout__lifts-container">
+        </header>
+        {lifts.length ?
+          <div className="page__scroll-wrapper">
+            <div className="page__content page__content--no-pad page__flex">
               {
                 userSettings ? lifts.map((lift, index) => {
                   return (
@@ -377,13 +382,12 @@ const WorkoutPage = () => {
                   : <p>Loading...</p>
               }
             </div>
-            :
-            <div className="workout__null-container">
-              <p className="workout__no-lifts">No lifts tracked yet!</p>
-              <button onClick={() => setShowAdd(true)} className="workout__first-lift">Track first lift!</button>
-            </div>
-          }
-        </div>
+          </div>
+          :
+          <div className="page__content center-text">
+            <Button onClick={() => setShowAdd(true)}>Track first lift!</Button>
+          </div>
+        }
       </section>
     </>
   )

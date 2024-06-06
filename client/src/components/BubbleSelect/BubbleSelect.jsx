@@ -4,9 +4,6 @@ import FormError from "../FormError/FormError";
 import FieldSet from "../FieldSet/FieldSet";
 
 const BubbleSelect = ({ options, selectedOptions, label, onChange, error }) => {
-    const handleChange = (value) => {
-        onChange(value);
-    }
 
     return (
         <div className="bubble-select">
