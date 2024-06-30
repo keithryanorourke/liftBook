@@ -8,15 +8,7 @@
   &__link-container {
     display: flex;
     justify-content: center;
-  }
-
-  &__icon {
-    margin: 0 1.25rem;
-    width: 2.5rem;
-    height: 2.5rem;
-    transition: 0.2s;
-    &:hover {
-      transform: scale(1.2) translateY(-0.25rem);
-    }
+    gap: 1rem;
+    align-items: flex-end;
   }
 }

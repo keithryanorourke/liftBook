@@ -4,10 +4,6 @@ import "./OrientationPage.scss"
 import useConfiguredAxios from '../../hooks/useConfiguredAxios'
 import Button from '../../components/Button/Button'
 import AboutDialog from '../../components/AboutDialog/AboutDialog'
-import back from "../../assets/icons/arrow_back_black_24dp.svg"
-import Checkbox from '../../components/Checkbox/Checkbox'
-import FieldSet from '../../components/FieldSet/FieldSet'
-import RadioButton from '../../components/RadioButton/RadioButton'
 import Form from '../../components/Form/Form'
 import { ArrowBack } from '@mui/icons-material'
 import AdvancedOptions from '../../components/AdvancedOptions/AdvancedOptions'
