@@ -2,13 +2,13 @@ import "./HomePage.scss"
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import IndividualWorkout from "../../components/IndividualWorkout/IndividualWorkout";
-import add from "../../assets/icons/add_black_24dp.svg";
 import useConfiguredAxios from "../../hooks/useConfiguredAxios";
 import Dialog from "../../components/Dialog/Dialog";
 import DeleteDialog from "../../components/DeleteDialog/DeleteDialog";
 import TextInput from "../../components/TextInput/TextInput";
 import Form from "../../components/Form/Form";
 import Button from "../../components/Button/Button";
+import { Add } from "@mui/icons-material";
 
 const WorkoutForm = ({ onSubmit, error, workout, onCancel }) => {
   const [name, setName] = useState(workout?.name || "");
@@ -43,7 +43,7 @@ const HomePage = () => {
   const [user, setUser] = useState({
     workouts: null
   })
-  const [showNewWorkout, setShowAdd] = useState(false)
+  const [showAdd, setShowAdd] = useState(false)
   const [currentWorkout, setCurrentWorkout] = useState(false)
   const [showDeleteModal, setShowDelete] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
@@ -129,7 +129,7 @@ const HomePage = () => {
     <>
       <Dialog
         title="New Workout"
-        visible={showNewWorkout}
+        visible={showAdd}
         onClose={() => setShowAdd(false)}
         color="primary"
       >
@@ -157,15 +157,16 @@ const HomePage = () => {
         onClose={onCloseDelete}
         itemName={currentWorkout?.name}
         onDelete={() => onDeleteWorkout(currentWorkout?.id)}
+        error={formError}
       />
-      <section className="home">
-        {!showNewWorkout ? <button onClick={() => setShowAdd(true)} className="home__new"><img src={add} alt="Plus sign icon" className="home__add" /></button> : null}
-        <div className="home__top-container">
-          <h2 className="home__title">Workouts</h2>
+      <section className="page page--fill">
+        {!showAdd && <button onClick={() => setShowAdd(true)} className="add-button"><Add sx={{ color: "white" }} /></button>}
+        <div className="page__header">
+          <h2>Workouts</h2>
         </div>
-        <div className="home__scroll-container">
-          <div className="home__workouts-container">
-            {user.workouts && user.workouts.length ? user.workouts.map((workout, index) => {
+        <div className="page__scroll-wrapper">
+          {user.workouts && user.workouts.length ? <div className="page__content page__content--no-pad page__flex">
+            {user.workouts.map((workout, index) => {
               return (
                 <IndividualWorkout
                   key={'workout-' + workout.name + index}
@@ -175,13 +176,14 @@ const HomePage = () => {
                   onClickEdit={onClickEdit}
                 />
               )
-            }) :
-              <div className="home__null-container">
-                <h3 className="home__null">You're all set up!</h3>
-                <button onClick={() => setShowAdd(true)} className="home__get-started">Track your first workout!</button>
-              </div>
-            }
+            })}
           </div>
+            :
+            <div className="page__content center-text">
+              <h3>You're all set up!</h3>
+              <Button type="button" onClick={() => setShowAdd(true)}>Track your first workout!</Button>
+            </div>
+          }
         </div>
       </section>
     </>

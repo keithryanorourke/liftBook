@@ -4,7 +4,14 @@
 @use "../../styles/partials/mixins" as *;
 
 .form-error {
-    padding: 0.5rem 1rem;
-    color: $error;
+    padding: 0.25rem 0.5rem;
     font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    
+    &__text {
+        color: red;
+        margin-top: 0.2rem;
+    }
 }

@@ -64,22 +64,4 @@
       transform: scale(1.02) translateY(-0.1rem)
     }
   }
-
-  &__button-container {
-    margin-left: 0.5rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-  }
-
-  &__button {
-    @include icon-button;
-  }
-
-  &__icon {
-    position: relative;
-    border-radius: 50%;
-    z-index: 2;
-  }
 }

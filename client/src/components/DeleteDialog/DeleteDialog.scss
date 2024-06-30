@@ -3,8 +3,18 @@
 @use "../../styles/partials/mixins" as *;
 @use "../../styles/partials/animations" as *;
 
-.delete__button-container {
+.delete {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__text {
+    margin: 0;
+  }
+
+  &__button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

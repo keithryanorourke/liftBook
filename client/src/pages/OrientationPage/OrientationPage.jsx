@@ -4,11 +4,9 @@ import "./OrientationPage.scss"
 import useConfiguredAxios from '../../hooks/useConfiguredAxios'
 import Button from '../../components/Button/Button'
 import AboutDialog from '../../components/AboutDialog/AboutDialog'
-import back from "../../assets/icons/arrow_back_black_24dp.svg"
-import Checkbox from '../../components/Checkbox/Checkbox'
-import FieldSet from '../../components/FieldSet/FieldSet'
-import RadioButton from '../../components/RadioButton/RadioButton'
 import Form from '../../components/Form/Form'
+import { ArrowBack } from '@mui/icons-material'
+import AdvancedOptions from '../../components/AdvancedOptions/AdvancedOptions'
 
 const AdvancedOrientation = ({ onSubmit, setAdvanced, error }) => {
   const [showAbout, setShowAbout] = useState(false)
@@ -27,69 +25,27 @@ const AdvancedOrientation = ({ onSubmit, setAdvanced, error }) => {
         visible={showAbout}
         onClose={() => setShowAbout(false)}
       />
-      <section>
-        <div>
-          <div>
-            <button onClick={() => setAdvanced(false)}><img src={back} alt="Arrow icon pointing left" /></button>
-            <h2>Advanced Mode</h2>
-          </div>
+      <section className="page page--fill">
+        <header className="page__header flex-between">
+          <button className="icon-button" onClick={() => setAdvanced(false)}><ArrowBack sx={{ color: "white" }} /></button>
+          <h2>Advanced Mode</h2>
+        </header>
+        <div className="page__content">
           <Form onSubmit={handleSubmit}
             buttons={<Button>Continue</Button>}
             error={error}
           >
-            <FieldSet label="Select enabled metrics:">
-              <div>
-                <div>
-                  <Checkbox
-                    label="Difficulty"
-                    value="difficulty"
-                    name="difficulty"
-                    onChange={() => setTrackDifficulty(prev => !prev)}
-                    checked={trackDifficulty}
-                    info="Tracking the difficulty of your sets is a good way to ensure that you are neither overworking or underworking your body throughout your workouts. It can also help you to identify potential reasons for a plateau. For example, if the first set you perform on every movement is very difficult, then it is likely to tire you out and affect your recovery."
-                  />
-                </div>
-                <div>
-                  <Checkbox
-                    label="Percentage"
-                    name="percentage"
-                    value="percentage"
-                    onChange={() => setTrackPercentage(prev => !prev)}
-                    checked={trackPercentage}
-                    info={"%of1RM is a shorthand for \" Percentage of your one rep max\" and is a measure of the percentage of the weight you are using on a given movement relative to the absolute maximum amount of weight that you could use on said movement for a single rep. This metric is often used to help determine what weight to use on any given movement in many popular intermediate and advanced strength training programs"}
-                  />
-                </div>
-              </div>
-            </FieldSet>
-            {trackDifficulty &&
-              <div>
-                <FieldSet label="Preferred difficulty metric:">
-                  <div>
-                    <div>
-                      <RadioButton
-                        label="RPE"
-                        name="preferredMetric"
-                        value="RPE"
-                        checked={preferredMetric === "RPE"}
-                        onChange={(e) => setPreferredMetric(e.target.value)}
-                        info={"RPE stands for \"rate of perceived exersion\" and is a rough measure of how close you got to failure when performing a set. It is measured on a scale of 1 to 10, where 1 means you were 9 reps away from failure and 10 means you reached failure. Each number in between represents one rep closer to failure. For example, an RPE 7 would mean you were 3 reps away from failure. Some trainees like to track halfway inbetween values, such as value 7.5. This allows for more flexibility and accuracy, but is not neccessary."}
-                      />
-                    </div>
-                    <div>
-                      <RadioButton
-                        label="RIR"
-                        name="preferredMetric"
-                        value="RIR"
-                        checked={preferredMetric === "RIR"}
-                        onChange={(e) => setPreferredMetric(e.target.value)}
-                        info={"RIR stands for \"reps in reserve\" and is a rough measure of how many more reps you could have potentially gotten after you finished a set. For example, if you performed a set of 8 but felt like you COULD have performed another 3 reps, you would have an RIR of 3."}
-                      />
-                    </div>
-                  </div>
-                </FieldSet>
-              </div>}
+            <AdvancedOptions
+              trackDifficulty={trackDifficulty}
+              trackPercentage={trackPercentage}
+              preferredMetric={preferredMetric}
+              onChangeDifficulty={setTrackDifficulty}
+              onChangePercentage={setTrackPercentage}
+              onChangeMetric={setPreferredMetric}
+            />
           </Form>
         </div>
+
       </section>
     </>
   )
@@ -130,6 +86,7 @@ const OrientationPage = () => {
       setAdvanced={setAdvanced}
     />)
   }
+
   return (
     <section className="orientation">
       <div className="orientation__top-container">

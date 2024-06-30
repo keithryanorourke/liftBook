@@ -4,57 +4,9 @@
 @use "../../styles/partials/mixins" as *;
 
 .single-exercise {
-  position: relative;
-  @include top-level-container;
-  animation: popup 0.2s;
-
-  &__top-container {
-    background-color: $bg3;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1.5rem;
-  }
-
-  &__link {
-    @include icon-button;
-  }
-
-  &__title {
-    text-align: center;
-  }
-
-  &__copy {
-    text-align: center;
-  }
 
   &__empty {
     width: 2rem;
     height: 2rem;
-  }
-
-  &__scroll-container {
-    border-bottom-left-radius:1rem;
-    border-bottom-right-radius:1rem;
-    overflow: hidden;
-  }
-
-  &__lifts-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-height: 68vh;
-    overflow-y: auto;
-    @include rotated-phone {
-      max-height: 45vh;
-    }
-    @include tablet {
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-  }
-
-  &__untracked {
-    padding: 1rem;
   }
 }

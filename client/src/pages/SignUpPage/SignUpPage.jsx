@@ -1,13 +1,13 @@
 import "./SignUpPage.scss"
 import { useState } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
-import back from "../../assets/icons/arrow_back_black_24dp.svg"
 import { useLocalStorage } from "usehooks-ts"
 import useConfiguredAxios from "../../hooks/useConfiguredAxios"
 import TextInput from "../../components/TextInput/TextInput"
 import Button from "../../components/Button/Button"
 import Form from "../../components/Form/Form"
 import PasswordInput from "../../components/PasswordInput/PasswordInput"
+import { ArrowBack } from "@mui/icons-material"
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
@@ -77,13 +77,13 @@ export const SignUpPage = () => {
   }
 
   return (
-    <section className="signup">
-      <div className="signup__top-container">
-        <NavLink to="/login" className="signup__back-button"><img src={back} alt="Arrow icon pointing left" className="signup__back" /></NavLink>
-        <h2 className="signup__title">Create Account:</h2>
+    <section className="page">
+      <header className="page__header flex-between">
+        <NavLink to="/login" className="icon-button"><ArrowBack sx={{ color: "white" }} /></NavLink>
+        <h2>Create Account:</h2>
         <div className="signup__empty"></div>
-      </div>
-      <div className="signup__bottom-container">
+      </header>
+      <div className="page__content">
         <Form
           onSubmit={onSubmit}
           buttons={<Button>Sign Up</Button>}
@@ -113,7 +113,6 @@ export const SignUpPage = () => {
             type="password"
           />
         </Form>
-        <p className="signup__disclaimer">DISCLAIMER: liftBook uses cookies to keep you logged in! By logging in or creating an account, you are agreeing to allow this website to store cookies in your browser.</p>
       </div>
     </section>
   )

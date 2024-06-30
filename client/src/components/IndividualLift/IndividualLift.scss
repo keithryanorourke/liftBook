@@ -11,6 +11,8 @@
   background-color: $bg5;
   border-top: .0625rem solid $bg2;
   flex-grow: 1;
+  padding-bottom: 1rem;
+  padding-right: .5rem;
   @include tablet {
     border: none;
     box-shadow: $darkshadow2;
@@ -104,17 +106,5 @@
   &__stat {
     font-weight: 600;
     color: $textcolor2;
-  }
-
-  &__button-container {
-    display: flex;
-    justify-content: space-between;
-    align-self: flex-end;
-    width: 5rem;
-    margin: 0 .5rem .5rem;
-  }
-
-  &__button {
-    @include icon-button;
   }
 }
