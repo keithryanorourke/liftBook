@@ -1,0 +1,66 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.button {
+    font-size: 1rem;
+    box-shadow: $darkshadow1;
+    outline: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    
+    &--filled {
+        color: $textcolor2;
+
+        &.button--default {
+            background-color: $bg2;
+            border: 4px solid $bg2;
+        }
+
+        &.button--primary {
+            background-color: $primary;
+            border: 4px solid $primary;
+        }
+
+        &.button--secondary {
+            background-color: $secondary;
+            border: 4px solid $secondary;
+        }
+
+        &.button--danger {
+            background-color: $danger;
+            border: 4px solid $danger;
+        }
+    }
+
+    &--outlined {
+        background-color: transparent;
+
+        &.button--default {
+            color: $bg2;
+            border: 4px solid $bg2;
+        }
+
+        &.button--primary {
+            color: $primary;
+            border: 4px solid $primary;
+        }
+
+        &.button--secondary {
+            color: $secondary;
+            border: 4px solid $secondary;
+        }
+
+        &.button--danger {
+            color: $danger;
+            border: 4px solid $danger;
+        }
+    }
+
+    &:hover {
+        transform: scale(1.1) translateY(-0.1rem)
+    }
+}

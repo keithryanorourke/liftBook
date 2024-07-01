@@ -1,20 +1,101 @@
 import "./ExercisesPage.scss"
 import { useState, useEffect, useCallback } from "react"
-import add from "../../assets/icons/add_black_24dp.svg"
-import AddExerciseModal from "../../components/AddExerciseModal/AddExerciseModal"
 import IndividualExercise from "../../components/IndividualExercise/IndividualExercise"
-import DeleteModal from "../../components/DeleteModal/DeleteModal"
-import EditExerciseModal from "../../components/EditExerciseModal/EditExerciseModal"
 import useConfiguredAxios from "../../hooks/useConfiguredAxios"
-const { REACT_APP_BACKEND_URL } = process.env
+import Dialog from "../../components/Dialog/Dialog"
+import BubbleSelect from "../../components/BubbleSelect/BubbleSelect"
+import muscleList from "../../assets/data/muscleList.json"
+import DeleteDialog from "../../components/DeleteDialog/DeleteDialog"
+import TextInput from "../../components/TextInput/TextInput"
+import Button from "../../components/Button/Button"
+import Form from "../../components/Form/Form"
+import { Add } from "@mui/icons-material";
+import getErrorMessage from "../../functions/getErrorMessage"
+
+const ExerciseForm = ({ onSubmit, error, exercise, onCancel }) => {
+  const [selectedMuscles, setSelectedMuscles] = useState(exercise?.muscle?.split(", ") || []);
+  const [name, setName] = useState(exercise?.name || "");
+  const [selectedMusclesError, setSelectedMusclesError] = useState(null);
+  const [nameError, setNameError] = useState(null);
+
+  const onChangeName = (e) => {
+    setName(e.target.value);
+    setNameError(null);
+  }
+
+  const toggleMuscle = (muscle) => {
+    setSelectedMusclesError(false);
+    if (selectedMuscles.includes(muscle)) {
+      let newArray = [...selectedMuscles]
+      const indexToRemove = newArray.indexOf(muscle)
+      newArray.splice(indexToRemove, 1)
+      setSelectedMuscles(newArray)
+    } else {
+      let newArray = [...selectedMuscles]
+      newArray.push(muscle)
+      setSelectedMuscles(newArray)
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let valid = true;
+    if (!name) {
+      setNameError("Exercise Name is a required field")
+      valid = false;
+    }
+    if (name.length > 25) {
+      setNameError("Exercise Name must be 25 characters or less")
+      valid = false;
+    }
+    if (name.match(/[^A-Za-z ]/)) {
+      setNameError("Exercise names may not contain any numbers or special characters!")
+      valid = false;
+    }
+    if (selectedMuscles.length === 0) {
+      setSelectedMusclesError("Please select at least 1 muscle group")
+      valid = false;
+    }
+    if (valid) {
+      onSubmit(name, selectedMuscles);
+    }
+  }
+
+  return (
+    <Form
+      onSubmit={handleSubmit}
+      error={error}
+      buttons={<>
+        <Button onClick={onCancel} type="button">Cancel</Button>
+        <Button theme="outlined" color="primary">Submit</Button>
+      </>}
+    >
+      <BubbleSelect
+        options={muscleList.array}
+        onChange={toggleMuscle}
+        selectedOptions={selectedMuscles}
+        label="Select all muscles involved in the exercise"
+        error={selectedMusclesError}
+      />
+      <TextInput
+        placeholder="Exercise name is required"
+        name="name"
+        label="Exercise Name"
+        value={name}
+        onChange={onChangeName}
+        error={nameError}
+      />
+    </Form>
+  )
+}
 
 const ExercisesPage = () => {
-  const [addExerciseModal, setAddExerciseModal] = useState(false)
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [editModal, setEditModal] = useState(false)
-  const [closeModalAnimation, setCloseModalAnimation] = useState(false)
+  const [showAdd, setShowAdd] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
+  const [showEdit, setShowEdit] = useState(false)
   const [exercises, setExercises] = useState([])
   const [currentExercise, setCurrentExercise] = useState(false)
+  const [formError, setFormError] = useState(null);
   const axios = useConfiguredAxios()
 
   const getUserExercises = useCallback(() => {
@@ -33,143 +114,136 @@ const ExercisesPage = () => {
   }, [getUserExercises])
 
   const formatMusclesIntoString = (musclesToFormat) => {
-    return musclesToFormat.map((muscle, index) => {
-      if (index !== musclesToFormat.length - 1) {
-        return muscle + ", "
-      }
-      return muscle
-    }).join('')
+    return musclesToFormat.join(", ")
   }
 
-  const validateExerciseForm = (e, muscles, exercise) => {
-    let newExercise = {}
-    if (exercise) {
-      newExercise = { ...exercise }
+  const onAddExercise = (name, muscles) => {
+    setFormError(null)
+    const newExercise = {
+      name,
+      muscle: formatMusclesIntoString(muscles)
     }
-
-    newExercise.muscle = formatMusclesIntoString(muscles)
-    newExercise.name = e.target.name.value
-
-    if (!newExercise.muscle.length) {
-      alert("Please select at least one muscle before submitting a new exercise!")
-      return { error: true }
-    }
-    if (!newExercise.name || newExercise.name.length > 25) {
-      alert("Make sure to give your exercise a name less than 25 characters long!")
-      return { error: true }
-    }
-    if (newExercise.name.match(/[^A-Za-z ]/)) {
-      alert("Exercise names may not contain any numbers or special characters!")
-      return { error: true }
-    }
-    return newExercise
+    axios.post(`/exercises`, newExercise)
+      .then(response => {
+        getUserExercises()
+        setShowAdd(false);
+      })
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
-  const addHandler = (e, muscles) => {
-    e.preventDefault()
-    const newExercise = validateExerciseForm(e, muscles)
-    if (!newExercise.error) {
-      axios.post(`/exercises`, newExercise)
-        .then(response => {
-          getUserExercises()
-          closingAnimationFunction(setAddExerciseModal)
-        })
-        .catch(error => alert(error + `\nYou may have entered a duplicate exercise name. Try using a different name than ${newExercise.name}!`))
+  const onEditExercise = (name, muscles, exercise) => {
+    setFormError(null)
+    const newExercise = {
+      ...exercise,
+      name,
+      muscle: formatMusclesIntoString(muscles)
     }
+    axios.put(`/exercises`, newExercise)
+      .then(response => {
+        getUserExercises()
+        onCloseEdit()
+      })
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
-  const editExerciseHandler = (e, exercise, muscles) => {
-    e.preventDefault()
-    const newExercise = validateExerciseForm(e, muscles, exercise)
-    if (!newExercise.error) {
-      axios.put(`/exercises`, newExercise)
-        .then(response => {
-          getUserExercises()
-          closingAnimationFunction(setEditModal)
-        })
-        .catch(error => alert(error + `\nYou may have entered a duplicate exercise name. Try using a different name than ${newExercise.name}!`))
-    }
-  }
-
-  const deleteExerciseHandler = (id) => {
+  const onDeleteExercise = (id) => {
     axios.delete(`/exercises/${id}`)
       .then(response => {
         getUserExercises()
-        closingAnimationFunction(setDeleteModal)
+        onCloseDelete()
       })
       .catch(error => alert(error))
   }
 
-  const handleSetDeleteModal = (exercise) => {
+  const onClickDelete = (exercise) => {
     setCurrentExercise(exercise)
-    setDeleteModal(true)
+    setShowDelete(true)
   }
 
-  const handleSetEditModal = (exercise) => {
+  const onClickEdit = (exercise) => {
     setCurrentExercise(exercise)
-    setEditModal(true)
+    setShowEdit(true)
   }
 
-  const closingAnimationFunction = (modalSetter) => {
-    setCloseModalAnimation(true)
-    setTimeout(() => {
-      modalSetter(false)
-      setCloseModalAnimation(false)
-    }, 300)
+  const afterClose = () => {
+    setCurrentExercise(false)
+    setFormError(null)
+  }
+
+  const onCloseAdd = () => {
+    setShowAdd(false);
+    afterClose();
+  }
+
+  const onCloseDelete = () => {
+    setShowDelete(false);
+    afterClose()
+  }
+
+  const onCloseEdit = () => {
+    setShowEdit(false);
+    afterClose()
   }
 
   return (
-    <>
-      {addExerciseModal ? <AddExerciseModal
-        setAddExerciseModal={setAddExerciseModal}
-        addExerciseHandler={addHandler}
-        close={closeModalAnimation}
+    <section className="page">
+      <Dialog
+        visible={showAdd}
+        onClose={onCloseAdd}
+        title="New Exercise"
+        color="primary"
+      >
+        <ExerciseForm
+          onCancel={onCloseAdd}
+          onSubmit={onAddExercise}
+          error={formError}
+        />
+      </Dialog>
+      <Dialog
+        visible={showEdit}
+        onClose={onCloseEdit}
+        title={`Edit ${currentExercise?.name}`}
+        color="primary"
+      >
+        <ExerciseForm
+          onCancel={onCloseEdit}
+          onSubmit={(name, muscles) => onEditExercise(name, muscles, currentExercise)}
+          error={formError}
+          exercise={currentExercise}
+        />
+      </Dialog>
+      <DeleteDialog
+        visible={showDelete}
+        onDelete={() => onDeleteExercise(currentExercise?.id)}
+        onClose={onCloseDelete}
+        itemName={currentExercise?.name}
+        error={formError}
       />
-        : null}
-      {editModal ? <EditExerciseModal
-        setEditExerciseModal={setEditModal}
-        editExerciseHandler={editExerciseHandler}
-        close={closeModalAnimation}
-        exercise={currentExercise}
-      />
-        : null}
-      {deleteModal ? <DeleteModal
-        setDeleteModal={setDeleteModal}
-        close={closeModalAnimation}
-        deleteHandler={deleteExerciseHandler}
-        title={currentExercise.name + " from your exercises"}
-        id={currentExercise.id}
-      />
-        : null}
-      <section className="exercises">
-        <button onClick={() => setAddExerciseModal(true)} className="exercises__add-button"><img src={add} alt="Plus sign icon" className="exercises__add" /></button>
-        <div className="exercises__top-container">
-          <h2 className="exercises__title">Exercises</h2>
-        </div>
-        <div className="exercises__scroll-container">
-          {exercises.length ?
-            <div className="exercises__bottom-container">
-              {exercises.map((exercise, index) => {
-                return <IndividualExercise
-                  key={exercise.id}
-                  exercise={exercise}
-                  index={index}
-                  setDeleteModal={exercise.user_id ? handleSetDeleteModal : null}
-                  setEditModal={exercise.user_id ? handleSetEditModal : null}
-                />
-              })}
-            </div>
-            :
-            <div className="exercises__bottom-container">
-              <div className="exercises__default-container">
-                <p className="exercises__copy">Not finding the exercise you want in our list? You can add any exercise you want to our database! Each exercise you add is only accessible to you, so it's like you're getting your own personalized exercise database!</p>
-                <button onClick={() => setAddExerciseModal(true)} className="exercises__button">Add first exercise!</button>
-              </div>
-            </div>
-          }
-        </div>
-      </section>
-    </>
+      <button onClick={() => setShowAdd(true)} className="add-button"><Add sx={{ color: "white" }} /></button>
+      <header className="page__header">
+        <h2>Exercises</h2>
+      </header>
+      <div className="page__scroll-wrapper">
+        {exercises.length ?
+          <div className="page__content page__content--no-pad page__flex">
+            {exercises.map((exercise, index) => {
+              return <IndividualExercise
+                key={'exercise-' + exercise.id}
+                exercise={exercise}
+                index={index}
+                onClickDelete={exercise.user_id ? onClickDelete : null}
+                onClickEdit={exercise.user_id ? onClickEdit : null}
+              />
+            })}
+          </div>
+          :
+          <div className="page__content">
+            <p>Not finding the exercise you want in our list? You can add any exercise you want to our database! Each exercise you add is only accessible to you, so it's like you're getting your own personalized exercise database!</p>
+            <Button onClick={() => setShowAdd(true)} type="button">Add first exercise!</Button>
+          </div>
+        }
+      </div>
+    </section>
   )
 }
 

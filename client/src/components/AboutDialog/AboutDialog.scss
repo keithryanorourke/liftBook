@@ -1,0 +1,14 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.about {
+
+  &__link-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+}

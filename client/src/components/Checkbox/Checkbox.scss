@@ -1,0 +1,13 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/animations" as *;
+@use "../../styles/partials/mixins" as *;
+
+.checkbox {
+    @include check-style-input;
+
+    &__label {
+        display: flex;
+        align-items: center;
+    }
+}

@@ -5,11 +5,13 @@
     @content;
   }
 }
+
 @mixin desktop {
   @media (min-width: 1280px) {
     @content;
   }
 }
+
 @mixin rotated-phone {
   @media (orientation: landscape) {
     @media (max-height: 400px) {
@@ -20,9 +22,11 @@
 
 @mixin page-margins {
   margin: 0 1rem;
+
   @include tablet {
     margin: 0 5rem;
   }
+
   @include desktop {
     margin: 0 15%;
   }
@@ -30,9 +34,11 @@
 
 @mixin page-padding {
   padding: 0 1rem;
+
   @include tablet {
     padding: 0 5rem;
   }
+
   @include desktop {
     padding: 0 15%;
   }
@@ -40,133 +46,25 @@
 
 @mixin modal-padding {
   padding: 0 2rem;
+
   @include tablet {
     padding: 0 15rem;
   }
+
   @include desktop {
     padding: 0 30%;
   }
 }
 
-@mixin modal {
-  position: fixed;
-  width: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  animation: modal-popup 0.2s;
-  @include rotated-phone {
-    width: 125%;
-  }
-  @include modal-padding;
-}
-
-@mixin modal-overlay {
-  z-index: 3;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 50%;
-}
-
-@mixin modal-top-level-container {
-  box-shadow: $lightshadow1;
-  display: flex;
-  flex-direction: column;
-  border-radius: 1rem;
-  overflow: hidden;
-  background-color: $primary4;
-}
-
-@mixin top-level-container {
-  box-shadow: $lightshadow1;
-  display: flex;
-  flex-direction: column;
-  border-radius: 1rem;
-  overflow: hidden;
-  background-color: $primary4;
-}
-
-@mixin generic-button {
-    color: $textcolor2;
-    font-size: 1rem;
-    box-shadow: $darkshadow1;
-    outline: none;
-    border: none;
-    background-color: $primary2;
-    padding: 0.65rem 1rem;
-    margin: 1rem 0 0;
-    cursor: pointer;
-    transition: 0.2s;
-
-    &:hover {
-      transform: scale(1.1) translateY(-0.1rem)
-    }
-}
-
-@mixin generic-field {
-  margin-top: 0.25rem;
-  width: 100%;
-  color: $globaltextcolor;
-  border: none;
-  background-color: $primary2;
-  padding: 0.65rem 1rem;
-  border-radius: 1rem;
-  outline: none;
-  transition: 0.1s;
-  -moz-appearance: textfield;
-
-  &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-
-
-  &:focus {
-    transform: scale(1.05);
-  }
-}
-
-@mixin icon-button {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin: 0 0.25rem;
-  width: 2rem;
-  height: 2rem;
-  background: linear-gradient(230deg, $primary1, $primary2);
-  border-radius: 0.5rem;
-  box-shadow: $darkshadow1;
-  border: none;
+@mixin check-style-input {
   cursor: pointer;
-  transition: 0.2s;
-  &:hover {
-    transform: scale(1.15) translateY(-0.1rem)
-  }
-}
+  transition: 0.5s;
+  margin: 0;
+  margin-right: 0.6rem;
+  filter: hue-rotate(100deg) brightness(0.5) drop-shadow(-0.5px 1px 4px $bg1);
+  transform: scale(1.375) translateX(2px);
 
-@mixin add-button {
-  position: absolute;
-    background-color: $accent4;
-    border-radius: 50%;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 2.5rem;
-    width: 2.5rem;
-    right: -0.75rem;
-    top: -0.75rem;
-    box-shadow: $lightshadow1;
-    cursor: pointer;
-    transition: 0.2s;
-    &:hover {
-      transform: scale(1.15) translateY(-0.1rem)
-    }
+  &:checked {
+    filter: hue-rotate(100deg) brightness(1) drop-shadow(-0.5px 1px 4px $bg1);
+  }
 }

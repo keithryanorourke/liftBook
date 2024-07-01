@@ -25,7 +25,6 @@
     }
   }
   
-  
   &__top-container {
     position: relative;
     z-index: 2;
@@ -39,7 +38,7 @@
   }
   
   &__mode {
-    background-color: $primary3;
+    background-color: $bg3;
     box-shadow: $darkshadow2;
     display: flex;
     flex-direction: column;
@@ -69,13 +68,6 @@
 
   &__mode-copy {
     padding: 0.5rem 0;
-  }
-
-  &__button {
-    @include generic-button;
-    min-width: 50%;
-    padding: 0.65rem 1rem;
-    margin: 0.5rem 0;
   }
 
   &__disclaimer {

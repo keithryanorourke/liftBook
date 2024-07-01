@@ -1,16 +1,64 @@
-import {useState} from 'react'
-import {useNavigate} from "react-router-dom"
+import { useState } from 'react'
+import { useNavigate } from "react-router-dom"
 import "./OrientationPage.scss"
-import AdvancedOrientation from '../../components/AdvancedOrientation/AdvancedOrientation'
 import useConfiguredAxios from '../../hooks/useConfiguredAxios'
+import Button from '../../components/Button/Button'
+import AboutDialog from '../../components/AboutDialog/AboutDialog'
+import Form from '../../components/Form/Form'
+import { ArrowBack } from '@mui/icons-material'
+import AdvancedOptions from '../../components/AdvancedOptions/AdvancedOptions'
+import getErrorMessage from '../../functions/getErrorMessage'
+
+const AdvancedOrientation = ({ onSubmit, setAdvanced, error }) => {
+  const [showAbout, setShowAbout] = useState(false)
+  const [trackDifficulty, setTrackDifficulty] = useState(false)
+  const [trackPercentage, setTrackPercentage] = useState(false)
+  const [preferredMetric, setPreferredMetric] = useState(null)
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(trackDifficulty, trackPercentage, preferredMetric);
+  }
+
+  return (
+    <>
+      <AboutDialog
+        visible={showAbout}
+        onClose={() => setShowAbout(false)}
+      />
+      <section className="page page--fill">
+        <header className="page__header flex-between">
+          <button className="icon-button" onClick={() => setAdvanced(false)}><ArrowBack sx={{ color: "white" }} /></button>
+          <h2>Advanced Mode</h2>
+        </header>
+        <div className="page__content">
+          <Form onSubmit={handleSubmit}
+            buttons={<Button>Continue</Button>}
+            error={error}
+          >
+            <AdvancedOptions
+              trackDifficulty={trackDifficulty}
+              trackPercentage={trackPercentage}
+              preferredMetric={preferredMetric}
+              onChangeDifficulty={setTrackDifficulty}
+              onChangePercentage={setTrackPercentage}
+              onChangeMetric={setPreferredMetric}
+            />
+          </Form>
+        </div>
+
+      </section>
+    </>
+  )
+}
 
 const OrientationPage = () => {
-  const [advanced, setAdvanced] = useState(false)
-  const [trackDifficulty, setTrackDifficulty] = useState(false)
-  const navigate = useNavigate()
-  const axios = useConfiguredAxios
+  const [advanced, setAdvanced] = useState(false);
+  const [formError, setFormError] = useState(null);
+  const navigate = useNavigate();
+  const axios = useConfiguredAxios();
 
-  const basicHandler = () => {
+  const onClickBasic = () => {
     const settings = {
       mode: "basic",
       trackDifficulty: false,
@@ -18,37 +66,30 @@ const OrientationPage = () => {
       trackPercentageOfMax: false
     }
     axios.put(`/account/settings`, settings)
-    .then(response => navigate("../", {replace: true}))
-    .catch(error => alert(error))
+      .then(response => navigate("../", { replace: true }))
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
-  const advancedHandler = (e) => {
-    e.preventDefault()
+  const onSubmitAdvanced = (trackDifficulty, trackPercentage, preferredMetric) => {
     const settings = {
       mode: "advanced",
-      trackDifficulty: e.target.difficulty.checked,
-      trackPercentageOfMax: e.target.percentage.checked,
-      preferredMetric: (e.target.difficultyMetric ? e.target.difficultyMetric.value : "RPE")
+      trackDifficulty,
+      trackPercentageOfMax: trackPercentage,
+      preferredMetric: preferredMetric || "RPE"
     }
     axios.put(`/account/settings`, settings)
-    .then(response => navigate("../", {replace: true}))
-    .catch(error => alert(error))
+      .then(response => navigate("../", { replace: true }))
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
-  const difficultyHandler = (e) => {
-    if(e.target.checked) {
-      return setTrackDifficulty(true)
-    }
-    return setTrackDifficulty(false)
+  if (advanced) {
+    return (<AdvancedOrientation
+      onSubmit={onSubmitAdvanced}
+      setAdvanced={setAdvanced}
+      error={formError}
+    />)
   }
 
-  if(advanced) {
-    return(<AdvancedOrientation 
-      advancedHandler={advancedHandler} 
-      setAdvanced={setAdvanced} 
-      difficultyHandler={difficultyHandler} 
-      trackDifficulty={trackDifficulty} /> )
-  }
   return (
     <section className="orientation">
       <div className="orientation__top-container">
@@ -57,11 +98,11 @@ const OrientationPage = () => {
       <p className="orientation__copy">Before you get started, please select a tracking mode:</p>
       <div className="orientation__container">
         <div className='orientation__mode orientation__mode--basic'>
-          <button onClick={basicHandler} className="orientation__button">Basic</button>
+          <Button onClick={onClickBasic} type="button">Basic</Button>
           <li className="orientation__mode-copy">Just track weights and reps!</li>
         </div>
         <div className="orientation__mode orientation__mode--advanced">
-          <button onClick={() => setAdvanced(true)} className="orientation__button">Advanced</button>
+          <Button onClick={() => setAdvanced(true)} type="button">Advanced</Button>
           <li className="orientation__mode-copy">Track advanced metrics like RPE and %of1RM!</li>
           <li className="orientation__mode-copy">Customize what metrics you do and don't want to track!</li>
         </div>

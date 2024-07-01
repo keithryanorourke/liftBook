@@ -1,0 +1,17 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/animations" as *;
+
+.select {
+    background-color: $bg2;
+    color: $globaltextcolor;
+    padding: .5rem;
+    border: none;
+    border-radius: .5rem;
+
+    &__label {
+        display: flex;
+        flex-direction: column;
+    }
+}

@@ -1,83 +1,118 @@
 import "./SignUpPage.scss"
-import {useState} from "react"
-import { Navigate, NavLink } from "react-router-dom"
-import back from "../../assets/icons/arrow_back_black_24dp.svg"
+import { useState } from "react"
+import { NavLink, useNavigate } from "react-router-dom"
 import { useLocalStorage } from "usehooks-ts"
 import useConfiguredAxios from "../../hooks/useConfiguredAxios"
+import TextInput from "../../components/TextInput/TextInput"
+import Button from "../../components/Button/Button"
+import Form from "../../components/Form/Form"
+import PasswordInput from "../../components/PasswordInput/PasswordInput"
+import { ArrowBack } from "@mui/icons-material"
+import getErrorMessage from "../../functions/getErrorMessage"
 
 export const SignUpPage = () => {
-  // formFields will be implemented as a manner to render conditional error messages in a future sprint
-  const [formFields, setFormFields] = useState({
-    username: {},
-    password: {},
-    confirmPassword: {}
-  })
-  const [redirect, setRedirect] = useState(false)
+  const navigate = useNavigate();
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState(null);
+  const [usernameError, setUsernameError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+  const [formError, setFormError] = useState(null);
   const [, setToken] = useLocalStorage("token", null)
   const axios = useConfiguredAxios();
 
-  const loginHandler = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
+    setFormError(null);
     let exit = false;
+    if (!username) {
+      setUsernameError("Username is required");
+      exit = true;
+    }
+    if (!password) {
+      setPasswordError("Password is required");
+      exit = true;
+    } else if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters long");
+      exit = true;
+    }
+    if (!confirmPassword) {
+      setConfirmPasswordError("Confirm password is required");
+      exit = true;
+    }
+    if (exit) {
+      return;
+    }
+    if (password !== confirmPassword) {
+      setFormError("Passwords do not match");
+      return;
+    }
     const submission = {
-      username: e.target.username.value,
-      password: e.target.password.value,
-      confirmPassword: e.target.confirmPassword.value
+      username: username,
+      password: password,
     }
-    Object.keys(submission).forEach(key => {
-      if (!submission[key]) {
-        exit = true;
-        setFormFields(prevState => ({...prevState, [key]: {value: "", error: "blank"}}))
-      } 
-    })
-    if(exit) {
-      return alert("Please make sure to fill out the Username, Password, and Confirm Password fields before continuing.")
-    }
-    if (submission.password !== submission.confirmPassword) {
-      alert("Password and Confirm Password do no match! Please make sure that you have typed the same password into both fields!")
-      setFormFields(prevState => ({...prevState, password: {value: submission.password, error: "Passwords do not match!"}, confirmPassword: {value: submission.confirmPassword, error: "Passwords do not match!"}}))
-      exit =true;
-    }
-    if (!exit) {
-      delete submission.confirmPassword
-      axios.post(`/account/signup`, submission)
+    axios.post(`/account/signup`, submission)
       .then(response => {
         setToken(response.data);
-        setRedirect(true)
+        navigate("/setup");
       })
-      .catch(error => {
-        alert(`Username ${submission.username} is already in use. Please select another username.`)
-        setFormFields(prevState => ({...prevState, username: {value: submission.username, error: `Username ${submission.username} is already in use.`}}))
-      })
-    }
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
-  if (redirect) {
-    return <Navigate to="/setup"/>
+  const onChangeUsername = (e) => {
+    setUsername(e.target.value);
+    setUsernameError(null);
+  }
+
+  const onChangePassword = (e) => {
+    setPassword(e.target.value);
+    setPasswordError(null);
+  }
+
+  const onChangeConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
+    setConfirmPasswordError(null);
   }
 
   return (
-    <section className="signup">
-        <div className="signup__top-container">
-          <NavLink to="/login" className="signup__back-button"><img src={back} alt="Arrow icon pointing left" className="signup__back" /></NavLink>
-          <h2 className="signup__title">Create Account:</h2>
-          <div className="signup__empty"></div>
-        </div>
-        <div className="signup__bottom-container">
-          <form onSubmit={loginHandler} className="signup__form">
-            <label className="signup__label">Username:
-              <input type="text" name="username" className="signup__field" />
-            </label>
-            <label className="signup__label">Password:
-              <input type="password" name="password" className="signup__field" />
-            </label>
-            <label className="signup__label">Confirm Password:
-              <input type="password" name="confirmPassword" className="signup__field" />
-            </label>
-            <button className="signup__submit" type="submit">Sign Up</button>
-          </form>
-          <p className="signup__disclaimer">DISCLAIMER: liftBook uses cookies to keep you logged in! By logging in or creating an account, you are agreeing to allow this website to store cookies in your browser.</p>
-        </div>
+    <section className="page">
+      <header className="page__header flex-between">
+        <NavLink to="/login" className="icon-button"><ArrowBack sx={{ color: "white" }} /></NavLink>
+        <h2>Create Account:</h2>
+        <div className="signup__empty"></div>
+      </header>
+      <div className="page__content">
+        <Form
+          onSubmit={onSubmit}
+          buttons={<Button>Sign Up</Button>}
+          error={formError}
+        >
+          <TextInput
+            label="Username"
+            name="username"
+            value={username}
+            onChange={onChangeUsername}
+            error={usernameError}
+          />
+          <PasswordInput
+            label="Password"
+            name="password"
+            value={password}
+            onChange={onChangePassword}
+            error={passwordError}
+            type="password"
+          />
+          <PasswordInput
+            label="Confirm Password"
+            name="password"
+            value={confirmPassword}
+            onChange={onChangeConfirmPassword}
+            error={confirmPasswordError}
+            type="password"
+          />
+        </Form>
+      </div>
     </section>
   )
 }

@@ -1,24 +1,24 @@
 require("dotenv").config();
-const { KEY, NODE_ENV } = process.env;
+const { NODE_ENV } = process.env;
 const knex = require("knex")(require("../knexfile")[NODE_ENV]);
 const bcrypt = require("bcrypt");
 const createJwt = require('../utils').createJwt;
 
-const postAccount = (req, res) => {
+const postAccount = (req, res, next) => {
 	const newUser = req.body;
 	// Validate user object
-	if (!newUser.password) {
-		res.status(400).send("Password required for sign up");
-	}
 	if (!newUser.username) {
-		res.status(400).send("Username required for sign up");
+		return res.status(400).send("Username is required");
+	}
+	if (!newUser.password) {
+		return res.status(400).send("Password is required");
 	}
 	// Check if username is already used
 	knex("users")
 		.where({ username: newUser.username })
 		.then((data) => {
 			if (data.length) {
-				return res.status(400).send("username already exists");
+				return res.status(400).send("Username already exists");
 			}
 		});
 
@@ -34,35 +34,38 @@ const postAccount = (req, res) => {
 	knex("users")
 		.insert(userToAdd)
 		.then((data) => {
-			delete userToAdd.password;
-			const token = createJwt(data[0].id, KEY);
+			const token = createJwt(data[0]);
 			return res.status(200).json(token);
 		})
-		.catch((err) => {
-			return res.status(400).send(`Error creating account: ${err}`);
-		});
+		.catch(next);
 };
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
 	const user = req.body;
+	// Validate user object
+	if (!user.username) {
+		return res.status(400).send("Username is required");
+	}
+	if (!user.password) {
+		return res.status(400).send("Password is required");
+	}
 	knex("users")
 		.where({ username: user.username })
 		.then((data) => {
-			if (!bcrypt.compareSync(user.password, data[0].password)) {
-				return res.status(400).send("Incorrect password");
+			if (data.length === 0) {
+				return res.status(400).send("Incorrect username or password");
+
 			}
-			const token = createJwt(data[0].id, KEY);
+			if (!bcrypt.compareSync(user.password, data[0].password)) {
+				return res.status(400).send("Incorrect username or password");
+			}
+			const token = createJwt(data[0].id);
 			return res.status(200).json(token);
 		})
-		.catch((err) => {
-			console.log(err);
-			return res
-				.status(404)
-				.send(`Username does not match any existing account! ${err}`);
-		});
+		.catch(next);
 };
 
-const getSettings = async (req, res) => {
+const getSettings = async (req, res, next) => {
 	const { userId } = req.decoded;
 	knex.select(
 		"mode",
@@ -72,30 +75,25 @@ const getSettings = async (req, res) => {
 	)
 		.from("users")
 		.where({ id: userId })
-		.then((response) => {
-			return res.status(200).json(response[0]);
+		.then((data) => {
+			if (data.length === 0) {
+				return res.status(404).send("User not found!");
+			}
+			return res.status(200).json(data[0]);
 		})
-		.catch((error) => {
-			return res.status(404).send("User not found!");
-		});
+		.catch(next);
 };
 
-const putSettings = async (req, res) => {
+const putSettings = async (req, res, next) => {
 	const { userId } = req.decoded;
 	const settings = req.body;
 	knex("users")
 		.where({ id: userId })
 		.update({ ...settings })
-		.then((response) => {
+		.then((data) => {
 			return res.status(200).send("settings succesfully updated!");
 		})
-		.catch((err) => {
-			return res
-				.status(400)
-				.send(
-					`Incorrect settings object provided OR user does not exist. ${err}`
-				);
-		});
+		.catch(next);
 };
 
 module.exports = {

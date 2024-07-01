@@ -11,7 +11,7 @@
   align-items: center;
   text-align: center;
   width: 100%;
-  border-top: 2px solid $primary2;
+  border-top: 2px solid $bg2;
   flex-grow: 1;
   @include tablet {
     box-shadow: $darkshadow2;
@@ -28,14 +28,14 @@
   }
 
   &--even {
-    background: $primary5;
+    background: $bg5;
   }
 
   &__container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient($primary1, $primary2);
+    background: linear-gradient($bg1, $bg2);
     width: 100%;
     padding:  0;
     box-shadow: $darkshadow1;
@@ -51,7 +51,7 @@
   &__title {
     margin: 0 0 0.75rem;
     width: 100%;
-    background-color: $primary1;
+    background-color: $bg1;
     padding: 0.5rem 0;
     box-shadow: $darkshadow1;
   }
@@ -70,18 +70,18 @@
     margin-top: 0;
     box-shadow: $lightshadow1;
     border-radius: 1rem;
-    background-color: $accent7;
+    background-color: $accent3;
     
     &--push {
-      background-color: $accent3;
+      background-color: $secondary;
     }
 
     &--pull {
-      background-color: $accent2;
+      background-color: $danger;
     }
     
     &--legs {
-      background-color: $accent5;
+      background-color: $accent2;
     }
   }
 
@@ -106,9 +106,4 @@
       padding-top: 0;
     }
   }
-
-  &__button {
-    @include icon-button;
-  }
-
 }
