@@ -60,7 +60,7 @@ const AdvancedOptions = ({ mode, setMode, showAdvancedMetrics = true, trackDiffi
                         </div>
                     </FieldSet>
                 </div>
-                {trackDifficulty &&
+                {Boolean(trackDifficulty) &&
                     <div className="advanced__preferance-container">
                         <FieldSet label="Preferred difficulty metric:">
                             <div className="advanced__flex-row">

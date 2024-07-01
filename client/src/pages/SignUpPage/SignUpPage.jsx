@@ -8,6 +8,7 @@ import Button from "../../components/Button/Button"
 import Form from "../../components/Form/Form"
 import PasswordInput from "../../components/PasswordInput/PasswordInput"
 import { ArrowBack } from "@mui/icons-material"
+import getErrorMessage from "../../functions/getErrorMessage"
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
@@ -56,9 +57,7 @@ export const SignUpPage = () => {
         setToken(response.data);
         navigate("/setup");
       })
-      .catch(error => {
-        setFormError("Server error encountered");
-      })
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
   const onChangeUsername = (e) => {

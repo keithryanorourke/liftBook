@@ -1,5 +1,4 @@
 import "./Form.scss"
-import FormError from "../FormError/FormError";
 import Alert from "../Alert/Alert";
 
 const Form = ({ onSubmit, children, error, buttons }) => {

@@ -39,7 +39,7 @@ const convertDate = (date) => {
       month = "DEC"
       break;
   }
-  return month + " " + splitDate[2].slice(0, 2) + " " + splitDate[0]
+  return month + " " + splitDate[2].slice(0, 2) + " " + splitDate[0];
 }
 
-module.exports=convertDate
+export default convertDate;

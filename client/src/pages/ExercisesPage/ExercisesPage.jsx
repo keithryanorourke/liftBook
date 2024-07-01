@@ -10,6 +10,7 @@ import TextInput from "../../components/TextInput/TextInput"
 import Button from "../../components/Button/Button"
 import Form from "../../components/Form/Form"
 import { Add } from "@mui/icons-material";
+import getErrorMessage from "../../functions/getErrorMessage"
 
 const ExerciseForm = ({ onSubmit, error, exercise, onCancel }) => {
   const [selectedMuscles, setSelectedMuscles] = useState(exercise?.muscle?.split(", ") || []);
@@ -127,7 +128,7 @@ const ExercisesPage = () => {
         getUserExercises()
         setShowAdd(false);
       })
-      .catch(error => setFormError("Server error encountered"))
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
   const onEditExercise = (name, muscles, exercise) => {
@@ -142,7 +143,7 @@ const ExercisesPage = () => {
         getUserExercises()
         onCloseEdit()
       })
-      .catch(error => setFormError("Server error encountered"))
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
   const onDeleteExercise = (id) => {

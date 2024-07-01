@@ -17,6 +17,7 @@ import RadioButton from "../../components/RadioButton/RadioButton";
 import Select from "../../components/Select/Select";
 import Button from "../../components/Button/Button";
 import { Add } from "@mui/icons-material";
+import getErrorMessage from "../../functions/getErrorMessage";
 
 const LiftForm = ({ onSubmit, onCancel, exercises, lift, error }) => {
   const settings = useContext(UserSettingsContext);
@@ -230,8 +231,8 @@ const WorkoutPage = () => {
       .then(response => {
         setWorkout(response.data)
       })
-      .catch(error => {
-        alert(`${error}.\nThe workout you are trying to access is not associated with your account! You will now be redirected to your home page.`)
+      .catch(err => {
+        alert(`${err}.\nThe workout you are trying to access is not associated with your account! You will now be redirected to your home page.`)
         navigate("../", { replace: true })
       })
 
@@ -239,13 +240,12 @@ const WorkoutPage = () => {
       .then(response => {
         setExercises(response.data)
       })
-      .catch(error => alert(`We could not retrieve the list of exercises from our database! Please try reloading the page and if that does not work, please try to logout and log back in.\n ${error}`))
+      .catch(err => alert(`We could not retrieve the list of exercises from our database! Please try reloading the page and if that does not work, please try to logout and log back in.\n ${err}`))
 
     getLifts()
   }, [getLifts, navigate, axios, workoutId])
 
   const onAddLift = (exercise, weight, measure, reps, difficulty, percentageOfMax) => {
-    console.log(exercise);
     const newLift = {
       workout_id: workoutId,
       exercise_id: exercise.id,
@@ -262,9 +262,7 @@ const WorkoutPage = () => {
         getLifts()
         setShowAdd(false);
       })
-      .catch(error => {
-        setFormError("Server error encountered")
-      })
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
 
@@ -284,9 +282,7 @@ const WorkoutPage = () => {
         getLifts()
         onCloseEdit()
       })
-      .catch(error => {
-        setFormError("Server error encountered")
-      })
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
   const onDeleteLift = (id) => {
@@ -295,7 +291,7 @@ const WorkoutPage = () => {
         getLifts()
         onCloseDelete()
       })
-      .catch(error => setFormError("Server error encountered"))
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
   const onClickEdit = (lift) => {
@@ -385,7 +381,7 @@ const WorkoutPage = () => {
           </div>
           :
           <div className="page__content center-text">
-            <Button onClick={() => setShowAdd(true)}>Track first lift!</Button>
+            <Button type="button" onClick={() => setShowAdd(true)}>Track first lift!</Button>
           </div>
         }
       </section>

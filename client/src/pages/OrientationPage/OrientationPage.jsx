@@ -7,6 +7,7 @@ import AboutDialog from '../../components/AboutDialog/AboutDialog'
 import Form from '../../components/Form/Form'
 import { ArrowBack } from '@mui/icons-material'
 import AdvancedOptions from '../../components/AdvancedOptions/AdvancedOptions'
+import getErrorMessage from '../../functions/getErrorMessage'
 
 const AdvancedOrientation = ({ onSubmit, setAdvanced, error }) => {
   const [showAbout, setShowAbout] = useState(false)
@@ -52,8 +53,9 @@ const AdvancedOrientation = ({ onSubmit, setAdvanced, error }) => {
 }
 
 const OrientationPage = () => {
-  const [advanced, setAdvanced] = useState(false)
-  const navigate = useNavigate()
+  const [advanced, setAdvanced] = useState(false);
+  const [formError, setFormError] = useState(null);
+  const navigate = useNavigate();
   const axios = useConfiguredAxios();
 
   const onClickBasic = () => {
@@ -65,7 +67,7 @@ const OrientationPage = () => {
     }
     axios.put(`/account/settings`, settings)
       .then(response => navigate("../", { replace: true }))
-      .catch(error => alert(error))
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
   const onSubmitAdvanced = (trackDifficulty, trackPercentage, preferredMetric) => {
@@ -77,13 +79,14 @@ const OrientationPage = () => {
     }
     axios.put(`/account/settings`, settings)
       .then(response => navigate("../", { replace: true }))
-      .catch(error => alert(error))
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
   if (advanced) {
     return (<AdvancedOrientation
       onSubmit={onSubmitAdvanced}
       setAdvanced={setAdvanced}
+      error={formError}
     />)
   }
 

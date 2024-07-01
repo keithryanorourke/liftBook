@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { TOKEN_LIFESPAN, TOKEN_LIFESPAN_UNIT } = process.env;
+const { TOKEN_LIFESPAN, TOKEN_LIFESPAN_UNIT, KEY } = process.env;
 const jwt = require("jsonwebtoken");
 
 const convertToMilliseconds = (value, unit) => {
@@ -17,9 +17,9 @@ const convertToMilliseconds = (value, unit) => {
     }
 }
 
-const createJwt = (userId, key) => {
+const createJwt = (userId) => {
     const expiration = new Date(Date.now() + convertToMilliseconds(TOKEN_LIFESPAN, TOKEN_LIFESPAN_UNIT)).toISOString();
-    return jwt.sign({ userId, expiration }, key);
+    return jwt.sign({ userId, expiration }, KEY);
 }
 
 module.exports = {
