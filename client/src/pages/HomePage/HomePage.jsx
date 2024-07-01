@@ -9,6 +9,7 @@ import TextInput from "../../components/TextInput/TextInput";
 import Form from "../../components/Form/Form";
 import Button from "../../components/Button/Button";
 import { Add } from "@mui/icons-material";
+import getErrorMessage from "../../functions/getErrorMessage";
 
 const WorkoutForm = ({ onSubmit, error, workout, onCancel }) => {
   const [name, setName] = useState(workout?.name || "");
@@ -70,7 +71,7 @@ const HomePage = () => {
 
     axios.post(`/workout`, workout)
       .then(response => navigate(`../workout/${response.data}`, { replace: true }))
-      .catch(error => setFormError("Server error encountered"))
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
   const onEditWorkout = (name, workout) => {
@@ -83,7 +84,7 @@ const HomePage = () => {
         getWorkouts()
         onCloseEdit()
       })
-      .catch(error => setFormError("Server error encountered"))
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
   const onDeleteWorkout = (id) => {
@@ -92,7 +93,7 @@ const HomePage = () => {
         getWorkouts()
         onCloseDelete()
       })
-      .catch(error => setFormError("Server error encountered"))
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
   const onClickDelete = (workout) => {

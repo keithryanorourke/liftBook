@@ -6,7 +6,7 @@ const Select = ({ label, name, options, value, onChange, error }) => {
     return (
         <label htmlFor={`select-${name}`} className="select__label">
             {label}:
-            <select name={name} value={value} onChange={onChange} id="" className="select">
+            <select name={name} value={value} onChange={onChange} id={`select-${name}`} className="select">
                 {options?.map(option => {
                     return <option
                         key={`select-${name}-${option}`}

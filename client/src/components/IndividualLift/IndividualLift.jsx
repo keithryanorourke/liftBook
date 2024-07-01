@@ -44,7 +44,7 @@ const IndividualLift = ({ lift, liftSeparationModifier, setNum, onClickEdit, onC
           </div>
           :
           null}
-        {settings.trackPercentageOfMax && settings.mode === "advanced"
+        {Boolean(settings.trackPercentageOfMax) && settings.mode === "advanced"
           ?
           <div className="lift__stat-container">
             <span className="lift__specifier">%of1RM:</span>

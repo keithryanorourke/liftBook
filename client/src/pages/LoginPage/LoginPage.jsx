@@ -8,6 +8,7 @@ import Form from "../../components/Form/Form";
 import TextInput from "../../components/TextInput/TextInput";
 import Button from "../../components/Button/Button";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
+import getErrorMessage from "../../functions/getErrorMessage";
 
 export const LoginPage = () => {
   const [showAbout, setShowAbout] = useState(false)
@@ -45,9 +46,7 @@ export const LoginPage = () => {
         setToken(response.data)
         navigate("/", { replace: true })
       })
-      .catch(error => {
-        setFormError("Incorrect username or password");
-      })
+      .catch(err => setFormError(getErrorMessage(err)))
   }
 
   const onChangeUsername = (e) => {

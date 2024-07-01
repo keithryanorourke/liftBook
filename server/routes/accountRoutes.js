@@ -3,11 +3,10 @@ const router = express.Router();
 const authorize = require("../middleware/authorize").authorize;
 const accountController = require("../controllers/accountController");
 
-const { postAccount, login, getSettings, putSettings, checkAuth } =
+const { postAccount, login, getSettings, putSettings } =
 	accountController;
 
 require("dotenv").config();
-const { KEY } = process.env;
 
 router.post("/signup", postAccount);
 

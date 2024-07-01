@@ -2,114 +2,103 @@ require("dotenv").config();
 const { NODE_ENV } = process.env;
 const knex = require("knex")(require("../knexfile")[NODE_ENV]);
 
-const getAllExercises = (req, res) => {
+const getAllExercises = (req, res, next) => {
 	const { userId } = req.decoded;
 	const exerciseList = [];
 	knex("exercises")
 		.where({ user_id: null })
-		.then((response) => {
-			exerciseList.push(...response);
+		.then((data) => {
+			exerciseList.push(...data);
 			return knex("exercises").where({ user_id: userId });
 		})
-		.then((response) => {
-			exerciseList.push(...response);
+		.then((data) => {
+			exerciseList.push(...data);
 			return res.status(200).json(exerciseList);
 		})
-		.catch((err) => {
-			return res
-				.status(500)
-				.send(
-					`Database error, exercise list could not be retrieved! ${err}`
-				);
-		});
+		.catch(next);
 };
 
-const getUserExercises = (req, res) => {
+const getUserExercises = (req, res, next) => {
 	const { userId } = req.decoded;
 	knex("exercises")
 		.where({ user_id: userId })
-		.then((response) => {
-			return res.status(200).json(response);
+		.then((data) => {
+			return res.status(200).json(data);
 		})
-		.catch((err) => {
-			return res
-				.status(500)
-				.message(
-					`Database error, exercise list could not be retrieved! ${err}`
-				);
-		});
+		.catch(next);
 };
 
-const getSingleExercise = (req, res) => {
+const getSingleExercise = (req, res, next) => {
+	const { userId } = req.decoded;
 	const { exerciseId } = req.params;
 	knex("exercises")
-		.where({ id: exerciseId })
-		.then((response) => {
-			return res.status(200).json(response[0]);
+		.where({ id: exerciseId, "user_id": userId })
+		.then((data) => {
+			if (data.length === 0) {
+				return res.status(404).send("Exercise not found!");
+			}
+			return res.status(200).json(data[0]);
 		})
-		.catch((err) => {
-			return res
-				.status(500)
-				.send(
-					`Database error, exercise could not be retrieved! ${err}`
-				);
-		});
+		.catch(next);
 };
 
-const postExercise = (req, res) => {
+const postExercise = (req, res, next) => {
 	const { userId } = req.decoded;
 	const newExercise = req.body;
+	if (newExercise.name === undefined) {
+		return res.status(400).send("Exercise name is required");
+	}
+	if (newExercise.muscle === undefined || newExercise.muscle.length === 0) {
+		return res.status(400).send("At least one muscle group must be provided");
+	}
 	knex("exercises")
 		.insert({
 			...newExercise,
 			user_id: userId,
 		})
-		.then((response) => {
-			return res.status(201).json(response);
+		.then((data) => {
+			return res.status(201).json(data);
 		})
-		.catch((err) => {
-			return res
-				.status(400)
-				.send(`Exercise not created, may be a duplicate. ${err}`);
-		});
+		.catch(next);
 };
 
-const putExercise = (req, res) => {
+const putExercise = (req, res, next) => {
 	const { userId } = req.decoded;
 	const newExercise = req.body;
+	if (newExercise.name === undefined) {
+		return res.status(400).send("Exercise name is required");
+	}
+	if (newExercise.muscle === undefined || newExercise.muscle.length === 0) {
+		return res.status(400).send("At least one muscle group must be provided");
+	}
 	knex("exercises")
 		.where({ id: newExercise.id, user_id: userId })
 		.update({
 			...newExercise,
 			user_id: userId,
 		})
-		.then((response) => {
-			return res.status(200).json(response);
+		.then((data) => {
+			return res.status(200).json(data);
 		})
-		.catch((err) => {
-			return res
-				.status(400)
-				.send(`Exercise not created, may be a duplicate. ${err}`);
-		});
+		.catch(next);
 };
 
-const deleteExercise = (req, res) => {
+const deleteExercise = (req, res, next) => {
 	const { userId } = req.decoded;
 	const { exerciseId } = req.params;
 	knex("exercises")
 		.where({ id: exerciseId, user_id: userId })
 		.delete()
-		.then((response) => {
+		.then((data) => {
+			if (data === 0) {
+				return res.status(404).send("Exercise not found!");
+			}
 			return res
 				.status(200)
 				.send(`Exercise ${exerciseId} succesfully deleted!`);
 		})
 		.catch((err) => {
-			return res
-				.status(404)
-				.send(
-					`Exercise ${exerciseId} was not deleted. It either does not exist or does not belong to your account. ${err}`
-				);
+			next(err)
 		});
 };
 

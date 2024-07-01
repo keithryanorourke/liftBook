@@ -5,12 +5,11 @@ import useConfiguredAxios from "../../hooks/useConfiguredAxios"
 import { UserSettingsContext } from "../../contexts/UserSettingsContext"
 import { UserSettingsSetterContext } from "../../contexts/UserSettingsSetterContext"
 import AboutDialog from "../../components/AboutDialog/AboutDialog"
-import RadioButton from "../../components/RadioButton/RadioButton"
 import Form from "../../components/Form/Form"
 import { useLocalStorage } from "usehooks-ts"
 import Button from "../../components/Button/Button"
-import FieldSet from "../../components/FieldSet/FieldSet"
 import AdvancedOptions from "../../components/AdvancedOptions/AdvancedOptions"
+import getErrorMessage from "../../functions/getErrorMessage"
 
 const SettingsPage = () => {
   const navigate = useNavigate()
@@ -48,7 +47,7 @@ const SettingsPage = () => {
       setUserSettings(newSettings);
       navigate(-1)
     } catch (err) {
-      setFormError("Server error encountered")
+      setFormError(getErrorMessage(err))
     }
   }
 

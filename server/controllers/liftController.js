@@ -2,47 +2,49 @@ require("dotenv").config();
 const { NODE_ENV } = process.env;
 const knex = require("knex")(require("../knexfile")[NODE_ENV]);
 
-const postLift = (req, res) => {
+const postLift = (req, res, next) => {
 	const { userId } = req.decoded;
 	const lift = req.body;
+	if (lift.reps === undefined) {
+		return res.status(400).send("Reps is required");
+	}
+	if (lift.reps <= 0) {
+		return res.status(400).send("Reps must be greater than 0");
+	}
 	knex("lifts")
 		.insert({
 			...lift,
+			weight: lift.weight || 0,
 			user_id: userId,
 		})
-		.then((response) => {
+		.then((data) => {
 			return res.status(201).send("Lift succesfully added!");
 		})
-		.catch((err) => {
-			return res
-				.status(400)
-				.send(
-					`Lift not succesfully added, please submit a valid lift object. ${err}`
-				);
-		});
+		.catch(next);
 };
 
-const putLift = (req, res) => {
+const putLift = (req, res, next) => {
 	const { userId } = req.decoded;
 	const lift = req.body;
+	if (lift.reps === undefined) {
+		return res.status(400).send("Reps is required");
+	}
+	if (lift.reps <= 0) {
+		return res.status(400).send("Reps must be greater than 0");
+	}
 	knex("lifts")
 		.where({ id: lift.id, user_id: userId })
 		.update({
 			...lift,
+			weight: lift.weight || 0,
 		})
-		.then((response) => {
+		.then((data) => {
 			return res.status(200).send("Lift succesfully edited!");
 		})
-		.catch((err) => {
-			return res
-				.status(400)
-				.send(
-					`Lift not succesfully edited, please submit a valid lift object and ensure it belongs to this account. ${err}`
-				);
-		});
+		.catch(next);
 };
 
-const getWorkoutLifts = async (req, res) => {
+const getWorkoutLifts = async (req, res, next) => {
 	const { userId } = req.decoded;
 	const { workoutId } = req.params;
 	knex.from("workouts")
@@ -61,19 +63,15 @@ const getWorkoutLifts = async (req, res) => {
 		.innerJoin("lifts", "workouts.id", "lifts.workout_id")
 		.innerJoin("exercises", "exercises.id", "lifts.exercise_id")
 		.where({ "lifts.user_id": userId, workout_id: workoutId })
-		.then((response) => {
-			return res.status(200).json(response);
+		.then((data) => {
+			return res.status(200).json(data);
 		})
 		.catch((err) => {
-			return res
-				.status(400)
-				.send(
-					`List of lifts could not be retrieved. Potential database error. ${err}`
-				);
+			next(err)
 		});
 };
 
-const getExerciseLifts = (req, res) => {
+const getExerciseLifts = (req, res, next) => {
 	const { userId } = req.decoded;
 	const { exerciseId } = req.params;
 	knex.from("exercises")
@@ -93,32 +91,25 @@ const getExerciseLifts = (req, res) => {
 		.innerJoin("lifts", "exercises.id", "lifts.exercise_id")
 		.innerJoin("workouts", "workouts.id", "lifts.workout_id")
 		.where({ "lifts.user_id": userId, exercise_id: exerciseId })
-		.then((response) => {
-			return res.status(200).json(response);
+		.then((data) => {
+			return res.status(200).json(data);
 		})
-		.catch((err) => {
-			return res
-				.status(400)
-				.send(`List of lifts could not be retrieved. ${err}`);
-		});
+		.catch(next);
 };
 
-const deleteLift = (req, res) => {
+const deleteLift = (req, res, next) => {
 	const { userId } = req.decoded;
 	const { liftId } = req.params;
 	knex("lifts")
 		.where({ id: liftId, user_id: userId })
 		.delete()
-		.then((response) => {
+		.then((data) => {
+			if (data === 0) {
+				return res.status(404).send("Lift not found!");
+			}
 			return res.status(200).send("Lift succesfully deleted!");
 		})
-		.catch((err) => {
-			return res
-				.status(404)
-				.send(
-					`Lift not found OR lift was not associated with user account. ${err}`
-				);
-		});
+		.catch(next);
 };
 
 module.exports = {
