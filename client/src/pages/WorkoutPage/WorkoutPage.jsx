@@ -22,6 +22,7 @@ import getErrorMessage from "../../functions/getErrorMessage";
 const LiftForm = ({ onSubmit, onCancel, exercises, lift, error }) => {
   const settings = useContext(UserSettingsContext);
   const previousLift = JSON.parse(sessionStorage.getItem('previousLift'));
+
   const getDefaultValue = (key, fallback = "") => {
     if (lift) {
       return lift[key] || fallback;
@@ -30,6 +31,7 @@ const LiftForm = ({ onSubmit, onCancel, exercises, lift, error }) => {
     }
     return fallback
   }
+
   const [exercise, setExercise] = useState(getDefaultValue("name", exercises[0].name));
   const [weight, setWeight] = useState(getDefaultValue("weight"));
   const [measure, setMeasure] = useState(getDefaultValue("measure", "lbs"));
@@ -39,6 +41,13 @@ const LiftForm = ({ onSubmit, onCancel, exercises, lift, error }) => {
   const [repsError, setRepsError] = useState(null);
   const [difficultyError, setDifficultyError] = useState(null);
   const [percentageOfMaxError, setPercentageOfMaxError] = useState(null);
+
+  // Ensure that exercise is updated if the currently selected exercise is filtered out by BubbleSelect
+  useEffect(() => {
+    if (!exercises.includes(ex => ex.name === exercise)) {
+      setExercise(exercises[0].name)
+    }
+  }, [exercises, lift, previousLift, exercise]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
