@@ -1,8 +1,8 @@
 const getErrorMessage = (err) => {
-    if (err.status === 500 || err.status === undefined) {
+    if (err.response.status === 500 || err.response.status === undefined) {
         return "An unkown error has occured.";
     }
-    return err.message;
+    return err.response.data;
 }
 
 export default getErrorMessage;
