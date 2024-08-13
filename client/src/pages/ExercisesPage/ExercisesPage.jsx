@@ -11,6 +11,8 @@ import Button from "../../components/Button/Button"
 import Form from "../../components/Form/Form"
 import { Add } from "@mui/icons-material";
 import getErrorMessage from "../../functions/getErrorMessage"
+import { useNavigate } from "react-router-dom"
+import getErrorRedirect from "../../functions/getErrorRedirect"
 
 const ExerciseForm = ({ onSubmit, error, exercise, onCancel }) => {
   const [selectedMuscles, setSelectedMuscles] = useState(exercise?.muscle?.split(", ") || []);
@@ -96,7 +98,8 @@ const ExercisesPage = () => {
   const [exercises, setExercises] = useState([])
   const [currentExercise, setCurrentExercise] = useState(false)
   const [formError, setFormError] = useState(null);
-  const axios = useConfiguredAxios()
+  const axios = useConfiguredAxios();
+  const navigate = useNavigate();
 
   const getUserExercises = useCallback(() => {
     if (axios) {
@@ -105,9 +108,9 @@ const ExercisesPage = () => {
           const sortedExercises = response.data.sort((exerciseA, exerciseB) => exerciseB.id - exerciseA.id)
           setExercises(sortedExercises)
         })
-        .catch(error => alert(error))
+        .catch(error => navigate(getErrorRedirect(error)));
     }
-  }, [axios])
+  }, [axios, navigate])
 
   useEffect(() => {
     getUserExercises()
@@ -152,7 +155,7 @@ const ExercisesPage = () => {
         getUserExercises()
         onCloseDelete()
       })
-      .catch(error => alert(error))
+      .catch(error => navigate(getErrorRedirect(error)));
   }
 
   const onClickDelete = (exercise) => {

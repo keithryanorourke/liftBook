@@ -1,12 +1,13 @@
 import "./SingleExercisePage.scss"
 import IndividualLift from "../../components/IndividualLift/IndividualLift"
 import { useContext, useEffect, useState } from "react"
-import { useParams, NavLink } from "react-router-dom"
+import { useParams, NavLink, useNavigate } from "react-router-dom"
 import setLiftModifierColor from "../../functions/setLiftModifierColor"
 import convertDate from "../../functions/dateConversion"
 import { UserSettingsContext } from "../../contexts/UserSettingsContext"
 import useConfiguredAxios from "../../hooks/useConfiguredAxios"
 import { ArrowBack } from "@mui/icons-material"
+import getErrorRedirect from "../../functions/getErrorRedirect"
 
 const SingleExercisePage = () => {
   const params = useParams()
@@ -14,18 +15,19 @@ const SingleExercisePage = () => {
   const [exercise, setExercise] = useState({})
   const [lifts, setLifts] = useState([])
   const userSettings = useContext(UserSettingsContext)
-  const axios = useConfiguredAxios()
+  const axios = useConfiguredAxios();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`/exercises/single/${exerciseId}`)
       .then(response => setExercise(response.data))
-      .catch(error => alert(error))
+      .catch(error => navigate(getErrorRedirect(error)))
     axios.get(`/lifts/byExercise/${exerciseId}`)
       .then(response => {
         const sortedLifts = response.data.sort((liftA, liftB) => liftB.id - liftA.id)
         setLifts(sortedLifts)
       })
-      .catch(error => alert(error))
+      .catch(error => navigate(getErrorRedirect(error)))
   }, [axios, exerciseId])
 
   return (
