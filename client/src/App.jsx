@@ -4,6 +4,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
 } from "react-router-dom";
 import Header from './components/Header/Header';
 
@@ -61,6 +62,7 @@ function App() {
               <Route path="/setup" element={<Private><OrientationPage /></Private>}></Route>
               <Route path="/settings" element={<Private><SettingsPage /></Private>}></Route>
               <Route path="/error" element={<ErrorPage />}></Route>
+              <Route path="/*" element={<Navigate to="/error?code=404" />}></Route>
             </Routes>
           </BrowserRouter>
         </UserSettingsSetterContext.Provider>

@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import "./ErrorPage.scss";
 
-const ErrorPage = () => {
+const ErrorPage = ({propCode}) => {
     let [searchParams] = useSearchParams();
     const code = parseInt(searchParams.get("code")) || 500;
     const subtitle = (() => {
