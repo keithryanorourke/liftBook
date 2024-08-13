@@ -18,10 +18,12 @@ import Select from "../../components/Select/Select";
 import Button from "../../components/Button/Button";
 import { Add } from "@mui/icons-material";
 import getErrorMessage from "../../functions/getErrorMessage";
+import getErrorRedirect from "../../functions/getErrorRedirect";
 
 const LiftForm = ({ onSubmit, onCancel, exercises, lift, error }) => {
   const settings = useContext(UserSettingsContext);
   const previousLift = JSON.parse(sessionStorage.getItem('previousLift'));
+
   const getDefaultValue = (key, fallback = "") => {
     if (lift) {
       return lift[key] || fallback;
@@ -30,6 +32,7 @@ const LiftForm = ({ onSubmit, onCancel, exercises, lift, error }) => {
     }
     return fallback
   }
+
   const [exercise, setExercise] = useState(getDefaultValue("name", exercises[0].name));
   const [weight, setWeight] = useState(getDefaultValue("weight"));
   const [measure, setMeasure] = useState(getDefaultValue("measure", "lbs"));
@@ -39,6 +42,13 @@ const LiftForm = ({ onSubmit, onCancel, exercises, lift, error }) => {
   const [repsError, setRepsError] = useState(null);
   const [difficultyError, setDifficultyError] = useState(null);
   const [percentageOfMaxError, setPercentageOfMaxError] = useState(null);
+
+  // Ensure that exercise is updated if the currently selected exercise is filtered out by BubbleSelect
+  useEffect(() => {
+    if (!exercises.includes(ex => ex.name === exercise)) {
+      setExercise(exercises[0].name)
+    }
+  }, [exercises, lift, previousLift, exercise]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -202,8 +212,7 @@ const LiftDialog = ({ visible, onClose, onSubmit, exercises, lift, title, error 
 }
 
 const WorkoutPage = () => {
-  const navigateCallback = useNavigate()
-  const navigate = useCallback((path, obj) => navigateCallback(path, obj), [navigateCallback])
+  const navigate = useNavigate()
   const paramaters = useParams();
   const { workoutId } = paramaters
   const [workout, setWorkout] = useState(null)
@@ -223,24 +232,23 @@ const WorkoutPage = () => {
       .then(response => {
         setLifts(response.data.sort((liftA, liftB) => liftA.id - liftB.id))
       })
-      .catch(error => alert(error))
-  }, [axios, workoutId])
+      .catch(error => navigate(getErrorRedirect(error)))
+  }, [axios, workoutId, navigate])
 
   useEffect(() => {
     axios.get(`/workout/${workoutId}`)
       .then(response => {
         setWorkout(response.data)
       })
-      .catch(err => {
-        alert(`${err}.\nThe workout you are trying to access is not associated with your account! You will now be redirected to your home page.`)
-        navigate("../", { replace: true })
+      .catch(error => {
+        navigate(getErrorRedirect(error))
       })
 
     axios.get(`/exercises/`)
       .then(response => {
         setExercises(response.data)
       })
-      .catch(err => alert(`We could not retrieve the list of exercises from our database! Please try reloading the page and if that does not work, please try to logout and log back in.\n ${err}`))
+      .catch(error => navigate(getErrorRedirect(error)))
 
     getLifts()
   }, [getLifts, navigate, axios, workoutId])

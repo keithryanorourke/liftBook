@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 
 const useConfiguredAxios = () => {
-    const [token, , removeToken] = useLocalStorage("token", null);
     const navigate = useNavigate();
+    const [token, , removeToken] = useLocalStorage("token", null);
 
     const instance = useMemo(() => {
         const axiosOptions = {
