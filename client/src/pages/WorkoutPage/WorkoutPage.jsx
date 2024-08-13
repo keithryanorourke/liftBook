@@ -212,8 +212,7 @@ const LiftDialog = ({ visible, onClose, onSubmit, exercises, lift, title, error 
 }
 
 const WorkoutPage = () => {
-  const navigateCallback = useNavigate()
-  const navigate = useCallback((path, obj) => navigateCallback(path, obj), [navigateCallback])
+  const navigate = useNavigate()
   const paramaters = useParams();
   const { workoutId } = paramaters
   const [workout, setWorkout] = useState(null)

@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
-import { redirect } from "react-router-dom";
 
 const useConfiguredAxios = () => {
+    const navigate = useNavigate();
     const [token, , removeToken] = useLocalStorage("token", null);
 
     const instance = useMemo(() => {
@@ -22,14 +23,14 @@ const useConfiguredAxios = () => {
             err => {
                 if (err.response.status === 401) {
                     removeToken();
-                    redirect("/login");
+                    navigate("/login");
                 }
                 return Promise.reject(err);
             }
         )
 
         return instance;
-    }, [token, removeToken])
+    }, [token, removeToken, navigate])
 
     return instance;
 }
