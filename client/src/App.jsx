@@ -20,6 +20,7 @@ import { UserSettingsContext } from './contexts/UserSettingsContext';
 import { UserSettingsSetterContext } from './contexts/UserSettingsSetterContext';
 import axios from 'axios';
 import { useReadLocalStorage } from 'usehooks-ts';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
 const { REACT_APP_BACKEND_URL } = process.env
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
               <Route exact path="/exercise/:exerciseId" element={<Private><SingleExercisePage /></Private>}></Route>
               <Route path="/setup" element={<Private><OrientationPage /></Private>}></Route>
               <Route path="/settings" element={<Private><SettingsPage /></Private>}></Route>
+              <Route path="/error" element={<ErrorPage />}></Route>
             </Routes>
           </BrowserRouter>
         </UserSettingsSetterContext.Provider>

@@ -18,6 +18,7 @@ import Select from "../../components/Select/Select";
 import Button from "../../components/Button/Button";
 import { Add } from "@mui/icons-material";
 import getErrorMessage from "../../functions/getErrorMessage";
+import getErrorRedirect from "../../functions/getErrorRedirect";
 
 const LiftForm = ({ onSubmit, onCancel, exercises, lift, error }) => {
   const settings = useContext(UserSettingsContext);
@@ -232,24 +233,23 @@ const WorkoutPage = () => {
       .then(response => {
         setLifts(response.data.sort((liftA, liftB) => liftA.id - liftB.id))
       })
-      .catch(error => alert(error))
-  }, [axios, workoutId])
+      .catch(error => navigate(getErrorRedirect(error)))
+  }, [axios, workoutId, navigate])
 
   useEffect(() => {
     axios.get(`/workout/${workoutId}`)
       .then(response => {
         setWorkout(response.data)
       })
-      .catch(err => {
-        alert(`${err}.\nThe workout you are trying to access is not associated with your account! You will now be redirected to your home page.`)
-        navigate("../", { replace: true })
+      .catch(error => {
+        navigate(getErrorRedirect(error))
       })
 
     axios.get(`/exercises/`)
       .then(response => {
         setExercises(response.data)
       })
-      .catch(err => alert(`We could not retrieve the list of exercises from our database! Please try reloading the page and if that does not work, please try to logout and log back in.\n ${err}`))
+      .catch(error => navigate(getErrorRedirect(error)))
 
     getLifts()
   }, [getLifts, navigate, axios, workoutId])

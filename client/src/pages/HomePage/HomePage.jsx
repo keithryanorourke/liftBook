@@ -1,6 +1,6 @@
 import "./HomePage.scss"
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import IndividualWorkout from "../../components/IndividualWorkout/IndividualWorkout";
 import useConfiguredAxios from "../../hooks/useConfiguredAxios";
 import Dialog from "../../components/Dialog/Dialog";
@@ -10,6 +10,7 @@ import Form from "../../components/Form/Form";
 import Button from "../../components/Button/Button";
 import { Add } from "@mui/icons-material";
 import getErrorMessage from "../../functions/getErrorMessage";
+import getErrorRedirect from "../../functions/getErrorRedirect";
 
 const WorkoutForm = ({ onSubmit, error, workout, onCancel }) => {
   const [name, setName] = useState(workout?.name || "");
@@ -40,7 +41,6 @@ const WorkoutForm = ({ onSubmit, error, workout, onCancel }) => {
 }
 
 const HomePage = () => {
-  const navigate = useNavigate()
   const [user, setUser] = useState({
     workouts: null
   })
@@ -57,7 +57,7 @@ const HomePage = () => {
         response.data.sort((workoutA, workoutB) => workoutB.id - workoutA.id)
         return setUser({ workouts: response.data })
       })
-      .catch(error => alert(error))
+      .catch(error => redirect(getErrorRedirect(error)))
   }, [axios])
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const HomePage = () => {
     }
 
     axios.post(`/workout`, workout)
-      .then(response => navigate(`../workout/${response.data}`, { replace: true }))
+      .then(response => redirect(`../workout/${response.data}`))
       .catch(err => setFormError(getErrorMessage(err)))
   }
 
